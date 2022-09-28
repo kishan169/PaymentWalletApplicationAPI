@@ -11,7 +11,11 @@ import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	
+	@ExceptionHandler(BeneficiaryExceptions.class)
+	public ResponseEntity<MyErrorDetails> BeneficiaryExceptionsException(BeneficiaryExceptions BeneficiaryException , WebRequest request){
+		MyErrorDetails errorDetails = new MyErrorDetails(LocalDateTime.now(), BeneficiaryException.getMessage(), request.getDescription(false));
+		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
+	}
 	@ExceptionHandler(LoginException.class)
 	public ResponseEntity<MyErrorDetails> HandleLoginException(LoginException loginException , WebRequest request){
 		MyErrorDetails errorDetails = new MyErrorDetails(LocalDateTime.now(), loginException.getMessage(), request.getDescription(false));
