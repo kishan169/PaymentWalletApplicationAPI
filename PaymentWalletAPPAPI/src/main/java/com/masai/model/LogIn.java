@@ -3,7 +3,10 @@ package com.masai.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class LogIn {
 	
 	@Id
@@ -12,6 +15,18 @@ public class LogIn {
 	private String username;
 	
 	private String password;
+
+	public LogIn(Integer userId, String username, String password) {
+		super();
+		this.userId = userId;
+		this.username = username;
+		this.password = password;
+	}
+
+	public LogIn() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public Integer getUserId() {
 		return userId;

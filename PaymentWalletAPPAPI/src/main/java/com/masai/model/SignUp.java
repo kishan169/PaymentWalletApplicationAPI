@@ -5,7 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class SignUp {
 	
 	@Id
@@ -19,6 +22,20 @@ public class SignUp {
 	private String password;
 	
 	private String email;
+
+	public SignUp(Integer userId, String userName, String mobileNo, String password, String email) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.mobileNo = mobileNo;
+		this.password = password;
+		this.email = email;
+	}
+
+	public SignUp() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public Integer getUserId() {
 		return userId;
@@ -60,8 +77,6 @@ public class SignUp {
 		this.email = email;
 	}
 
-	
-	
 	
 	
 	

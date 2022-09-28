@@ -9,9 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class CurrentSessionUser {
 	
+	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -23,6 +28,19 @@ public class CurrentSessionUser {
 	private String uuid;
 	
 	private LocalDateTime localDateTime;
+
+
+	public CurrentSessionUser(Integer userId, String uuid, LocalDateTime localDateTime) {
+		super();
+		this.userId = userId;
+		this.uuid = uuid;
+		this.localDateTime = localDateTime;
+	}
+
+	public CurrentSessionUser() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public Integer getId() {
 		return id;
@@ -55,15 +73,6 @@ public class CurrentSessionUser {
 	public void setLocalDateTime(LocalDateTime localDateTime) {
 		this.localDateTime = localDateTime;
 	}
-
-	public CurrentSessionUser(Integer userId, String uuid, LocalDateTime localDateTime) {
-		super();
-		this.userId = userId;
-		this.uuid = uuid;
-		this.localDateTime = localDateTime;
-	}
-
-	
 
 	
 }
