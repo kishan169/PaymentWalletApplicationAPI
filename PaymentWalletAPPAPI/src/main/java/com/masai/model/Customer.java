@@ -91,6 +91,5 @@ public class Customer {
 
 	public Customer() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 }

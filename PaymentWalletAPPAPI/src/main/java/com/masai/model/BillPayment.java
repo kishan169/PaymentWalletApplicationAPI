@@ -15,6 +15,8 @@ public class BillPayment {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer billId;
 	
+	private BillType billtype;
+	
 	private Double amount;
 	
 	private LocalDateTime time;
