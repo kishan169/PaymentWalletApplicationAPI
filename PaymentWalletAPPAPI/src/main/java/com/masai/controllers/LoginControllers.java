@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exception.LoginException;
 import com.masai.model.LogIn;
-import com.masai.model.SignUp;
+import com.masai.model.Customer;
 import com.masai.service.LoginService;
-import com.masai.service.SignUpService;
+import com.masai.service.CustomerService;
 
 
 @RestController

@@ -6,21 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masai.exception.LoginException;
-import com.masai.model.SignUp;
-import com.masai.repository.SignUpDAO;
+import com.masai.model.Customer;
+import com.masai.repository.CustomerDAO;
 
 @Service
-public class SignUpServiceImpl implements SignUpService{
+public class CustomerServiceImpl implements CustomerService{
 	
 	@Autowired
-	private SignUpDAO signUpDAO;
+	private CustomerDAO signUpDAO;
 	
 	@Autowired
 	private CurrentUserSessionService getCurrentLoginUserSession;
 
 	@Override
-	public SignUp createNewSignUp(SignUp newSignUp) throws LoginException {
-		Optional<SignUp> opt = signUpDAO.findByUserName(newSignUp.getUserName());
+	public Customer createNewSignUp(Customer newSignUp) throws LoginException {
+		Optional<Customer> opt = signUpDAO.findByUserName(newSignUp.getUserName());
 		if(opt.isPresent())
 		{
 			throw new LoginException("User Already Exist!");
@@ -30,8 +30,8 @@ public class SignUpServiceImpl implements SignUpService{
 	}
 
 	@Override
-	public SignUp updateSignUpDetails(SignUp signUp, String key) throws LoginException {
-		SignUp signUpDetails = getCurrentLoginUserSession.getSignUpDetails(key);
+	public Customer updateSignUpDetails(Customer signUp, String key) throws LoginException {
+		Customer signUpDetails = getCurrentLoginUserSession.getSignUpDetails(key);
 		
 		if(signUpDetails == null)
 		{

@@ -10,29 +10,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exception.LoginException;
-import com.masai.model.SignUp;
-import com.masai.service.SignUpService;
+import com.masai.model.Customer;
+import com.masai.service.CustomerService;
 
 @RestController
 public class SignUpController {
 	
 	@Autowired
-	private SignUpService signUpService;
+	private CustomerService signUpService;
 	
 	@PostMapping("/signUp")
-	public ResponseEntity<SignUp> createNewSignUpHandler(@RequestBody SignUp newSignUp) throws LoginException {
+	public ResponseEntity<Customer> createNewSignUpHandler(@RequestBody Customer newSignUp) throws LoginException {
 		
-		SignUp newSignedUp =signUpService.createNewSignUp(newSignUp);
-		return new ResponseEntity<SignUp>(newSignedUp,HttpStatus.CREATED);
+		Customer newSignedUp =signUpService.createNewSignUp(newSignUp);
+		return new ResponseEntity<Customer>(newSignedUp,HttpStatus.CREATED);
 
 	}
 	
 	@PutMapping("/updateSignUp")
-	public ResponseEntity<SignUp> updateSignUpDetailsHandler(@RequestBody SignUp signUp, @RequestParam String key) throws LoginException
+	public ResponseEntity<Customer> updateSignUpDetailsHandler(@RequestBody Customer signUp, @RequestParam String key) throws LoginException
 	{
-		SignUp newUpdatedSignUp = signUpService.updateSignUpDetails(signUp,key);
+		Customer newUpdatedSignUp = signUpService.updateSignUpDetails(signUp,key);
 		
-		return new ResponseEntity<SignUp>(newUpdatedSignUp,HttpStatus.ACCEPTED);
+		return new ResponseEntity<Customer>(newUpdatedSignUp,HttpStatus.ACCEPTED);
 		
 	
 	}

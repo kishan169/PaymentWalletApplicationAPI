@@ -4,12 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Data
-public class SignUp {
+public class Customer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,20 +22,11 @@ public class SignUp {
 	private String password;
 	
 	private String email;
-
-	public SignUp(Integer userId, String userName, String mobileNo, String password, String email) {
-		super();
-		this.userId = userId;
-		this.userName = userName;
-		this.mobileNo = mobileNo;
-		this.password = password;
-		this.email = email;
-	}
-
-	public SignUp() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
+	@JsonIgnore
+	@OneToOne
+	private Wallet wallet;
+	
 
 	public Integer getUserId() {
 		return userId;
@@ -77,7 +68,29 @@ public class SignUp {
 		this.email = email;
 	}
 
-	
-	
-	
+	public Wallet getWallet() {
+		return wallet;
+	}
+
+	public void setWallet(Wallet wallet) {
+		this.wallet = wallet;
+	}
+
+
+
+	public Customer(Integer userId, String userName, String mobileNo, String password, String email,
+			com.masai.model.Wallet wallet) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.mobileNo = mobileNo;
+		this.password = password;
+		this.email = email;
+		this.wallet = wallet;
+	}
+
+	public Customer() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }

@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.masai.exception.LoginException;
 import com.masai.model.CurrentSessionUser;
-import com.masai.model.SignUp;
+import com.masai.model.Customer;
 import com.masai.repository.SessionDAO;
-import com.masai.repository.SignUpDAO;
+import com.masai.repository.CustomerDAO;
 
 @Service
 public class CurrentUserSessionServiceImpl implements CurrentUserSessionService{
@@ -18,7 +18,7 @@ public class CurrentUserSessionServiceImpl implements CurrentUserSessionService{
 	private SessionDAO sessionDAO;
 	
 	@Autowired
-	private SignUpDAO signUpDAO;
+	private CustomerDAO signUpDAO;
 	
 
 	@Override
@@ -43,7 +43,7 @@ public class CurrentUserSessionServiceImpl implements CurrentUserSessionService{
 	}
 
 	@Override
-	public SignUp getSignUpDetails(String key) throws LoginException {
+	public Customer getSignUpDetails(String key) throws LoginException {
 		Optional<CurrentSessionUser> currentUser = sessionDAO.findByUuid(key);
 		if(!currentUser.isPresent())
 		{

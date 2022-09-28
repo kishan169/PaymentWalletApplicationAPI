@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.masai.model.CurrentSessionUser;
-import com.masai.model.SignUp;
+import com.masai.model.Customer;
 
 @Repository
 public interface SessionDAO extends JpaRepository<CurrentSessionUser, Integer>{

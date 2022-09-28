@@ -15,7 +15,6 @@ import lombok.Data;
 @Data
 public class CurrentSessionUser {
 	
-	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -73,6 +72,14 @@ public class CurrentSessionUser {
 	public void setLocalDateTime(LocalDateTime localDateTime) {
 		this.localDateTime = localDateTime;
 	}
+
+	@Override
+	public String toString() {
+		return "CurrentSessionUser [id=" + id + ", userId=" + userId + ", uuid=" + uuid + ", localDateTime="
+				+ localDateTime + "]";
+	}
+	
+	
 
 	
 }

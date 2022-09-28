@@ -9,16 +9,16 @@ import org.springframework.stereotype.Service;
 import com.masai.exception.LoginException;
 import com.masai.model.CurrentSessionUser;
 import com.masai.model.LogIn;
-import com.masai.model.SignUp;
+import com.masai.model.Customer;
 import com.masai.repository.LogInDAO;
 import com.masai.repository.SessionDAO;
-import com.masai.repository.SignUpDAO;
+import com.masai.repository.CustomerDAO;
 
 @Service
 public class LoginServiceImpl implements LoginService{
 	
 	@Autowired
-	private SignUpDAO signUpDAO;
+	private CustomerDAO signUpDAO;
 	
 	@Autowired
 	private SessionDAO SessionDAO;
@@ -31,14 +31,17 @@ public class LoginServiceImpl implements LoginService{
 
 	@Override
 	public String logInAccount(LogIn loginData) throws LoginException {
-		Optional<SignUp> options = signUpDAO.findById(loginData.getUserId());
+		Optional<Customer> options = signUpDAO.findByMobileNo(loginData.getMobileNo());
 		
 		if(!options.isPresent()) {
-			throw new LoginException("Invalid Login UserId");
+			throw new LoginException("Invalid mobile Number ");
 		}
 		
-		SignUp newSignUp = options.get();
+		Customer newSignUp = options.get();
 		
+		System.out.println(newSignUp);
+		
+		System.out.println(loginData.getMobileNo());
 		Integer newSignUpId = newSignUp.getUserId();
 		Optional<CurrentSessionUser> currentSessionUser = SessionDAO.findByUserId(newSignUpId);
 		
@@ -46,13 +49,14 @@ public class LoginServiceImpl implements LoginService{
 			throw new LoginException("User already login with this userId");
 		}
 		
-		if((newSignUp.getUserId()==loginData.getUserId())  && newSignUp.getPassword().equals(loginData.getPassword())) {
+		if((newSignUp.getMobileNo().equals(loginData.getMobileNo()))  && newSignUp.getPassword().equals(loginData.getPassword())) {
 			String key = RandomString.getRandomString();
 			CurrentSessionUser currentSessionUser2 = new CurrentSessionUser(newSignUp.getUserId(), key, LocalDateTime.now());
 			loginDAO.save(loginData);
+			SessionDAO.save(currentSessionUser2);
 			return currentSessionUser2.toString();
 		}else {
-			throw new LoginException("Invalid username and Password");
+			throw new LoginException("Invalid mobile and Password");
 		}
 		
 	}
