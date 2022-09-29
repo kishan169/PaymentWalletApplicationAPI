@@ -60,6 +60,7 @@ public class Wallet {
 	@JsonIgnore
 	private List<BeneficiaryDetail> beneficiaryDetails;
 	
+	
 	//=======================================================================================================
 
 	public Integer getWalletId() {
