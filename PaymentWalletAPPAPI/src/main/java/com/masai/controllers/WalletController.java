@@ -7,6 +7,8 @@ import org.hibernate.validator.constraints.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,12 +53,21 @@ public class WalletController {
 	
 	
 //	public  Double showBalance(String mobileNo) throws CustomerNotException;
-	
-//	public ResponseEntity<T>
+	@GetMapping("/showBalance/{mobileNo}")
+	public ResponseEntity<Double> showBlanceHandler(@PathVariable("mobileNo") String moblieNo) throws CustomerNotException{
+		
+		Double showBlance  = walletServiceImpl.showBalance(moblieNo);
+		
+		return new ResponseEntity<Double>(showBlance,HttpStatus.OK);
+	}
 	
 	
 	
 //	public Customer fundTransfer(String sourceMoblieNo,String targetMobileNo,BigDecimal amout);
+	
+	public ResponseEntity<Customer> FundtransferHandler(@PathVariable String sourceMoblieNo){
+		return null;
+	}
 	
 	
 	

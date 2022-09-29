@@ -13,6 +13,7 @@ import com.masai.model.CurrentSessionUser;
 import com.masai.model.Customer;
 import com.masai.model.CustomerDTO;
 import com.masai.model.Wallet;
+import com.masai.repository.SessionDAO;
 import com.masai.repository.TransactionDao;
 
 @Service
@@ -24,11 +25,15 @@ public class WalletServiceImpl implements WalletService {
 	@Autowired
 	private CustomerService cutomerservice;
 	
+	@Autowired
+	private SessionDAO sessiondao;
 	
 
 	@Override
 	public Customer createAccount(String name, String moblieNo, BigDecimal amount) {
-		// TODO Auto-generated method stub
+		
+//		Customer customer = sessiondao.find
+		
 		return null;
 	}
 

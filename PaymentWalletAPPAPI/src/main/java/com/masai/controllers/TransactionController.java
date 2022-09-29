@@ -2,6 +2,7 @@ package com.masai.controllers;
 import com.masai.exception.CustomerNotException;
 import com.masai.model.Transaction;
 import com.masai.model.Wallet;
+import com.masai.service.CurrentUserSessionServiceImpl;
 import com.masai.service.TranscationServiceImpl;
 
 import java.time.LocalDate;
@@ -31,6 +32,8 @@ public class TransactionController {
 //	public Transaction addTranscation(Transaction tran);
 	
 	public ResponseEntity<Transaction> addTransactionHandeler(Transaction tran){
+		
+		
 		
 		Transaction transaction = transactionserviceimpl.addTranscation(tran);
 		

@@ -34,7 +34,7 @@ public class Wallet {
 	// walletDao.save(wallet);
 	// newSignUp.setWallet(wallet);
 
-	@Min(value = 0)
+	
 	private Double balance;
 
 	@OneToOne(cascade = CascadeType.ALL)

@@ -30,6 +30,10 @@ public class TranscationServiceImpl implements TransactionService{
 	@Autowired
 	private SessionDAO sessionDao;
 	
+	@Autowired
+	private CurrentUserSessionServiceImpl currentSessionServiecImpl;
+	
+	
 	//==========================
 	
 
