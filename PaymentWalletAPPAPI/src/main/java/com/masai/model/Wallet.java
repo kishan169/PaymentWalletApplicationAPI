@@ -25,43 +25,40 @@ import lombok.ToString;
 
 @Entity
 public class Wallet {
-	
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer walletId;
-//	wallet.setBalance(0.0);
-//	wallet.setCustomer(newSignUp);
-//	walletDao.save(wallet);
-//	newSignUp.setWallet(wallet);
-	
-	
+	// wallet.setBalance(0.0);
+	// wallet.setCustomer(newSignUp);
+	// walletDao.save(wallet);
+	// newSignUp.setWallet(wallet);
+
 	@Min(value = 0)
 	private Double balance;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="customerId")
+	@JoinColumn(name = "customerId")
 	private Customer customer;
-	
+
 	@OneToMany
 	@JsonIgnore
 	private Set<Transaction> transaction;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private BankAccount bankAccount;
-	
+
 	@OneToMany
 	@JsonIgnore
 	private List<BillPayment> billPayment;
-	
+
 	@Embedded
 	@ElementCollection
 	@JsonIgnore
 	private List<BeneficiaryDetail> beneficiaryDetails;
-	
-	
-	//=======================================================================================================
+
+	// =======================================================================================================
 
 	public Integer getWalletId() {
 		return walletId;
@@ -124,13 +121,6 @@ public class Wallet {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public String toString() {
-		return "Wallet [walletId=" + walletId + ", balance=" + balance + ", customer=" + customer + ", transaction="
-				+ transaction + ", bankAccount=" + bankAccount + ", billPayment=" + billPayment
-				+ ", beneficiaryDetails=" + beneficiaryDetails + "]";
-	}
-
 	public Wallet(Integer walletId, Double balance, Customer customer, Set<Transaction> transaction,
 			BankAccount bankAccount, List<BillPayment> billPayment, List<BeneficiaryDetail> beneficiaryDetails) {
 		super();
@@ -143,7 +133,4 @@ public class Wallet {
 		this.beneficiaryDetails = beneficiaryDetails;
 	}
 
-	
-	
-	
 }

@@ -103,12 +103,7 @@ public class Transaction {
 		this.localdatetime = LocalDateTime.now();
 	}
 
-	@Override
-	public String toString() {
-		return "Transaction [transactionId=" + transactionId + ", transactiontype=" + transactiontype
-				+ ", localdatetime=" + localdatetime + ", transactionamount=" + transactionamount + ", description="
-				+ description + ", walletId=" + walletId + "]";
-	}
+	
 	
 	
 	
