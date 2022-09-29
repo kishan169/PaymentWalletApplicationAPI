@@ -21,13 +21,8 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer userId;
 	
-	@Size(min = 4,max = 25)
 	private String userName;
 	
-	@Min(10)
-	@Max(10)
-	@NotNull
-	@NotBlank
 	private String mobileNo;
 	
 	private String password;
