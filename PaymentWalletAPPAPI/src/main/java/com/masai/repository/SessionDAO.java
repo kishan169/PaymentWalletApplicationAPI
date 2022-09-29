@@ -14,4 +14,8 @@ public interface SessionDAO extends JpaRepository<CurrentSessionUser, Integer>{
 	public Optional<CurrentSessionUser> findByUserId(Integer userId);
 	
 	public Optional<CurrentSessionUser> findByUuid(String uuid);
+	
+	public Optional<CurrentSessionUser> findByMobileNo(String uuid);
+	
+	
 }
