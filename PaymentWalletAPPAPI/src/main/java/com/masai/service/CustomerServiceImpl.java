@@ -25,17 +25,19 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public Customer createNewSignUp(Customer newSignUp) throws LoginException {
+		System.out.println(newSignUp.toString());
 		Optional<Customer> opt = signUpDAO.findByUserName(newSignUp.getUserName());
 		if(opt.isPresent())
 		{
 			throw new LoginException("User Already Exist!");
 		}
-		
 		Wallet wallet = new Wallet();
 		wallet.setBalance(0.0);
 		wallet.setCustomer(newSignUp);
+		System.out.println("done");
 		walletDao.save(wallet);
 		newSignUp.setWallet(wallet);
+		
 		return signUpDAO.save(newSignUp);
 	}
 
