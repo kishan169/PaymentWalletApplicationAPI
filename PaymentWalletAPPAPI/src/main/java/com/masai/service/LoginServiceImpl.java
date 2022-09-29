@@ -51,7 +51,7 @@ public class LoginServiceImpl implements LoginService{
 		
 		if((newSignUp.getMobileNo().equals(loginData.getMobileNo()))  && newSignUp.getPassword().equals(loginData.getPassword())) {
 			String key = RandomString.getRandomString();
-			CurrentSessionUser currentSessionUser2 = new CurrentSessionUser(newSignUp.getUserId(), key, LocalDateTime.now());
+			CurrentSessionUser currentSessionUser2 = new CurrentSessionUser(newSignUp.getUserId(), key, newSignUp.getMobileNo(),LocalDateTime.now());
 			loginDAO.save(loginData);
 			SessionDAO.save(currentSessionUser2);
 			return currentSessionUser2.toString();

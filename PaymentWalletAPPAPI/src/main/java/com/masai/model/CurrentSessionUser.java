@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -25,13 +26,19 @@ public class CurrentSessionUser {
 	
 	private String uuid;
 	
+	@NotNull
+	private String mobileNo;
+	
 	private LocalDateTime localDateTime;
 
 
-	public CurrentSessionUser(Integer userId, String uuid, LocalDateTime localDateTime) {
+	
+
+	public CurrentSessionUser(Integer userId, String uuid, @NotNull String mobileNo, LocalDateTime localDateTime) {
 		super();
 		this.userId = userId;
 		this.uuid = uuid;
+		this.mobileNo = mobileNo;
 		this.localDateTime = localDateTime;
 	}
 

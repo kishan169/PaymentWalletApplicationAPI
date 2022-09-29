@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masai.exception.CustomerNotException;
+import com.masai.exception.LoginException;
 import com.masai.model.CurrentSessionUser;
 import com.masai.model.Customer;
 import com.masai.model.Wallet;
+import com.masai.repository.CustomerDAO;
+import com.masai.repository.SessionDAO;
 import com.masai.repository.TransactionDao;
 
 @Service
@@ -21,10 +24,11 @@ public class WalletServiceImpl implements WalletService {
 	private TransactionDao transactiodao;
 	
 	@Autowired
-	private CustomerService cutomerservice;
+	private CustomerDAO customerDAO;
 	
+	@Autowired
+	private SessionDAO currentSessionDAO;
 	
-
 	@Override
 	public Customer createAccount(String name, String moblieNo, BigDecimal amount) {
 		// TODO Auto-generated method stub
@@ -33,19 +37,29 @@ public class WalletServiceImpl implements WalletService {
 
 	@Override
 	public Customer showBalance(String mobileNo) throws CustomerNotException {
-		// TODO Auto-generated method stub
+
+		Optional<CurrentSessionUser> currentSessionOptional = currentSessionDAO.findByMobileNo(mobileNo);
 		
+		if(!currentSessionOptional.isPresent()) {
+			throw new CustomerNotException("You have to login First");
+		}
+		
+		Optional<Customer> customer =  customerDAO.findByMobileNo(mobileNo);
+		
+		Wallet wallet =  customer.get().getWallet();
+		
+		wallet.getBalance();
 		Optional<Customer> currentUser=null;// = .findByMobileNo(mobileNo);
 		
 		if(currentUser==null) {
 			throw new CustomerNotException("Customer not there");
 		}
 		
-		Customer customer = currentUser.get();
+		//Customer customer = currentUser.get();
 		
-		Wallet userwallet = customer.getWallet();
+		//Wallet userwallet = customer.getWallet();
 		
-		Double balance = userwallet.ge
+		//Double balance = userwallet.ge
 		
 		
 		return null;
