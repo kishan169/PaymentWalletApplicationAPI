@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.masai.exception.LoginException;
 import com.masai.model.Customer;
+import com.masai.model.Wallet;
 import com.masai.repository.CustomerDAO;
+import com.masai.repository.WalletDao;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -15,6 +17,9 @@ public class CustomerServiceImpl implements CustomerService{
 	@Autowired
 	private CustomerDAO signUpDAO;
 	
+	@Autowired
+	private WalletDao walletDao;
+ 	
 	@Autowired
 	private CurrentUserSessionService getCurrentLoginUserSession;
 
@@ -26,6 +31,11 @@ public class CustomerServiceImpl implements CustomerService{
 			throw new LoginException("User Already Exist!");
 		}
 		
+		Wallet wallet = new Wallet();
+		wallet.setBalance(0.0);
+		wallet.setCustomer(newSignUp);
+		walletDao.save(wallet);
+		newSignUp.setWallet(wallet);
 		return signUpDAO.save(newSignUp);
 	}
 
