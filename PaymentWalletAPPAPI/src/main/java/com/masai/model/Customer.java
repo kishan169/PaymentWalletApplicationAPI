@@ -5,6 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,12 +21,18 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer userId;
 	
+	@Size(min = 4,max = 25)
 	private String userName;
 	
+	@Min(10)
+	@Max(10)
+	@NotNull
+	@NotBlank
 	private String mobileNo;
 	
 	private String password;
 	
+	@Email
 	private String email;
 	
 	@JsonIgnore
