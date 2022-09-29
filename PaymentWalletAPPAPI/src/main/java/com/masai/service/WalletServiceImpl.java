@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.masai.exception.CustomerNotException;
 import com.masai.model.CurrentSessionUser;
 import com.masai.model.Customer;
+import com.masai.model.CustomerDTO;
 import com.masai.model.Wallet;
 import com.masai.repository.TransactionDao;
 
@@ -32,7 +33,7 @@ public class WalletServiceImpl implements WalletService {
 	}
 
 	@Override
-	public Customer showBalance(String mobileNo) throws CustomerNotException {
+	public Double showBalance(String mobileNo) throws CustomerNotException {
 		// TODO Auto-generated method stub
 		
 		Optional<Customer> currentUser=null;// = .findByMobileNo(mobileNo);
@@ -45,39 +46,62 @@ public class WalletServiceImpl implements WalletService {
 		
 		Wallet userwallet = customer.getWallet();
 		
-		Double balance = userwallet.ge
+		Double bal = userwallet.getBalance();
 		
 		
-		return null;
+		return bal;
 	}
 
 	@Override
 	public Customer fundTransfer(String sourceMoblieNo, String targetMobileNo, BigDecimal amout) {
-		// TODO Auto-generated method stub
+		
+		//sourceMobileNo = Currentuser moblieNo; find the current user ;
+		
+		
+		//after finding the currentuser get the currentUser customer list ;
+		//check the targetmobileNo is present in the user list ;
+		//if there transfer the amount ;//at the same time deduct the amout fro mthe user acc also;
+		//or throw the error;
+		
+		
+		
+		
+		
 		return null;
 	}
 
 	@Override
 	public Customer depositeAmount(String mmobileNo, BigDecimal amount) {
-		// TODO Auto-generated method stub
+		
+		//find the customer by the mobileNo;
+		//if found add the amount to the account;
+		//else throw error;
 		return null;
 	}
 
 	@Override
 	public List<Customer> getList() {
-		// TODO Auto-generated method stub
+		
+		//get the currentuser;
+	
+		//gett the list of all the customer of the curretUser;
+		
 		return null;
 	}
 
-	@Override
-	public Customer UpdateAmount(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public Customer addMoney(Wallet wallet, Double amount) {
-		// TODO Auto-generated method stub
+		// find the wallet ;
+		//add the amount;
+		return null;
+	}
+
+	@Override
+	public Customer updateAcount(Customer customer) {
+		// find the customer account ;
+		//and update it;
 		return null;
 	}
 

@@ -12,7 +12,7 @@ public interface WalletService {
 
 	public Customer createAccount(String name,String moblieNo,BigDecimal amount);
 	
-	public  Customer showBalance(String mobileNo) throws CustomerNotException;
+	public  Double showBalance(String mobileNo) throws CustomerNotException;
 	
 	public Customer fundTransfer(String sourceMoblieNo,String targetMobileNo,BigDecimal amout);
 	
@@ -20,7 +20,7 @@ public interface WalletService {
 	
 	public List<Customer> getList();
 	
-	public Customer UpdateAmount(Customer customer);
+	public Customer updateAcount(Customer customer);
 	
 	public Customer addMoney(Wallet wallet, Double amount);
 	
