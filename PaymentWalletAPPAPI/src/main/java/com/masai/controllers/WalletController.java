@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.masai.exception.BeneficiaryDetailException;
 import com.masai.exception.CustomerNotException;
 import com.masai.model.BeneficiaryDetail;
 import com.masai.model.CurrentSessionUser;
@@ -45,38 +44,64 @@ public class WalletController {
 	@Autowired
 	private CurrentUserSessionServiceImpl currentuserSesionServiceImpl;
 	
-
+	//=============================
+	
+	
+//		/public Customer createAccount(String name,String moblieNo,BigDecimal amount);
+	
+	
+	
+//	public  Double showBalance(String mobileNo) throws CustomerNotException;
 	@GetMapping("/balance/{mobileNo}")
 	public Double showBalanceHandler(@PathVariable("mobileNo") String mobileNo) throws CustomerNotException {
 		Double balance = walletServiceImpl.showBalance(mobileNo);
+		
 		return balance;
 	}
+	
+	
 	
 //	public Transaction fundTransfer(String sourceMoblieNo,String targetMobileNo,BigDecimal amout);
 	@PutMapping("/fundtran/{sourceMobileNo}/{tragetMobileNo}/{amount}")
 	public Transaction FundTransactionHandler(@PathVariable("sourceMobileNo") String sourceMobileNo,@PathVariable("tragetMobileNo") String tragerMobileNo,@PathVariable("amount") Double amount) throws CustomerNotException {
+		
 		return walletServiceImpl.fundTransfer(sourceMobileNo, tragerMobileNo, amount);
 		
 	}
 	
+	
 //	public Customer depositeAmount(String mmobileNo,BigDecimal amount);
 	@PutMapping("/deposite/{mobileNo}/{amount}")
 	public Transaction depositeAmountFromWalletToBankHandler(@PathVariable("moblieNo") String mobileNo,@PathVariable("amount") Double amount) throws CustomerNotException {
-		System.out.println(mobileNo + " " + amount);
-		return walletServiceImpl.depositeAmount("9998373476", 45.50);
+		
+		
+		return walletServiceImpl.depositeAmount(mobileNo, amount);
 	}
+	
+	
+	
 	
 //	public List<Customer> getList();
 	@GetMapping("/getbenList/{mobileNo}")
-	public List<BeneficiaryDetail> getAllCoustomerFromWallet(@PathVariable("mobileNo") String mobileNo) throws CustomerNotException, BeneficiaryDetailException{
+	public List<BeneficiaryDetail> getAllCoustomerFromWallet(@PathVariable("mobileNo") String mobileNo) throws CustomerNotException{
 		return walletServiceImpl.getList(mobileNo);
 	}
 	
+	
+	
+	
+	
+	
+	
 //	public Customer addMoney(Wallet wallet, Double amount);
 	@PostMapping("/addMoney/{mobileNo}/{amount}")
-	public Customer addMoneyHandler(String mobileNo,Double amount) throws Exception {  
+	public Customer addMoneyHandler(String mobileNo,Double amount) throws Exception {
+	    
 	    return walletServiceImpl.addMoney(mobileNo, amount);
 	}
 	
 	
+	
+	
+
 }

@@ -16,13 +16,11 @@ public class BillPayment {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer billId;
 	
-	private BillType billtype;
-	
-	private TransactionType transactiontype;
+	private String billtype;
 	
 	private Double amount;
 	
-	private LocalDateTime time;
+	private String time;
 	
 	private Integer walletId;
 
@@ -50,31 +48,21 @@ public class BillPayment {
 		this.walletId = walletId;
 	}
 
-	public BillType getBilltype() {
+	public String getBilltype() {
 		return billtype;
 	}
 
-	public void setBilltype(BillType billtype) {
+	public void setBilltype(String billtype) {
 		this.billtype = billtype;
 	}
 
-	public LocalDateTime getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(LocalDateTime time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
-
-	public TransactionType getTransactiontype() {
-		return transactiontype;
-	}
-
-	public void setTransactiontype(TransactionType transactiontype) {
-		this.transactiontype = transactiontype;
-	}
-
-	
 
 	
 	

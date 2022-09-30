@@ -1,6 +1,7 @@
 package com.masai.model;
 
 public enum BillType {
+
 	MOBILE_RECHARGE,
 	FAST_TAG,
 	CABLE_TV,
@@ -8,4 +9,5 @@ public enum BillType {
 	INTERNET_BILL,
 	SETUPBOX_RECHARGE,
 	WATER_BILL;
+
 }

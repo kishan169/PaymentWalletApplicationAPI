@@ -1,6 +1,7 @@
 package com.masai.model;
 
 public enum TransactionType {
+
 	WALLET_TO_WALLET,
 	WALLET_TO_BANK,
 	BANK_TO_WALLET,
@@ -10,4 +11,5 @@ public enum TransactionType {
 	INTERNET_BANKING,
 	PAY_ON_RENT,
 	AUTO_PAY;
+
 }
