@@ -33,13 +33,17 @@ public class Wallet {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Customer customer;
 	
+	@OneToOne
+	@JsonIgnore
+	private BankAccount bankaccount;
+	
 	@OneToMany
 	@JsonIgnore
 	private List<Transaction> transaction;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	private BankAccount bankAccount;
-	
+	@OneToMany
+	@JsonIgnore
+	private List<BillPayment> billpayments;
 	
 	@OneToMany
 	@JsonIgnore
@@ -78,16 +82,7 @@ public class Wallet {
 		this.transaction = transaction;
 	}
 
-	public BankAccount getBankAccount() {
-		return bankAccount;
-	}
-
-	public void setBankAccount(BankAccount bankAccount) {
-		this.bankAccount = bankAccount;
-	}
-
 	
-
 	public List<BeneficiaryDetail> getBeneficiaryDetails() {
 		return beneficiaryDetails;
 	}
@@ -99,6 +94,22 @@ public class Wallet {
 	public Wallet() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public BankAccount getBankaccount() {
+		return bankaccount;
+	}
+
+	public void setBankaccount(BankAccount bankaccount) {
+		this.bankaccount = bankaccount;
+	}
+
+	public List<BillPayment> getBillpayments() {
+		return billpayments;
+	}
+
+	public void setBillpayments(List<BillPayment> billpayments) {
+		this.billpayments = billpayments;
 	}
 
 	

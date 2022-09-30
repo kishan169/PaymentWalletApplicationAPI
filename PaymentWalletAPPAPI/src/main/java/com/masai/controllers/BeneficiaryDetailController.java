@@ -15,6 +15,7 @@ import com.masai.exception.BeneficiaryDetailException;
 import com.masai.model.BeneficiaryDetail;
 import com.masai.model.Customer;
 import com.masai.service.BeneficiaryDetailServices;
+import com.masai.service.LoginServiceImpl;
 
 @RestController
 public class BeneficiaryDetailController {
@@ -23,6 +24,7 @@ public class BeneficiaryDetailController {
 	
 	@PostMapping("ben")
 	public ResponseEntity<BeneficiaryDetail>addBeneficiaryDetail(@RequestBody BeneficiaryDetail bd) throws BeneficiaryDetailException{
+		
 		BeneficiaryDetail saved = bSer.addBeneficiary(bd);
 		return new ResponseEntity<BeneficiaryDetail>(saved,HttpStatus.CREATED);
 	}

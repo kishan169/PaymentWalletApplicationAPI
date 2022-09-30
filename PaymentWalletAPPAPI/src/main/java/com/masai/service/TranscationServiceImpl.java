@@ -18,7 +18,7 @@ public class TranscationServiceImpl implements TransactionService{
 
 	@Override
 	public Transaction addTranscation(Transaction tran) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
