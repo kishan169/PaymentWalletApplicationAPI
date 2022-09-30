@@ -23,18 +23,20 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer transactionId;
     
-    private String transactionType;
+    private TransactionType transactionType;
+    
+    private BillType billType;
     
     @CreatedDate
     @CreationTimestamp
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate transactionDate;
+    private LocalDateTime transactionDate;
     private double amount;
     private String description;
     
-    @ManyToOne
+    
     @JsonIgnore
-    private Wallet wallet;
+    private Integer walletId;
 
     public Integer getTransactionId() {
         return transactionId;
@@ -44,23 +46,24 @@ public class Transaction {
         this.transactionId = transactionId;
     }
 
-    public String getTransactionType() {
-        return transactionType;
-    }
 
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
-    }
+    public TransactionType getTransactionType() {
+		return transactionType;
+	}
 
-    public LocalDate getTransactionDate() {
-        return transactionDate;
-    }
+	public void setTransactionType(TransactionType transactionType) {
+		this.transactionType = transactionType;
+	}
 
-    public void setTransactionDate(LocalDate transactionDate) {
-        this.transactionDate = transactionDate;
-    }
+	public LocalDateTime getTransactionDate() {
+		return transactionDate;
+	}
 
-    public double getAmount() {
+	public void setTransactionDate(LocalDateTime transactionDate) {
+		this.transactionDate = transactionDate;
+	}
+
+	public double getAmount() {
         return amount;
     }
 
@@ -76,13 +79,26 @@ public class Transaction {
         this.description = description;
     }
 
-    public Wallet getWallet() {
-        return wallet;
-    }
+	public BillType getBillType() {
+		return billType;
+	}
 
-    public void setWallet(Wallet wallet) {
-        this.wallet = wallet;
-    }
+	public void setBillType(BillType billType) {
+		this.billType = billType;
+	}
+
+	public Integer getWalletId() {
+		return walletId;
+	}
+
+	public void setWalletId(Integer walletId) {
+		this.walletId = walletId;
+	}
+
+	public Transaction() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
     
 	
 }

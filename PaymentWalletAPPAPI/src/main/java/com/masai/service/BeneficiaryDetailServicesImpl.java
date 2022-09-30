@@ -38,7 +38,7 @@ public class BeneficiaryDetailServicesImpl implements BeneficiaryDetailServices{
 		if(customer.isPresent()) {
 		Wallet wallet = customer.get().getWallet();
 		System.out.println(wallet.getWalletId());
-		BeneficiaryDetail saved =bDao.save(bd);
+
 		beneficiaryDetail.setWalletId(wallet.getWalletId());
 		List<BeneficiaryDetail> list = wallet.getBeneficiaryDetails();
 		list.add(beneficiaryDetail);
@@ -84,6 +84,7 @@ public class BeneficiaryDetailServicesImpl implements BeneficiaryDetailServices{
 			throw new BeneficiaryDetailException("No Customer found with the mobile no "+customerMobile);
 		}
 		
+		
 	}
 
 	@Override
@@ -112,6 +113,8 @@ public class BeneficiaryDetailServicesImpl implements BeneficiaryDetailServices{
 			throw new BeneficiaryDetailException("No customer found");	
 		}
 	}
+
+	
 
 
 

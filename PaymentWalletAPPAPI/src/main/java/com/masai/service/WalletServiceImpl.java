@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import com.masai.exception.BeneficiaryDetailException;
 import com.masai.exception.CustomerNotException;
 import com.masai.exception.LoginException;
 import com.masai.model.BankAccount;
@@ -62,47 +63,31 @@ public class WalletServiceImpl implements WalletService {
 		
 		Optional<CurrentSessionUser> currentSessionOptional = currentSessionDAO.findByMobileNo(mobileNo);
 		
-		
 		if(!currentSessionOptional.isPresent()) {
 			throw new CustomerNotException("You have to login First");
 		}
-
 		Optional<Customer> customer =  customerDAO.findByMobileNo(mobileNo);
-		
-//		to find the customer System.out.println(currentSessionOptional.get().getUserId());
-		
 		Wallet wallet =  customer.get().getWallet();
-		
 		Double balance = wallet.getBalance();
 		
 		return balance;
 	}
 
-
-
-
 	@Override
 	public Transaction fundTransfer(String sourceMoblieNo, String targetMobileNo, Double amout) throws CustomerNotException {
-		
-		
 		Optional<CurrentSessionUser> currentUser = currentSessionDAO.findByMobileNo(sourceMoblieNo);
-		
 		if(!currentUser.isPresent()) {
 			throw new CustomerNotException("Customer not login");
 		}
-		
 		Optional<Customer> customerUser = customerDAO.findByMobileNo(sourceMoblieNo);
-		
 		Customer customer = customerUser.get();
-		
 		Wallet wallet = customer.getWallet();
-		
-		
-		Boolean f=true;
+
+		Boolean flag=true;
 		List<BeneficiaryDetail> beneficiarydetails = wallet.getBeneficiaryDetails();
 		for(BeneficiaryDetail bd:beneficiarydetails) {
 			if (bd.getBeneficiaryMobileNo().equals(targetMobileNo)) {
-				f = false;
+				flag = false;
 				break;
 			}
 		}
@@ -111,7 +96,7 @@ public class WalletServiceImpl implements WalletService {
 		
 		Customer tragetCustomer = tragetopt.get();
 		
-		if(f) {
+		if(flag) {
 			throw new CustomerNotException("beneficiary is not add to wallet list");
 		}
 		
@@ -146,8 +131,8 @@ public class WalletServiceImpl implements WalletService {
 
 	@Override
 	public Transaction depositeAmount(String mobileNo, Double amount) throws CustomerNotException {
-//		dposite to bank
-		//find the customer by the mobileNo;
+		// deposite to bank
+		// find the customer by the mobileNo;
 		
 		Optional<CurrentSessionUser> currentUser = currentSessionDAO.findByMobileNo(mobileNo);
 		
@@ -165,9 +150,7 @@ public class WalletServiceImpl implements WalletService {
 //		got the bankac
 		BankAccount bankacc = bankaccountdao.findByWalletId(wallet.getWalletId()); 
 		
-		
 
-		
 		if(bankacc==null) {
 			throw new CustomerNotException("Bank not add to the wallet yet");
 		}
@@ -204,7 +187,7 @@ public class WalletServiceImpl implements WalletService {
 	}
 
 	@Override
-	public List<BeneficiaryDetail> getList(String mobileNo) throws CustomerNotException {
+	public List<BeneficiaryDetail> getList(String mobileNo) throws CustomerNotException, BeneficiaryDetailException {
 		
 			Optional<CurrentSessionUser> currentuser = currentSessionDAO.findByMobileNo(mobileNo);
 			
@@ -215,8 +198,8 @@ public class WalletServiceImpl implements WalletService {
 			Optional<Customer> custOptional = customerDAO.findByMobileNo(mobileNo);
 			Customer curruser = custOptional.get();
 			Wallet wallet = curruser.getWallet();
-		
-			return wallet.getBeneficiaryDetails();
+		 	List<BeneficiaryDetail> beneficiaries = beneficiaryDetailDao.findByWalletId(wallet.getWalletId());
+			return beneficiaries;
 		
 		
 		
@@ -231,7 +214,7 @@ public class WalletServiceImpl implements WalletService {
 	@Override
 	@PutMapping("/addMoney")
 	public Customer addMoney(String mobileNo, Double amount) throws Exception {
-//	    add 
+		//add 
 		// TODO Auto-generated method stub
 		
 		Optional<CurrentSessionUser> currOptional = currentSessionDAO.findByMobileNo(mobileNo);
