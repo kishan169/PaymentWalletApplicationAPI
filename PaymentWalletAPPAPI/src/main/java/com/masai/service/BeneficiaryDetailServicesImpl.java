@@ -8,14 +8,28 @@ import org.springframework.stereotype.Service;
 
 import com.masai.exception.BeneficiaryDetailException;
 import com.masai.model.BeneficiaryDetail;
+import com.masai.model.CurrentSessionUser;
 import com.masai.model.Customer;
+import com.masai.model.Wallet;
 import com.masai.repository.BeneficiaryDetailDao;
+import com.masai.repository.CustomerDAO;
 @Service
 public class BeneficiaryDetailServicesImpl implements BeneficiaryDetailServices{
 	@Autowired
 	private BeneficiaryDetailDao bDao;
+	
+	@Autowired
+	private CustomerDAO customerDao;
+	
 	@Override
 	public BeneficiaryDetail addBeneficiary(BeneficiaryDetail bd) throws BeneficiaryDetailException {
+		CurrentSessionUser user =  LoginServiceImpl.getCurrentUser();
+		
+		Optional<Customer> customer = customerDao.findById(user.getUserId());
+		
+		Wallet wallet = customer.get().getWallet();
+		System.out.println(wallet.getWalletId());
+		bd.setWalletId(wallet.getWalletId());
 		BeneficiaryDetail saved =bDao.save(bd);
 		return saved;
 	}

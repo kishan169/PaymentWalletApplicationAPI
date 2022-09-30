@@ -21,7 +21,7 @@ public class BeneficiaryDetailController {
 	@Autowired
 	private BeneficiaryDetailServices bSer;
 	
-	@PostMapping("ben/add")
+	@PostMapping("ben")
 	public ResponseEntity<BeneficiaryDetail>addBeneficiaryDetail(@RequestBody BeneficiaryDetail bd) throws BeneficiaryDetailException{
 		BeneficiaryDetail saved = bSer.addBeneficiary(bd);
 		return new ResponseEntity<BeneficiaryDetail>(saved,HttpStatus.CREATED);
