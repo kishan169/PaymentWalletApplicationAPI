@@ -1,6 +1,10 @@
 package com.masai.model;
 
+import javax.persistence.Column;
+import javax.annotation.Generated;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -8,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class BankAccount {
 	
-	@Id
+  @Id
 	private Integer accountNumber;
 
 	private String mobileNumber;
@@ -18,8 +22,12 @@ public class BankAccount {
 	private String bankName;
 	
 	private double bankBalance;
-	
+
 	private Integer walletId;
+	
+	
+
+	
 
 	public Integer getAccountNumber() {
 		return accountNumber;
@@ -68,6 +76,25 @@ public class BankAccount {
 	public void setWalletId(Integer walletId) {
 		this.walletId = walletId;
 	}
+
+	public BankAccount(Integer accountNumber, String mobileNumber, String ifscCode, String bankName, double bankBalance,
+			Integer walletId) {
+		super();
+		this.accountNumber = accountNumber;
+		this.mobileNumber = mobileNumber;
+		this.ifscCode = ifscCode;
+		this.bankName = bankName;
+		this.bankBalance = bankBalance;
+		this.walletId = walletId;
+	}
+
+	public BankAccount() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+
 	
 	
 }

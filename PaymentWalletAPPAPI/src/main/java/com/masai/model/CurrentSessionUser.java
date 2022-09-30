@@ -26,7 +26,15 @@ public class CurrentSessionUser {
 	
 	private String uuid;
 	
-	@NotNull
+	
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
 	private String mobileNo;
 	
 	private LocalDateTime localDateTime;
@@ -34,7 +42,7 @@ public class CurrentSessionUser {
 
 	
 
-	public CurrentSessionUser(Integer userId, String uuid, @NotNull String mobileNo, LocalDateTime localDateTime) {
+	public CurrentSessionUser(Integer userId, String uuid, String mobileNo, LocalDateTime localDateTime) {
 		super();
 		this.userId = userId;
 		this.uuid = uuid;

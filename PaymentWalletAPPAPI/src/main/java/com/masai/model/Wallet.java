@@ -23,11 +23,6 @@ import lombok.ToString;
 @Entity
 public class Wallet {
 	
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer walletId;
-	
 	private Double balance;
 	
 	@OneToOne(cascade = CascadeType.ALL)
@@ -37,9 +32,9 @@ public class Wallet {
 	@JsonIgnore
 	private List<Transaction> transaction;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	private BankAccount bankAccount;
-	
+	@OneToMany
+	@JsonIgnore
+	private List<BillPayment> billpayments;
 	
 	@OneToMany
 	@JsonIgnore
@@ -78,16 +73,7 @@ public class Wallet {
 		this.transaction = transaction;
 	}
 
-	public BankAccount getBankAccount() {
-		return bankAccount;
-	}
-
-	public void setBankAccount(BankAccount bankAccount) {
-		this.bankAccount = bankAccount;
-	}
-
 	
-
 	public List<BeneficiaryDetail> getBeneficiaryDetails() {
 		return beneficiaryDetails;
 	}
@@ -100,6 +86,23 @@ public class Wallet {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	public BankAccount getBankaccount() {
+		return bankaccount;
+	}
+
+	public void setBankaccount(BankAccount bankaccount) {
+		this.bankaccount = bankaccount;
+	}
+
+	public List<BillPayment> getBillpayments() {
+		return billpayments;
+	}
+
+	public void setBillpayments(List<BillPayment> billpayments) {
+		this.billpayments = billpayments;
+	}
+
 
 	
 }
