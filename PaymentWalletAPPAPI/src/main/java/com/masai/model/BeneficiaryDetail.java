@@ -9,17 +9,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class BeneficiaryDetail {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer beneficiaryId;
+	private Integer ben_id;
 	
-	private String beneficiaryName;
 	
-	private String beneficiaryMobileNo;
-	
-	@ManyToOne
-	private Customer customer;
-	
-	@ManyToOne
-	private Wallet wallet;
 }

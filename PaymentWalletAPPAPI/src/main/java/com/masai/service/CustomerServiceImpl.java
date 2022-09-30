@@ -32,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService{
 		}
 		
 		Wallet wallet = new Wallet();
-		wallet.setBalance(0.0);
+		((Object) wallet).setBalance(0.0);
 		wallet.setCustomer(newSignUp);
 		walletDao.save(wallet);
 		newSignUp.setWallet(wallet);
