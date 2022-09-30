@@ -48,13 +48,7 @@ public class WalletController {
 	
 	
 //		/public Customer createAccount(String name,String moblieNo,BigDecimal amount);
-	@PostMapping()
-	public ResponseEntity<Customer> createAccountHandler(String name,String moblieNo, BigDecimal amount){
-		
-		Customer customer = walletServiceImpl.createAccount(name, moblieNo, amount);
-		
-		return new ResponseEntity<Customer>(customer,HttpStatus.OK);
-	}
+	
 	
 	
 //	public  Double showBalance(String mobileNo) throws CustomerNotException;
@@ -77,7 +71,7 @@ public class WalletController {
 	
 	
 //	public Customer depositeAmount(String mmobileNo,BigDecimal amount);
-	
+	@PutMapping("/deposite/{mobileNo}/{amount}")
 	public Transaction depositeAmountFromWalletToBankHandler(@PathVariable("moblieNo") String mobileNo,@PathVariable("amount") Double amount) throws CustomerNotException {
 		
 		
@@ -95,17 +89,16 @@ public class WalletController {
 	
 	
 	
-//	public Customer updateAcount(Customer customer);
-	@PatchMapping("/update")
-	public Customer updateAccountHandeler(@RequestBody Customer coustomer) throws CustomerNotException {
-		
-		return walletServiceImpl.UpdateAmount(coustomer);
-	}
 	
 	
 	
 	
 //	public Customer addMoney(Wallet wallet, Double amount);
+	@PostMapping("/addMoney/{mobileNo}/{amount}")
+	public Customer addMoneyHandler(String mobileNo,Double amount) throws Exception {
+	    
+	    return walletServiceImpl.addMoney(mobileNo, amount);
+	}
 	
 	
 	

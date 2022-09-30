@@ -20,53 +20,32 @@ public class BeneficiaryDetail {
 	private String beneficiaryMobileNo;
 	
 	private Integer walletId;
+
+    public Integer getGetBeneficiaryId() {
+        return getBeneficiaryId;
+    }
+
+    public void setGetBeneficiaryId(Integer getBeneficiaryId) {
+        this.getBeneficiaryId = getBeneficiaryId;
+    }
+
+    public String getBeneficiaryMobileNo() {
+        return beneficiaryMobileNo;
+    }
+
+    public void setBeneficiaryMobileNo(String beneficiaryMobileNo) {
+        this.beneficiaryMobileNo = beneficiaryMobileNo;
+    }
+
+    public Integer getWalletId() {
+        return walletId;
+    }
+
+    public void setWalletId(Integer walletId) {
+        this.walletId = walletId;
+    }
 	
 	
-	public Integer getBeneficiaryId() {
-		return beneficiaryId;
-	}
-
-	public void setBeneficiaryId(Integer beneficiaryId) {
-		this.beneficiaryId = beneficiaryId;
-	}
-
-	public String getBeneficiaryName() {
-		return beneficiaryName;
-	}
-
-	public void setBeneficiaryName(String beneficiaryName) {
-		this.beneficiaryName = beneficiaryName;
-	}
-
-	public String getBeneficiaryMobileNo() {
-		return beneficiaryMobileNo;
-	}
-
-	public void setBeneficiaryMobileNo(String beneficiaryMobileNo) {
-		this.beneficiaryMobileNo = beneficiaryMobileNo;
-	}
-
-	public Integer getWalletId() {
-		return walletId;
-	}
-
-	public void setWalletId(Integer walletId) {
-		this.walletId = walletId;
-	}
-
-
-	public BeneficiaryDetail(Integer beneficiaryId, String beneficiaryName, String beneficiaryMobileNo,
-			Integer walletId) {
-		super();
-		this.beneficiaryId = beneficiaryId;
-		this.beneficiaryName = beneficiaryName;
-		this.beneficiaryMobileNo = beneficiaryMobileNo;
-		this.walletId = walletId;
-	}
-
-	public BeneficiaryDetail() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
 	
 }

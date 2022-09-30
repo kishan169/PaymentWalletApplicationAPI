@@ -2,12 +2,14 @@ package com.masai.service;
 
 import java.lang.StackWalker.Option;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.masai.exception.CustomerNotException;
 import com.masai.exception.LoginException;
@@ -17,6 +19,8 @@ import com.masai.model.CurrentSessionUser;
 import com.masai.model.Customer;
 import com.masai.model.Transaction;
 import com.masai.model.Wallet;
+import com.masai.repository.BankAccountDao;
+import com.masai.repository.BeneficiaryDetailDao;
 import com.masai.repository.CustomerDAO;
 import com.masai.repository.LogInDAO;
 import com.masai.repository.SessionDAO;
@@ -32,6 +36,12 @@ public class WalletServiceImpl implements WalletService {
 	@Autowired
 	private TranscationServiceImpl transactionserviceImpl;
 	
+	@Autowired
+	private BankAccountDao bankaccountdao;
+	
+	@Autowired
+	private BeneficiaryDetailDao beneficiaryDetailDao;
+	
 	
 	@Autowired
 	private WalletDao walletDao;
@@ -45,11 +55,7 @@ public class WalletServiceImpl implements WalletService {
 	@Autowired
 	private LogInDAO logindao;
 	
-	@Override
-	public Customer createAccount(String name, String moblieNo, BigDecimal amount) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 	@Override
 	public Double showBalance(String mobileNo) throws CustomerNotException {
@@ -124,17 +130,23 @@ public class WalletServiceImpl implements WalletService {
 		
 		//add to transaction
 		
-		Transaction tr = new Transaction();
-//		tr.setTransactionId(Math.abs(Random.nextInt()));
+		Transaction transaction = new Transaction();
+        transaction.setTransactionType("WalletToWallet");
+        transaction.setTransactionDate(LocalDate.now());
+        transaction.setAmount(amout);
+        transaction.setDescription("Fund Transfer from Wallet to Wallet");
+        
+        wallet.getTransaction().add(transaction);
+        
+        transactiodao.save(transaction);
 		
 		
-		
-		return null;
+		return transaction;
 	}
 
 	@Override
 	public Transaction depositeAmount(String mobileNo, Double amount) throws CustomerNotException {
-		
+//		dposite to bank
 		//find the customer by the mobileNo;
 		
 		Optional<CurrentSessionUser> currentUser = currentSessionDAO.findByMobileNo(mobileNo);
@@ -147,9 +159,13 @@ public class WalletServiceImpl implements WalletService {
 		
 		Customer customer = customerUser.get();
 		
-		Wallet wallet = customer.getWallet();
 		
-		BankAccount bankacc = wallet.getBankAccount();
+//		got the  wallet
+		Wallet wallet = customer.getWallet();
+//		got the bankac
+		BankAccount bankacc = bankaccountdao.findByWalletId(wallet.getWalletId()); 
+		
+		
 		
 		if(bankacc==null) {
 			throw new CustomerNotException("Bank not add to the wallet yet");
@@ -164,14 +180,26 @@ public class WalletServiceImpl implements WalletService {
 		
 		customer.getWallet().setBalance(wallet.getBalance()-amount);
 		
+		bankacc.setBankBalance(bankacc.getBankBalance()+amount);
 		
-		
+		bankaccountdao.save(bankacc);
+		walletDao.save(wallet);
 		
 		//if found add the amount to the account;
 		//else throw error;
 		
-		//add to transaction
-		return null;
+		Transaction transaction = new Transaction();
+        transaction.setTransactionType("WalletToWallet");
+        transaction.setTransactionDate(LocalDate.now());
+        transaction.setAmount(amount);
+        transaction.setDescription("Fund Transfer from Wallet to Wallet");
+        
+        wallet.getTransaction().add(transaction);
+        
+        transactiodao.save(transaction);
+        
+        
+        return transaction;
 	}
 
 	@Override
@@ -197,48 +225,60 @@ public class WalletServiceImpl implements WalletService {
 
 	
 
-	@Override
-	public Customer UpdateAmount(Customer customer) throws CustomerNotException {
-		
-		System.out.println("i am here");
-		Optional<CurrentSessionUser> currentOptional = currentSessionDAO.findByUserId(customer.getUserId());
-		
-		if(!currentOptional.isPresent()) {
-			throw new CustomerNotException("customer not exc");
-		}
-		
-		Integer userId =currentOptional.get().getUserId();
-		System.out.println("check it here");
-		Optional<Customer> customeruser = customerDAO.findById(userId);
-		Customer custome = customerDAO.save(customer);
-//		CurrentSessionUser usercurrent = currentSessionDAO.;
-		CurrentSessionUser newi = new CurrentSessionUser();
-		newi.setUserId(userId);
-		newi.setMobileNo(custome.getMobileNo());
-		
-		
-		
-		
-		return custome;
-	}
+	
 
 	@Override
-	public Customer addMoney(Wallet wallet, Double amount) {
+	@PutMapping("/addMoney")
+	public Customer addMoney(String mobileNo, Double amount) throws Exception {
+//	    add 
 		// TODO Auto-generated method stub
 		
+		Optional<CurrentSessionUser> currOptional = currentSessionDAO.findByMobileNo(mobileNo);
+		
+		if(!currOptional.isPresent()) {
+		    throw new CustomerNotException("not found");
+		}
+		
+		Optional<Customer> customer = customerDAO.findByMobileNo(mobileNo);
+		
+		Customer  currcustomer = customer.get();
+		
+		Wallet wallet = currcustomer.getWallet();
+		
+		BankAccount bankacc = bankaccountdao.findByWalletId(wallet.getWalletId());
+		
+		if(bankacc==null) {
+		    throw new CustomerNotException("bank not linked");
+		}
+		
+		if(bankacc.getBankBalance()==0 || bankacc.getBankBalance()<amount) {
+		    throw new CustomerNotException("insufficient balance in bank");
+		}
+		
+		bankacc.setBankBalance(bankacc.getBankBalance()-amount);
+		
+		wallet.setBalance(wallet.getBalance()+amount);
+		
+		bankaccountdao.save(bankacc);
+		walletDao.save(wallet);
+		customerDAO.save(currcustomer);
 		
 		
 		
 		
 		
-		
-		
-		//add to transaction
-		
-		
-		
-		
-		return null;
+		Transaction transaction = new Transaction();
+        transaction.setTransactionType("WalletToWallet");
+        transaction.setTransactionDate(LocalDate.now());
+        transaction.setAmount(amount);
+        transaction.setDescription("Fund Transfer from Wallet to Wallet");
+        
+        wallet.getTransaction().add(transaction);
+        
+        transactiodao.save(transaction);
+        
+        
+        return currcustomer;
 		
 		
 	}

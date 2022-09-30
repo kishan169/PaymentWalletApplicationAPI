@@ -22,6 +22,9 @@ import lombok.ToString;
 
 @Entity
 public class Wallet {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer walletId;
 	
 	private Double balance;
 	
@@ -39,6 +42,8 @@ public class Wallet {
 	@OneToMany
 	@JsonIgnore
 	private List<BeneficiaryDetail> beneficiaryDetails;
+	
+	
 
 	
 	public Integer getWalletId() {
@@ -87,13 +92,7 @@ public class Wallet {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BankAccount getBankaccount() {
-		return bankaccount;
-	}
-
-	public void setBankaccount(BankAccount bankaccount) {
-		this.bankaccount = bankaccount;
-	}
+	
 
 	public List<BillPayment> getBillpayments() {
 		return billpayments;

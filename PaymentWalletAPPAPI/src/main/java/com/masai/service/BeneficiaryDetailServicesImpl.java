@@ -42,7 +42,7 @@ public class BeneficiaryDetailServicesImpl implements BeneficiaryDetailServices{
 		
 		Wallet wallet = customer.get().getWallet();
 		System.out.println(wallet.getWalletId());
-		bd.setWalletId(wallet.getWalletId());
+		
 		BeneficiaryDetail saved =bDao.save(bd);
 		return saved;
 
