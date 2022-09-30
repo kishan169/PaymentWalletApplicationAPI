@@ -26,15 +26,15 @@ public class BeneficiaryDetailController {
 		BeneficiaryDetail saved = bSer.addBeneficiary(bd);
 		return new ResponseEntity<BeneficiaryDetail>(saved,HttpStatus.CREATED);
 	}
-	@PostMapping("ben/del")
-	public ResponseEntity<BeneficiaryDetail>deleteBeneficiaryDetail(@RequestBody BeneficiaryDetail bd) throws BeneficiaryDetailException{
-		BeneficiaryDetail deleted = bSer.deleteBeneficiary(bd);
+	@PostMapping("ben/del/{beneficiaryMobileNo}")
+	public ResponseEntity<BeneficiaryDetail>deleteBeneficiaryDetail(@RequestBody BeneficiaryDetail beneficiaryDetail,@PathVariable String mobile) throws BeneficiaryDetailException{
+		BeneficiaryDetail deleted = bSer.deleteBeneficiary(beneficiaryDetail,mobile);
 		return new ResponseEntity<BeneficiaryDetail>(deleted,HttpStatus.OK);
 	}
-	@GetMapping("ben/{}")
-	public ResponseEntity<BeneficiaryDetail>findBeneficiaryDetailByMobNo(@PathVariable String MobNo) throws BeneficiaryDetailException{
-		BeneficiaryDetail bd = bSer.viewBeneficiaryByMobileNo(MobNo);
-		return new ResponseEntity<BeneficiaryDetail>(bd,HttpStatus.OK);
+	@GetMapping("ben/{beneficiaryMobileNo}")
+	public ResponseEntity<BeneficiaryDetail>findBeneficiaryDetailByMobNo(@PathVariable("beneficiaryMobileNo") String MobNo) throws BeneficiaryDetailException{
+		BeneficiaryDetail beneficiaryDetail = bSer.viewBeneficiaryByMobileNo(MobNo);
+		return new ResponseEntity<BeneficiaryDetail>(beneficiaryDetail,HttpStatus.OK);
 	}
 	@PostMapping("ben/customer")
 	public ResponseEntity<List<BeneficiaryDetail>>findBeneficiaryDetailByCustomer(@RequestBody Customer customer) throws BeneficiaryDetailException{
