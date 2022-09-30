@@ -1,6 +1,7 @@
 package com.masai.model;
 
 import javax.persistence.Column;
+import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class BankAccount {
 	
-	@Id
+  @Id
 	private Integer accountNumber;
 
 	private String mobileNumber;
@@ -21,7 +22,7 @@ public class BankAccount {
 	private String bankName;
 	
 	private double bankBalance;
-	
+
 	private Integer walletId;
 	
 	

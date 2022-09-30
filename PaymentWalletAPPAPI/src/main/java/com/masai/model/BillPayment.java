@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class BillPayment {
 	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer billId;
@@ -62,6 +63,7 @@ public class BillPayment {
 	public void setTime(String time) {
 		this.time = time;
 	}
+
 	
 	
 	

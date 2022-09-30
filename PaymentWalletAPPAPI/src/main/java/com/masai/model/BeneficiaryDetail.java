@@ -14,12 +14,9 @@ import javax.validation.constraints.Size;
 @Entity
 public class BeneficiaryDetail {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer beneficiaryId;
-	
-	private String beneficiaryName;
-	
+  @Id
+	private Integer getBeneficiaryId;
+  
 	private String beneficiaryMobileNo;
 	
 	private Integer walletId;

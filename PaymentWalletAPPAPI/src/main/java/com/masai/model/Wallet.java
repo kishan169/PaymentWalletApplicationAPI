@@ -23,11 +23,6 @@ import lombok.ToString;
 @Entity
 public class Wallet {
 	
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer walletId;
-	
 	private Double balance;
 	
 	@OneToOne(cascade = CascadeType.ALL)
@@ -107,6 +102,7 @@ public class Wallet {
 	public void setBillpayments(List<BillPayment> billpayments) {
 		this.billpayments = billpayments;
 	}
+
 
 	
 }
