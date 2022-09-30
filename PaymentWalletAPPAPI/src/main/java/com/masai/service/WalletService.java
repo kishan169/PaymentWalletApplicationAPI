@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 
 import java.util.*;
 
-import org.springframework.aop.framework.adapter.ThrowsAdviceInterceptor;
-
 import com.masai.exception.BeneficiaryDetailException;
 import com.masai.exception.CustomerNotException;
 import com.masai.model.BeneficiaryDetail;
@@ -23,7 +21,9 @@ public interface WalletService {
 	
 	public Transaction depositeAmount(String mobileNo,Double amount) throws CustomerNotException;
 	
-	public List<BeneficiaryDetail> getList(String mobileNo) throws CustomerNotException,BeneficiaryDetailException;
+	public List<BeneficiaryDetail> getList(String mobileNo) throws CustomerNotException;
+	
+	
 	
 	public Customer addMoney(String mobileNo, Double amount) throws Exception;
 	

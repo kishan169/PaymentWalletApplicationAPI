@@ -24,25 +24,15 @@ public class BeneficiaryDetail {
 	
 	private Integer walletId;
 
-   
+//    public Integer getGetBeneficiaryId() {
+//        return getBeneficiaryId;
+//    }
+//
+//    public void setGetBeneficiaryId(Integer getBeneficiaryId) {
+//        this.getBeneficiaryId = getBeneficiaryId;
+//    }
 
-    public Integer getBeneficiaryId() {
-		return beneficiaryId;
-	}
-
-	public void setBeneficiaryId(Integer beneficiaryId) {
-		this.beneficiaryId = beneficiaryId;
-	}
-
-	public String getBeneficiaryName() {
-		return beneficiaryName;
-	}
-
-	public void setBeneficiaryName(String beneficiaryName) {
-		this.beneficiaryName = beneficiaryName;
-	}
-
-	public String getBeneficiaryMobileNo() {
+    public String getBeneficiaryMobileNo() {
         return beneficiaryMobileNo;
     }
 
