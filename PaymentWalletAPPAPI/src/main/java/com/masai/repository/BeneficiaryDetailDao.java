@@ -10,7 +10,6 @@ import com.masai.model.BeneficiaryDetail;
 public interface BeneficiaryDetailDao extends JpaRepository<BeneficiaryDetail, Integer>{
 
 	public BeneficiaryDetail findBybeneficiaryMobileNo(String beneficiaryMobileNo) throws BeneficiaryDetailException;
-	
 	public List<BeneficiaryDetail> findByWalletId(Integer walletId) throws BeneficiaryDetailException;
 
 }

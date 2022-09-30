@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class BankAccount {
 	
@@ -25,9 +27,12 @@ public class BankAccount {
 
 	private Integer walletId;
 	
+//	@JsonIgnore
+//    private Wallet wall;
 	
-
-	
+//	@JsonIgnore
+//	private Customer cost;
+//	
 
 	public Integer getAccountNumber() {
 		return accountNumber;

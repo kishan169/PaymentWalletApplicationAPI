@@ -1,6 +1,9 @@
 package com.masai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,10 +20,13 @@ public class BankAccountController {
 	private BankAccountService bankService;
 
 	
-	@PostMapping("/bank/add")
-	public BankAccount addBankAccountToWallet(@RequestBody BankAccount bankaccount) {
-		System.out.println(bankaccount.toString());
-		BankAccount bank =bankService.addBankDetail(bankaccount);
-		return bank;
+	@PostMapping("/bank/{id}")
+	public  ResponseEntity<BankAccount> addBankAccountToWallet(@RequestBody BankAccount bankaccount,@PathVariable("id") String uniqueId) {
+		//System.out.println(bankaccount.toString(),uniqueId);
+		//BankAccount bank =bankService.addBank(bankaccount,uniqueId);
+		//return bank;
+		BankAccount aaccountAdded = bankService.addBank(bankaccount,"-1608047387");
+		return new ResponseEntity<>(bankaccount,HttpStatus.ACCEPTED);
 	}
+	
 }
