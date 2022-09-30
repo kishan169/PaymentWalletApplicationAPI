@@ -38,10 +38,12 @@ public class BeneficiaryDetailServicesImpl implements BeneficiaryDetailServices{
 		if(customer.isPresent()) {
 		Wallet wallet = customer.get().getWallet();
 		System.out.println(wallet.getWalletId());
+		BeneficiaryDetail saved =bDao.save(bd);
 		beneficiaryDetail.setWalletId(wallet.getWalletId());
 		List<BeneficiaryDetail> list = wallet.getBeneficiaryDetails();
 		list.add(beneficiaryDetail);
 		BeneficiaryDetail saved =bDao.save(beneficiaryDetail);
+
 		return saved;
 		}else {
 			throw new BeneficiaryDetailException("You need to login first!");
