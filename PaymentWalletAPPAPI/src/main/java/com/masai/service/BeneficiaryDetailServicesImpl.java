@@ -13,15 +13,28 @@ import com.masai.model.Customer;
 import com.masai.model.Wallet;
 import com.masai.repository.BeneficiaryDetailDao;
 import com.masai.repository.CustomerDAO;
+
+
+import com.masai.repository.SessionDAO;
+import com.masai.repository.WalletDao;
+
 @Service
 public class BeneficiaryDetailServicesImpl implements BeneficiaryDetailServices{
 	@Autowired
 	private BeneficiaryDetailDao bDao;
+
 	
+
+	@Autowired
+	private SessionDAO sDao;
+	@Autowired
+	private WalletDao wDao;
+
 	@Autowired
 	private CustomerDAO customerDao;
 	
 	@Override
+
 	public BeneficiaryDetail addBeneficiary(BeneficiaryDetail bd) throws BeneficiaryDetailException {
 		CurrentSessionUser user =  LoginServiceImpl.getCurrentUser();
 		
@@ -32,28 +45,40 @@ public class BeneficiaryDetailServicesImpl implements BeneficiaryDetailServices{
 		bd.setWalletId(wallet.getWalletId());
 		BeneficiaryDetail saved =bDao.save(bd);
 		return saved;
+
 	}
 
 	@Override
-	public BeneficiaryDetail deleteBeneficiary(BeneficiaryDetail bd) throws BeneficiaryDetailException {
-		Optional<BeneficiaryDetail> opt =bDao.findById(bd.getBeneficiaryId());
-		if(opt.isPresent()) {
-			BeneficiaryDetail detail=opt.get();
-			bDao.delete(detail);
-			return detail;
+	public BeneficiaryDetail deleteBeneficiary(BeneficiaryDetail beneficiaryDetail,String mobile) throws BeneficiaryDetailException {
+		Optional<CurrentSessionUser> curentSessionOpt= sDao.findByMobileNo(mobile);
+		if(curentSessionOpt.isPresent()){
+			CurrentSessionUser user=curentSessionOpt.get();
+			int userId=user.getUserId();
+			
+			Optional<Customer> customerOpt= customerDao.findById(userId);
+			Wallet wallet = customerOpt.get().getWallet();
+			
+			List<BeneficiaryDetail> list=wallet.getBeneficiaryDetails();
+			if(list.remove(beneficiaryDetail)) {
+					wDao.save(wallet);
+					bDao.delete(beneficiaryDetail);
+					return beneficiaryDetail;
+			}else {
+				throw new BeneficiaryDetailException("Some technical glitch");
+			}
+			
 		}else {
-			throw new BeneficiaryDetailException("No Beneficiary found with id : "+bd.getBeneficiaryId());
+			throw new BeneficiaryDetailException("You have to login first");
 		}
-		
 	}
 
 	@Override
 	public BeneficiaryDetail viewBeneficiaryByMobileNo(String beneficiaryMobileNo) throws BeneficiaryDetailException {
-		BeneficiaryDetail bd=bDao.findBybeneficiaryMobileNo(beneficiaryMobileNo);
-		if(bd == null) {
+		BeneficiaryDetail beneficiaryDetail=bDao.findBybeneficiaryMobileNo(beneficiaryMobileNo);
+		if(beneficiaryDetail == null) {
 			throw new BeneficiaryDetailException("No Beneficiary found with Mobile No : "+beneficiaryMobileNo);
 		}else {
-			return bd;
+			return beneficiaryDetail;
 		}
 	}
 
