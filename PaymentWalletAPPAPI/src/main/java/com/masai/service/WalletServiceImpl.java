@@ -3,6 +3,7 @@ package com.masai.service;
 import java.lang.StackWalker.Option;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -19,6 +20,7 @@ import com.masai.model.BeneficiaryDetail;
 import com.masai.model.CurrentSessionUser;
 import com.masai.model.Customer;
 import com.masai.model.Transaction;
+import com.masai.model.TransactionType;
 import com.masai.model.Wallet;
 import com.masai.repository.BankAccountDao;
 import com.masai.repository.BeneficiaryDetailDao;
@@ -116,8 +118,8 @@ public class WalletServiceImpl implements WalletService {
 		//add to transaction
 		
 		Transaction transaction = new Transaction();
-        transaction.setTransactionType("WalletToWallet");
-        transaction.setTransactionDate(LocalDate.now());
+        transaction.setTransactionType(TransactionType.WALLET_TO_WALLET);
+        transaction.setTransactionDate(LocalDateTime.now());;
         transaction.setAmount(amout);
         transaction.setDescription("Fund Transfer from Wallet to Wallet");
         
@@ -173,8 +175,8 @@ public class WalletServiceImpl implements WalletService {
 		//else throw error;
 		
 		Transaction transaction = new Transaction();
-        transaction.setTransactionType("WalletToWallet");
-        transaction.setTransactionDate(LocalDate.now());
+        transaction.setTransactionType(TransactionType.WALLET_TO_BANK);
+        transaction.setTransactionDate(LocalDateTime.now());
         transaction.setAmount(amount);
         transaction.setDescription("Fund Transfer from Wallet to Wallet");
         
@@ -252,8 +254,8 @@ public class WalletServiceImpl implements WalletService {
 		
 		
 		Transaction transaction = new Transaction();
-        transaction.setTransactionType("WalletToWallet");
-        transaction.setTransactionDate(LocalDate.now());
+        transaction.setTransactionType(TransactionType.);
+        transaction.setTransactionDate(LocalDateTime.now());
         transaction.setAmount(amount);
         transaction.setDescription("Fund Transfer from Wallet to Wallet");
         
