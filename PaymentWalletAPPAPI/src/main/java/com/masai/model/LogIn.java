@@ -19,10 +19,6 @@ public class LogIn {
 	
 	private String password;
 
-	
-
-	
-
 	public LogIn(Integer userId, String mobileNo, String password) {
 		super();
 		this.userId = userId;

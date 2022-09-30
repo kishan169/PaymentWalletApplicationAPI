@@ -36,13 +36,14 @@ public class TranscationServiceImpl implements TransactionService{
 	@Override
 	public Transaction addTranscation(Transaction tran) {
 		
+
+
 		Optional<Wallet> walletOptional = walletdao.findByWalletId(tran.getWalletId());
 		
 		Wallet userwallet = walletOptional.get();
 		
 //		Optional<CurrentSessionUser> currentsUser = sessionDao.findByMobileNo(userwallet.getCustomer());
-		
-		
+
 		return null;
 	}
 
