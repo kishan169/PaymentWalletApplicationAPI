@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CustomerDTO {
 	
+	private String UserName;
 	private String moblidNo;
-	private Integer amount;
+	private Double balance;
 
 }

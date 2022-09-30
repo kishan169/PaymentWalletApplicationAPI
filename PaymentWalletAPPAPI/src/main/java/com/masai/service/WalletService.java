@@ -5,22 +5,24 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import com.masai.exception.CustomerNotException;
+import com.masai.model.BeneficiaryDetail;
 import com.masai.model.Customer;
+import com.masai.model.Transaction;
 import com.masai.model.Wallet;
 
 public interface WalletService {
 
 	public Customer createAccount(String name,String moblieNo,BigDecimal amount);
 	
-	public  Customer showBalance(String mobileNo) throws CustomerNotException;
+	public  Double showBalance(String mobileNo) throws CustomerNotException;
 	
-	public Customer fundTransfer(String sourceMoblieNo,String targetMobileNo,BigDecimal amout);
+	public Transaction fundTransfer(String sourceMoblieNo,String targetMobileNo,Double amout) throws CustomerNotException;
 	
-	public Customer depositeAmount(String mmobileNo,BigDecimal amount);
+	public Transaction depositeAmount(String mobileNo,Double amount) throws CustomerNotException;
 	
-	public List<Customer> getList();
+	public List<BeneficiaryDetail> getList(String mobileNo) throws CustomerNotException;
 	
-	public Customer UpdateAmount(Customer customer);
+	public Customer UpdateAmount(Customer customer) throws CustomerNotException;
 	
 	public Customer addMoney(Wallet wallet, Double amount);
 	
