@@ -13,40 +13,39 @@ import com.masai.model.Customer;
 import com.masai.model.Wallet;
 import com.masai.repository.BeneficiaryDetailDao;
 import com.masai.repository.CustomerDAO;
+
+
 import com.masai.repository.SessionDAO;
 import com.masai.repository.WalletDao;
+
 @Service
 public class BeneficiaryDetailServicesImpl implements BeneficiaryDetailServices{
 	@Autowired
 	private BeneficiaryDetailDao bDao;
+
+	
+
 	@Autowired
 	private SessionDAO sDao;
 	@Autowired
 	private WalletDao wDao;
+
 	@Autowired
 	private CustomerDAO customerDao;
 	
 	@Override
-	public BeneficiaryDetail addBeneficiary(BeneficiaryDetail beneficiaryDetail,String mobile) throws BeneficiaryDetailException {
-		Optional<CurrentSessionUser> curentSessionOpt= sDao.findByMobileNo(mobile);
-		if(curentSessionOpt.isPresent()){
-			CurrentSessionUser user=curentSessionOpt.get();
-			int userId=user.getUserId();
-			
-			Optional<Customer> customerOpt= customerDao.findById(userId);
-			Wallet wallet = customerOpt.get().getWallet();
-			
-			List<BeneficiaryDetail> list=wallet.getBeneficiaryDetails();
-			list.add(beneficiaryDetail);
-			
-			wDao.save(wallet);
-			return bDao.save(beneficiaryDetail);
-			
-			
-		}else {
-			throw new BeneficiaryDetailException("You have to login first");
-		}
+
+	public BeneficiaryDetail addBeneficiary(BeneficiaryDetail bd) throws BeneficiaryDetailException {
+		CurrentSessionUser user =  LoginServiceImpl.getCurrentUser();
 		
+		Optional<Customer> customer = customerDao.findById(user.getUserId());
+		
+		Wallet wallet = customer.get().getWallet();
+		System.out.println(wallet.getWalletId());
+		bd.setWalletId(wallet.getWalletId());
+		BeneficiaryDetail saved =bDao.save(bd);
+		return saved;
+
 	}
 
 	@Override

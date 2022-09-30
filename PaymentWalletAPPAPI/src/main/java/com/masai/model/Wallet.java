@@ -21,9 +21,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Data
-@AllArgsConstructor
-@ToString
 public class Wallet {
 	
 	
@@ -41,15 +38,10 @@ public class Wallet {
 	private List<Transaction> transaction;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JsonIgnore
 	private BankAccount bankAccount;
 	
-	@OneToMany
-	@JsonIgnore
-	private List<BillPayment> billPayment;
 	
-	@Embedded
-	@ElementCollection
+	@OneToMany
 	@JsonIgnore
 	private List<BeneficiaryDetail> beneficiaryDetails;
 
@@ -94,13 +86,7 @@ public class Wallet {
 		this.bankAccount = bankAccount;
 	}
 
-	public List<BillPayment> getBillPayment() {
-		return billPayment;
-	}
-
-	public void setBillPayment(List<BillPayment> billPayment) {
-		this.billPayment = billPayment;
-	}
+	
 
 	public List<BeneficiaryDetail> getBeneficiaryDetails() {
 		return beneficiaryDetails;

@@ -11,17 +11,63 @@ public class BankAccount {
 	@Id
 	private Integer accountNumber;
 
-	@NotNull
 	private String mobileNumber;
 	
-	@NotNull
 	private String ifscCode;
 	
-	@NotNull
 	private String bankName;
 	
-	@NotNull
 	private double bankBalance;
 	
 	private Integer walletId;
+
+	public Integer getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(Integer accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public String getIfscCode() {
+		return ifscCode;
+	}
+
+	public void setIfscCode(String ifscCode) {
+		this.ifscCode = ifscCode;
+	}
+
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+
+	public double getBankBalance() {
+		return bankBalance;
+	}
+
+	public void setBankBalance(double bankBalance) {
+		this.bankBalance = bankBalance;
+	}
+
+	public Integer getWalletId() {
+		return walletId;
+	}
+
+	public void setWalletId(Integer walletId) {
+		this.walletId = walletId;
+	}
+	
+	
 }

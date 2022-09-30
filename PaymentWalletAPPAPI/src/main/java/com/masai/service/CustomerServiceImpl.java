@@ -34,8 +34,6 @@ public class CustomerServiceImpl implements CustomerService{
 		Wallet wallet = new Wallet();
 		wallet.setBalance(0.0);
 		wallet.setCustomer(newSignUp);
-		System.out.println("done");
-		walletDao.save(wallet);
 		newSignUp.setWallet(wallet);
 		
 		return signUpDAO.save(newSignUp);

@@ -18,22 +18,13 @@ public class BeneficiaryDetail {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer beneficiaryId;
 	
-	@NotNull
-	@NotBlank
-	@Size(min = 4,max = 25)
 	private String beneficiaryName;
-	@NotNull
-	@NotBlank
-	@Min(10)
-	@Max(10)
+	
 	private String beneficiaryMobileNo;
 	
-	@ManyToOne
-	private Customer customer;
+	private Integer walletId;
 	
-	@ManyToOne
-	private Wallet wallet;
-
+	
 	public Integer getBeneficiaryId() {
 		return beneficiaryId;
 	}
@@ -58,30 +49,22 @@ public class BeneficiaryDetail {
 		this.beneficiaryMobileNo = beneficiaryMobileNo;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public Integer getWalletId() {
+		return walletId;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setWalletId(Integer walletId) {
+		this.walletId = walletId;
 	}
 
-	public Wallet getWallet() {
-		return wallet;
-	}
 
-	public void setWallet(Wallet wallet) {
-		this.wallet = wallet;
-	}
-
-	public BeneficiaryDetail(Integer beneficiaryId, @NotNull @NotBlank @Size(min = 4, max = 25) String beneficiaryName,
-			@NotNull @NotBlank @Min(10) @Max(10) String beneficiaryMobileNo, Customer customer, Wallet wallet) {
+	public BeneficiaryDetail(Integer beneficiaryId, String beneficiaryName, String beneficiaryMobileNo,
+			Integer walletId) {
 		super();
 		this.beneficiaryId = beneficiaryId;
 		this.beneficiaryName = beneficiaryName;
 		this.beneficiaryMobileNo = beneficiaryMobileNo;
-		this.customer = customer;
-		this.wallet = wallet;
+		this.walletId = walletId;
 	}
 
 	public BeneficiaryDetail() {

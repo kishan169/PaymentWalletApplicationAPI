@@ -1,5 +1,6 @@
 package com.masai.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,13 +22,8 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer userId;
 	
-	@Size(min = 4,max = 25)
 	private String userName;
 	
-	@Min(10)
-	@Max(10)
-	@NotNull
-	@NotBlank
 	private String mobileNo;
 	
 	private String password;
@@ -36,7 +32,7 @@ public class Customer {
 	private String email;
 	
 	@JsonIgnore
-	@OneToOne
+	@OneToOne(optional = false, cascade = CascadeType.ALL)
 	private Wallet wallet;
 	
 
