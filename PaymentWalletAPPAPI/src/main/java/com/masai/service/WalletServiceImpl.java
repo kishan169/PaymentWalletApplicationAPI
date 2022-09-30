@@ -254,7 +254,7 @@ public class WalletServiceImpl implements WalletService {
 		
 		
 		Transaction transaction = new Transaction();
-        transaction.setTransactionType(TransactionType.);
+        transaction.setTransactionType(TransactionType.WALLET_TO_WALLET);
         transaction.setTransactionDate(LocalDateTime.now());
         transaction.setAmount(amount);
         transaction.setDescription("Fund Transfer from Wallet to Wallet");
