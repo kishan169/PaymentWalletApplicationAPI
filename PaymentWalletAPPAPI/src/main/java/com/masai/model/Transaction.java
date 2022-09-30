@@ -23,12 +23,12 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer transactionId;
     
-    private String transactionType;
+    private TransactionType transactionType;
     
     @CreatedDate
     @CreationTimestamp
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate transactionDate;
+    private LocalDateTime transactionDate;
     private double amount;
     private String description;
     
@@ -44,19 +44,21 @@ public class Transaction {
         this.transactionId = transactionId;
     }
 
-    public String getTransactionType() {
-        return transactionType;
-    }
+   
 
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
-    }
+    public TransactionType getTransactionType() {
+		return transactionType;
+	}
 
-    public LocalDate getTransactionDate() {
+	public void setTransactionType(TransactionType transactionType) {
+		this.transactionType = transactionType;
+	}
+
+	public LocalDateTime getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(LocalDate transactionDate) {
+    public void setTransactionDate(LocalDateTime transactionDate) {
         this.transactionDate = transactionDate;
     }
 
@@ -83,6 +85,11 @@ public class Transaction {
     public void setWallet(Wallet wallet) {
         this.wallet = wallet;
     }
+
+	public Transaction() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
     
 	
 }
