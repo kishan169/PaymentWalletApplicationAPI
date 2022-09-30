@@ -32,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService{
 			throw new LoginException("User Already Exist!");
 		}
 		Wallet wallet = new Wallet();
-		((Object) wallet).setBalance(0.0);
+		wallet.setBalance(0.0);
 		wallet.setCustomer(newSignUp);
 		newSignUp.setWallet(wallet);
 		

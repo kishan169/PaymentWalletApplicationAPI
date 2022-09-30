@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class BankAccount {
 	
-  @Id
+	@Id
 	private Integer accountNumber;
 
 	private String mobileNumber;

@@ -38,9 +38,9 @@ public class TranscationServiceImpl implements TransactionService{
 		
 
 
-		Optional<Wallet> walletOptional = walletdao.findByWalletId(tran.getWalletId());
+//		Optional<Wallet> walletOptional = walletdao.findByWalletId();
 		
-		Wallet userwallet = walletOptional.get();
+	//	Wallet userwallet = walletOptional.get();
 		
 //		Optional<CurrentSessionUser> currentsUser = sessionDao.findByMobileNo(userwallet.getCustomer());
 

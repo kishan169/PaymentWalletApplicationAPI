@@ -149,22 +149,22 @@ public class WalletServiceImpl implements WalletService {
 		
 		Wallet wallet = customer.getWallet();
 		
-		BankAccount bankacc = wallet.getBankAccount();
+	//	BankAccount bankacc = wallet.getBankAccount();
 		
-		if(bankacc==null) {
-			throw new CustomerNotException("Bank not add to the wallet yet");
-		}
-		
-		if(wallet.getBalance()==null) {
-			throw new CustomerNotException("Insifficinet balance");
-		}
-		if(wallet.getBalance()<amount) {
-			throw new CustomerNotException("Insufficient balance");
-		}
-		
-		customer.getWallet().setBalance(wallet.getBalance()-amount);
-		
-		
+//		if(bankacc==null) {
+//			throw new CustomerNotException("Bank not add to the wallet yet");
+//		}
+//		
+//		if(wallet.getBalance()==null) {
+//			throw new CustomerNotException("Insifficinet balance");
+//		}
+//		if(wallet.getBalance()<amount) {
+//			throw new CustomerNotException("Insufficient balance");
+//		}
+//		
+//		customer.getWallet().setBalance(wallet.getBalance()-amount);
+//		
+//		
 		
 		
 		//if found add the amount to the account;
