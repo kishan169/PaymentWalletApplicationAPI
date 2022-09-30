@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Transaction {
 	
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer transactionId;
@@ -82,8 +83,6 @@ public class Transaction {
     public void setWallet(Wallet wallet) {
         this.wallet = wallet;
     }
-    
-    
     
 	
 }

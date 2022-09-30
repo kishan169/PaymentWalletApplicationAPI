@@ -26,6 +26,10 @@ public class Wallet {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer walletId;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer walletId;
+	
 	private Double balance;
 	
 	@OneToOne(cascade = CascadeType.ALL)
@@ -91,8 +95,6 @@ public class Wallet {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	
 
 	public List<BillPayment> getBillpayments() {
 		return billpayments;

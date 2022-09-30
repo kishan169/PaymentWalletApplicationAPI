@@ -166,6 +166,7 @@ public class WalletServiceImpl implements WalletService {
 		BankAccount bankacc = bankaccountdao.findByWalletId(wallet.getWalletId()); 
 		
 		
+
 		
 		if(bankacc==null) {
 			throw new CustomerNotException("Bank not add to the wallet yet");

@@ -2,13 +2,18 @@ package com.masai.controllers;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exception.BeneficiaryDetailException;
@@ -23,14 +28,15 @@ public class BeneficiaryDetailController {
 	private BeneficiaryDetailServices bSer;
 	
 	@PostMapping("ben")
-	public ResponseEntity<BeneficiaryDetail>addBeneficiaryDetail(@RequestBody BeneficiaryDetail bd) throws BeneficiaryDetailException{
-		
-		BeneficiaryDetail saved = bSer.addBeneficiary(bd);
+	public ResponseEntity<BeneficiaryDetail> addBeneficiaryDetail(@RequestBody BeneficiaryDetail beneficiaryDetail) throws BeneficiaryDetailException{
+		BeneficiaryDetail saved = bSer.addBeneficiary(beneficiaryDetail);
 		return new ResponseEntity<BeneficiaryDetail>(saved,HttpStatus.CREATED);
 	}
-	@PostMapping("ben/del/{beneficiaryMobileNo}")
-	public ResponseEntity<BeneficiaryDetail>deleteBeneficiaryDetail(@RequestBody BeneficiaryDetail beneficiaryDetail,@PathVariable String mobile) throws BeneficiaryDetailException{
-		BeneficiaryDetail deleted = bSer.deleteBeneficiary(beneficiaryDetail,mobile);
+	@PatchMapping("ben/del")
+	public ResponseEntity<BeneficiaryDetail>deleteBeneficiaryDetail(@RequestParam String mobileNo,@RequestParam String beneficiaryMobileNo) throws BeneficiaryDetailException{
+		System.out.println(mobileNo);
+		System.out.println(beneficiaryMobileNo);
+		BeneficiaryDetail deleted = bSer.deleteBeneficiary(mobileNo,beneficiaryMobileNo);
 		return new ResponseEntity<BeneficiaryDetail>(deleted,HttpStatus.OK);
 	}
 	@GetMapping("ben/{beneficiaryMobileNo}")
