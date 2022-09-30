@@ -33,10 +33,6 @@ public class Wallet {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Customer customer;
 	
-	@OneToOne
-	@JsonIgnore
-	private BankAccount bankaccount;
-	
 	@OneToMany
 	@JsonIgnore
 	private List<Transaction> transaction;
