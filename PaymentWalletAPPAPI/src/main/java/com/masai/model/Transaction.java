@@ -113,9 +113,7 @@ public class Transaction {
 	}
 
 
-	public Integer getWalletId() {
-		return walletId;
-	}
+	
 
 	public void setWalletId(Integer walletId) {
 		this.walletId = walletId;

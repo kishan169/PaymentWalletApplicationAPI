@@ -65,12 +65,12 @@ public class WalletController {
 
 	// public Transaction fundTransfer(String sourceMoblieNo,String
 	// targetMobileNo,BigDecimal amout);
-	@PutMapping("/fundtran/{sourceMobileNo}/{tragetMobileNo}/{amount}")
+	@PutMapping("/fundtran/{sourceMobileNo}/{tragetMobileNo}/{amount}/{uniqueId}")
 	public ResponseEntity<Transaction> FundTransactionHandler(@PathVariable("sourceMobileNo") String sourceMobileNo,
-			@PathVariable("tragetMobileNo") String tragerMobileNo, @PathVariable("amount") Double amount)
+			@PathVariable("tragetMobileNo") String tragerMobileNo, @PathVariable("amount") Double amount,@PathVariable("uniqueId") String uniqueId)
 			throws CustomerNotException, LoginException, BeneficiaryDetailException {
 
-		Transaction transaction = walletServiceImpl.fundTransfer(sourceMobileNo, tragerMobileNo, amount);
+		Transaction transaction = walletServiceImpl.fundTransfer(sourceMobileNo, tragerMobileNo, amount,uniqueId);
 
 		return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
 	}

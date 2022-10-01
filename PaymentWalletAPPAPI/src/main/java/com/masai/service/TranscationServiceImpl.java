@@ -38,7 +38,7 @@ public class TranscationServiceImpl implements TransactionService{
 	@Autowired
 	private SessionDAO sessionDao;
 	
-	static DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+	
 	
 	//==========================
 	
@@ -72,8 +72,17 @@ public class TranscationServiceImpl implements TransactionService{
 	}
 
 	@Override
-	public List<Transaction> viewTranscationByDate(LocalDate from, LocalDate  to,String uniqueId) throws UserNotLogedinException,TransactionNotFoundException {
+	public List<Transaction> viewTranscationByDate(String from, String  to,String uniqueId) throws UserNotLogedinException,TransactionNotFoundException {
 		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		
+		System.out.println("yes im in");
+
+		LocalDate start = LocalDate.parse(from, formatter);
+		LocalDate end = LocalDate.parse(to, formatter);
+		
+		System.out.println(start);
+		System.out.println("there");
 		Optional<CurrentSessionUser> optional = sessionDao.findByUuid(uniqueId);
 		
 		if(!optional.isPresent()) {
@@ -92,21 +101,25 @@ public class TranscationServiceImpl implements TransactionService{
 		for(Transaction tr: transaction) {
 			
 			LocalDateTime localDateTime = tr.getTransactionDate();
-			Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
-			LocalDate date = LocalDate.from(instant);
 			
+			String date = localDateTime.getDayOfMonth() + "-0" + localDateTime.getMonthValue() + "-"+ localDateTime.getYear();
 			
-
+			LocalDate temp = LocalDate.parse(date, formatter);
+			
+			if ((temp.isAfter(start) && temp.isBefore(end)) || temp.equals(start) || temp.equals(end)) {
+				
+				transactionbydate.add(tr);
+			}
 			
 			
 		}
 		
-		return null;
+		return transactionbydate;
 		
 	}
 
 	@Override
-	public List<Transaction> viewAllTransaction(String uniqueId,TransactionType type) throws UserNotLogedinException,TransactionNotFoundException  {
+	public List<Transaction> viewAllTransactionbyTransactionType(String uniqueId,TransactionType type) throws UserNotLogedinException,TransactionNotFoundException  {
 
 		Optional<CurrentSessionUser> optional = sessionDao.findByUuid(uniqueId);
 		

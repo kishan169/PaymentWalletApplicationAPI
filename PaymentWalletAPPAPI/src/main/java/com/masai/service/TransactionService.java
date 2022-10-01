@@ -17,8 +17,8 @@ public interface TransactionService {
 	
 	public List<Transaction> viewAlltransaction(String  uniqueId)throws UserNotLogedinException, TransactionNotFoundException ;
 	
-	public List<Transaction> viewTranscationByDate(LocalDate from, LocalDate to , String uniqueId)  throws UserNotLogedinException,TransactionNotFoundException ;
+	public List<Transaction> viewTranscationByDate(String from, String to , String uniqueId)  throws UserNotLogedinException,TransactionNotFoundException ;
 		
-	public List<Transaction> viewAllTransaction(String uniqueId,TransactionType type) throws UserNotLogedinException, TransactionNotFoundException;
+	public List<Transaction> viewAllTransactionbyTransactionType(String uniqueId,TransactionType type) throws UserNotLogedinException, TransactionNotFoundException;
 
 }
