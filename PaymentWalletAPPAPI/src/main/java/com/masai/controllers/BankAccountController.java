@@ -47,11 +47,7 @@ public class BankAccountController {
 	}
 	
 	@GetMapping("/bank/{id}")
-<<<<<<< HEAD
-	public  ResponseEntity<BankAccount> viewAllBankAccountDetails(@PathVariable("id") String uniqueId) {
-=======
 	public  ResponseEntity<BankAccount> viewAllBankAccountDetails(@PathVariable("id") String uniqueId) throws NotAnyBankAddedYet, UserNotLogedinException {
->>>>>>> 2d1825baeeb2a90f6a1c3852c09c898da285f5f2
 		BankAccount accountDetails = bankService.viewAllAccount(uniqueId);
 		return new ResponseEntity<BankAccount>(accountDetails,HttpStatus.ACCEPTED);
 	}
