@@ -30,12 +30,4 @@ public class BillPaymentController {
 		return new ResponseEntity<BillPayment> (addBill, HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/billPayment/{uniqueId}/{billId}")
-	public ResponseEntity<BillPayment>getBillDetailsByBillIdHandler(@PathVariable("billId")Integer billId, @PathVariable String uniqueId) throws BillNotExisttException, UserNotLogedinException{
-		
-		BillPayment bDetails=bService.getBillPaymentDetailseByBillId(billId);
-		
-		return new ResponseEntity<BillPayment>(bDetails, HttpStatus.OK);		
-		
-	}
 }

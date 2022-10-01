@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.masai.exception.BillNotExisttException;
 import com.masai.exception.InsufficientBalanceException;
 import com.masai.exception.UserNotLogedinException;
 import com.masai.model.BillPayment;
@@ -78,12 +77,6 @@ public class BillPaymentServiceImpl implements BillPaymentService{
 		return completedPayment;
 	}
 
-	@Override
-	public BillPayment getBillPaymentDetailseByBillId(Integer billId) throws UserNotLogedinException, BillNotExisttException {
-		
-		Optional<BillPayment> opt=billDao.findById(billId);
-		
-		return opt.orElseThrow(()->new BillNotExisttException("Bill details does not exist with ID:"+billId));
-	}
+	
 	
 }
