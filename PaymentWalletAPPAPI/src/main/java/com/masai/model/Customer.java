@@ -24,14 +24,22 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer userId;
 	
+	@NotNull
+	@Pattern(regexp="[a-zA-Z]{3,12}", message = "User Name must not contains any numbers and Special Character")
 	private String userName;
 	
-	
+
+	@NotNull
+	@Size(min=10,max=10)
+	@Pattern(regexp="[6-9]{1}[0-9]{9}", message = "Mobile number must have 10 digits mobile Number")
 	private String mobileNo;
 	
+	@NotNull
+	@Pattern(regexp="[a-zA-Z0-9]{6,12}",message="Password must contain between 6 to 12 characters. Must be alphanumeric with both Upper and lowercase characters.")
 	private String password;
 	
 	@Email
+	@NotNull
 	private String email;
 	
 	@JsonIgnore

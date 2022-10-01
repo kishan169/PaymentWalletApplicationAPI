@@ -1,5 +1,7 @@
 package com.masai.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ public class SignUpController {
 	private CustomerService signUpService;
 	
 	@PostMapping("/signUp")
-	public ResponseEntity<Customer> createNewSignUpHandler(@RequestBody Customer newSignUp) throws LoginException {
+	public ResponseEntity<Customer> createNewSignUpHandler(@Valid @RequestBody Customer newSignUp) throws LoginException {
 		
 		Customer newSignedUp =signUpService.createNewSignUp(newSignUp);
 		return new ResponseEntity<Customer>(newSignedUp,HttpStatus.CREATED);
@@ -28,7 +30,7 @@ public class SignUpController {
 	}
 	
 	@PutMapping("/updateSignUp")
-	public ResponseEntity<Customer> updateSignUpDetailsHandler(@RequestBody Customer signUp, @RequestParam String key) throws LoginException
+	public ResponseEntity<Customer> updateSignUpDetailsHandler(@Valid @RequestBody Customer signUp, @RequestParam String key) throws LoginException
 	{
 		Customer newUpdatedSignUp = signUpService.updateSignUpDetails(signUp,key);
 		
