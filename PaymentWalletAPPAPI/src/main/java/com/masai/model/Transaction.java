@@ -27,14 +27,13 @@ public class Transaction {
     
     @CreatedDate
     @CreationTimestamp
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime transactionDate;
     private double amount;
     private String description;
     
-    @ManyToOne
-    @JsonIgnore
-    private Wallet wallet;
+    
+    private Integer  walletId;
 
     public Integer getTransactionId() {
         return transactionId;
@@ -78,13 +77,14 @@ public class Transaction {
         this.description = description;
     }
 
-    public Wallet getWallet() {
-        return wallet;
-    }
+	public Integer getWalletId() {
+		return walletId;
+	}
 
-    public void setWallet(Wallet wallet) {
-        this.wallet = wallet;
-    }
-    
+	public void setWalletId(Integer walletId) {
+		this.walletId = walletId;
+	}
+
+   
 	
 }

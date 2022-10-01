@@ -102,7 +102,7 @@ public class BanKAccountServiceImpl implements BankAccountService{
 	}
 
 	@Override
-	public Set<BankAccount> viewAllAccount(String uniqueId) throws UserNotLogedinException, NotAnyBankAddedYet {
+	public BankAccount viewAllAccount(String uniqueId) throws UserNotLogedinException, NotAnyBankAddedYet {
 		Optional<CurrentSessionUser> currentUser =  sessionDao.findByUuid(uniqueId);
 		
 		if(!currentUser.isPresent()) {
@@ -112,9 +112,9 @@ public class BanKAccountServiceImpl implements BankAccountService{
 		Optional<Customer> customer =  cDao.findById(currentUser.get().getUserId());
 		Wallet wallet = customer.get().getWallet();
 		
-		Set<BankAccount> bankAccounts= bankDao.findByWalletId(wallet.getWalletId());
+		BankAccount bankAccounts= bankDao.findByWalletId(wallet.getWalletId());
 		
-		if(bankAccounts.size()>0) {
+		if(bankAccounts!=null) {
 			return bankAccounts;
 		}else {
 			throw new BankAccountNotExsists("Bank account is not existed in current user ");
