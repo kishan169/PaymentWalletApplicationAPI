@@ -43,9 +43,9 @@ public class BankAccountController {
 	}
 	
 	@GetMapping("/bank/{id}")
-	public  ResponseEntity<Set<BankAccount>> viewAllBankAccountDetails(@PathVariable("id") String uniqueId) {
-		Set<BankAccount> accountDetails = bankService.viewAllAccount(uniqueId);
-		return new ResponseEntity<Set<BankAccount>>(accountDetails,HttpStatus.ACCEPTED);
+	public  ResponseEntity<BankAccount> viewAllBankAccountDetails(@PathVariable("id") String uniqueId) {
+		BankAccount accountDetails = bankService.viewAllAccount(uniqueId);
+		return new ResponseEntity<BankAccount>(accountDetails,HttpStatus.ACCEPTED);
 	}
 	
 	

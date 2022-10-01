@@ -12,7 +12,7 @@ public interface TransactionService {
 	
 	public Transaction addTranscation(Transaction tran);
 	public Set<Transaction> viewAlltransaction(Wallet wallet) throws CustomerNotException;
-	public Set<Transaction> viewTranscationByDate(LocalDate from, LocalDate to);
+	public Set<Transaction> viewTranscationByDate(String from, String to);
 	public Set<Transaction> viewAllTransaction(String type);
 
 }

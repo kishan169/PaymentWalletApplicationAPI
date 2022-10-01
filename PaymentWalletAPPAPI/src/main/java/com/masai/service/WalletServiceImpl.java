@@ -233,9 +233,7 @@ public class WalletServiceImpl implements WalletService {
 	@Override
 	@PutMapping("/addMoney")
 	public Customer addMoney(String mobileNo, Double amount) throws Exception {
-//	    add 
-		// TODO Auto-generated method stub
-		
+
 		Optional<CurrentSessionUser> currOptional = currentSessionDAO.findByMobileNo(mobileNo);
 		
 		if(!currOptional.isPresent()) {
@@ -248,40 +246,32 @@ public class WalletServiceImpl implements WalletService {
 		
 		Wallet wallet = currcustomer.getWallet();
 		
-//		BankAccount bankacc = bankaccountdao.findByWalletId(wallet.getWalletId());
-//		
-//		if(bankacc==null) {
-//		    throw new CustomerNotException("bank not linked");
-//		}
-//		
-//		if(bankacc.getBankBalance()==0 || bankacc.getBankBalance()<amount) {
-//		    throw new CustomerNotException("insufficient balance in bank");
-//		}
-//		
-//		bankacc.setBankBalance(bankacc.getBankBalance()-amount);
-//		
-//		wallet.setBalance(wallet.getBalance()+amount);
-//		
-//		bankaccountdao.save(bankacc);
-//		walletDao.save(wallet);
-//		customerDAO.save(currcustomer);
-//		
+		BankAccount bankacc = bankaccountdao.findByWalletId(wallet.getWalletId());
 		
+		if(bankacc==null) {
+		    throw new CustomerNotException("bank not linked");
+		}
 		
+		if(bankacc.getBankBalance()==0 || bankacc.getBankBalance()<amount) {
+		    throw new CustomerNotException("insufficient balance in bank");
+		}
 		
+		bankacc.setBankBalance(bankacc.getBankBalance()-amount);
+		
+		wallet.setBalance(wallet.getBalance()+amount);
+		
+		bankaccountdao.save(bankacc);
+		walletDao.save(wallet);
+		customerDAO.save(currcustomer);	
 		
 		Transaction transaction = new Transaction();
 
-        transaction.setTransactionType(TransactionType.WALLET_TO_WALLET);
+        transaction.setTransactionType(TransactionType.BANK_TO_WALLET);
         transaction.setTransactionDate(LocalDateTime.now());
-
         transaction.setAmount(amount);
-        transaction.setDescription("Fund Transfer from Wallet to Wallet");
-        
+        transaction.setDescription("Fund Transfer from Bank to Wallet");
         wallet.getTransaction().add(transaction);
-        
         transactiodao.save(transaction);
-        
         
         return currcustomer;
 		
