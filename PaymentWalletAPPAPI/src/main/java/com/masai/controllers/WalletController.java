@@ -48,42 +48,9 @@ public class WalletController {
 
 	@Autowired
 	private CurrentUserSessionServiceImpl currentuserSesionServiceImpl;
-<<<<<<< HEAD
-	
-=======
 
-	// =============================
 
-	// /public Customer createAccount(String name,String moblieNo,BigDecimal
-	// amount);
 
-	// public Double showBalance(String mobileNo) throws CustomerNotException;
->>>>>>> 2d1825baeeb2a90f6a1c3852c09c898da285f5f2
-	@GetMapping("/balance/{mobileNo}")
-	public ResponseEntity<Double> showBalanceHandler(@PathVariable("mobileNo") String mobileNo)
-			throws CustomerNotException, LoginException {
-		Double balance = walletServiceImpl.showBalance(mobileNo);
-<<<<<<< HEAD
-		return balance;
-	}
-	
-	@PutMapping("/fundtran/{sourceMobileNo}/{tragetMobileNo}/{amount}")
-	public Transaction FundTransactionHandler(@PathVariable("sourceMobileNo") String sourceMobileNo,@PathVariable("tragetMobileNo") String tragerMobileNo,@PathVariable("amount") Double amount) throws CustomerNotException {
-		return walletServiceImpl.fundTransfer(sourceMobileNo, tragerMobileNo, amount);
-	}
-
-	@PutMapping("/deposite/{mobileNo}/{amount}")
-	public Transaction depositeAmountFromWalletToBankHandler(@PathVariable("moblieNo") String mobileNo,@PathVariable("amount") Double amount) throws CustomerNotException {
-		return walletServiceImpl.depositeAmount(mobileNo, amount);
-	}
-
-=======
-
-		return new ResponseEntity<Double>(balance, HttpStatus.OK);
-	}
-
-	// public Transaction fundTransfer(String sourceMoblieNo,String
-	// targetMobileNo,BigDecimal amout);
 	@PutMapping("/fundtran/{sourceMobileNo}/{tragetMobileNo}/{amount}/{uniqueId}")
 	public ResponseEntity<Transaction> FundTransactionHandler(@PathVariable("sourceMobileNo") String sourceMobileNo,
 			@PathVariable("tragetMobileNo") String tragerMobileNo, @PathVariable("amount") Double amount,@PathVariable("uniqueId") String uniqueId)
@@ -95,9 +62,8 @@ public class WalletController {
 	}
 
 	// public Customer depositeAmount(String mmobileNo,BigDecimal amount);
-	@PutMapping("/deposite/{mobileNo}/{amount}")
-	public ResponseEntity<Transaction> depositeAmountFromWalletToBankHandler(@PathVariable("moblieNo") String mobileNo,
-			@PathVariable("amount") Double amount)
+	@PutMapping("/deposite/{mobile}/{amount}")
+	public ResponseEntity<Transaction> depositeAmountFromWalletToBankHandler(@PathVariable("mobile") String mobileNo,@PathVariable("amount") Double amount)
 			throws CustomerNotException, InsufficientResourcesException, LoginException {
 
 		Transaction transaction = walletServiceImpl.depositeAmount(mobileNo, amount);
@@ -106,8 +72,7 @@ public class WalletController {
 		return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
 	}
 
-	// public List<Customer> getList();
->>>>>>> 2d1825baeeb2a90f6a1c3852c09c898da285f5f2
+
 	@GetMapping("/getbenList/{mobileNo}")
 	public ResponseEntity<List<BeneficiaryDetail>> getAllCoustomerFromWallet(@PathVariable("mobileNo") String mobileNo)
 			throws CustomerNotException, LoginException, BeneficiaryDetailException {
@@ -115,12 +80,6 @@ public class WalletController {
 
 		return new ResponseEntity<List<BeneficiaryDetail>>(beneficiaryDetails, HttpStatus.OK);
 	}
-<<<<<<< HEAD
-	
-	@PostMapping("/addmoney/{mobile}/{am}")
-	public Customer addMoneyFromBankToWallet(@PathVariable("mobile") String mobileNo,@PathVariable("am") Double amount) throws Exception {
-	    return walletServiceImpl.addMoney(mobileNo, amount);
-=======
 
 	// lsCustomer addMoney(Wallet wallet, Double amount);
 	@PostMapping("/addMoney/{mobileNo}/{amount}")
@@ -130,7 +89,6 @@ public class WalletController {
 
 		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 
->>>>>>> 2d1825baeeb2a90f6a1c3852c09c898da285f5f2
 	}
 
 }

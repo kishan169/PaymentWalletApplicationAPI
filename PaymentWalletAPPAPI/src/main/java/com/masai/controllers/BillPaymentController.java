@@ -15,6 +15,7 @@ import com.masai.model.BillPayment;
 import com.masai.service.BillPaymentService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import java.util.*;
 
 @RestController
 public class BillPaymentController {
@@ -24,10 +25,14 @@ public class BillPaymentController {
 	
 	@PostMapping("/billPayment/{uniqueId}")
 	public ResponseEntity<BillPayment> addNewBillPaymentDetails(@RequestBody BillPayment billPayment, @PathVariable String uniqueId) throws UserNotLogedinException, InsufficientBalanceException {
-		
 		BillPayment addBill =  bService.makeBillPayment(billPayment, uniqueId);
-		
 		return new ResponseEntity<BillPayment> (addBill, HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/billPayment/{id}")
+	public ResponseEntity<Set<BillPayment>> viewAllBillPayments(@PathVariable("id") String uniqueId) throws UserNotLogedinException{
+		Set<BillPayment> billPayments = bService.viewBillPayments(uniqueId);
+		return new ResponseEntity<Set<BillPayment>>(billPayments,HttpStatus.ACCEPTED);
 	}
 	
 }

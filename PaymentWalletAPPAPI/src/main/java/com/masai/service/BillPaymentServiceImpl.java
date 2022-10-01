@@ -2,6 +2,7 @@ package com.masai.service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,6 +76,23 @@ public class BillPaymentServiceImpl implements BillPaymentService{
 		}
 		System.out.println(billpayment);
 		return completedPayment;
+	}
+
+	@Override
+	public Set<BillPayment> viewBillPayments(String uniqueId) throws UserNotLogedinException {
+		
+		
+		Optional<CurrentSessionUser> currentUser =  sessionDao.findByUuid(uniqueId);
+		
+		if(!currentUser.isPresent()) {
+			throw new UserNotLogedinException("Please Login first");
+		}
+		
+		Optional<Customer> customer =  cDao.findById(currentUser.get().getUserId());
+		Wallet wallet = customer.get().getWallet();
+		
+		Set<BillPayment> billpaymnets = billDao.findByWalletId(wallet.getWalletId());
+		return billpaymnets;
 	}
 
 	
