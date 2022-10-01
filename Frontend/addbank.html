@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id = "operations">
+        <div id = "signUp"><a href="index.html">SignUP</a></div>
+        <div id = "logIn"><a href="login.html">LogIn</a></div>
+        <div id = "Bank"><a href="addbank.html">Add Bank</a></div>
+        <div id = "beneficiary"><a href="beneficiary.html">Add beneficiary</a></div>
+        <div id = "makePayment"><a href="paybill.html">Pay Bill</a></div>
+        <div id = "transaction"><a href="transaction.html">Transaction</a></div>
+    </div>
+
+    <div id = "container">
+    
+        <div id = "addinput">
+            <h1>Add Bank</h1>
+            <input type="text" id = "UniqueId" placeholder = "Enter ID">
+            <input type="text" id = "accountNumber" placeholder = "Enter Account Number">
+            <input type="text" id = "mobileNo" placeholder = "Enter mobile">
+            <input type="text" id = "ifscCode" placeholder = "Enter idscCode">
+            <input type="text" id = "bankName" placeholder = "Enter Bank Name">
+            <input type="text" id = "balance" placeholder = "Enter bank Balance">
+            <button onclick = "addAccount()">Add Account</button>
+        </div>
+       
+    </div>
+
+
+    <div id = "operation">
+        <h3>DELETE  and View Bank Account Details</h3>
+        <input type="text" id = "key" placeholder = "Enter ID">
+        <input type="text" id = "accountNumber" placeholder = "Enter Account Number">
+        <button onClick="deleteAccount()" id ="delete">Delete Bank Account Details</button>
+        <button onClick="getProduct()" id ="get">View Bank Account Details</button>
+    </div>
+    
+</body>
+</html>
+
+<script>
+
+async function addAccount(){
+
+    const data = {
+        accountNumber:document.getElementById("accountNumber").value,
+        mobileNumber:document.getElementById("mobileNo").value,
+        ifscCode:document.getElementById("ifscCode").value,
+        bankName:document.getElementById("bankName").value,
+        bankBalance:document.getElementById("balance").value
+    };
+    console.log(data)
+    let id = document.getElementById("UniqueId").value;
+    console.log(id);
+    let response = await fetch(`http://localhost:8888/bank/${id}`, {
+    method:"POST",
+    body: JSON.stringify(data),
+    headers : { 'Content-Type': 'application/json'},
+    })
+
+    let dat = await response.json();
+
+    console.log(dat);
+
+    console.log("kishan");
+}
+
+
+async function deleteAccount(){
+    let id = document.getElementById("key").value;
+
+    let response = await fetch(`http://localhost:5001/bank/${id}` ,{
+        method: 'DELETE',
+        headers : {'Content-Type' : 'application/json'},
+    });
+
+    let dat = await response.json();
+    console.log(dat)
+}
+
+</script>
+

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id = "operations">
+        <div id = "signUp"><a href="index.html">SignUP</a></div>
+        <div id = "logIn"><a href="login.html">LogIn</a></div>
+        <div id = "Bank"><a href="addbank.html">Add Bank</a></div>
+        <div id = "beneficiary"><a href="beneficiary.html">Add beneficiary</a></div>
+        <div id = "makePayment"><a href="paybill.html">Pay Bill</a></div>
+        <div id = "transaction"><a href="transaction.html">Transaction</a></div>
+    </div>
+
+    <div id = "container">
+    
+        <div id = "addinput">
+            <h1>Add Beneficiary Details</h1>
+            <input type="text" id = "beneficiaryName" placeholder = "Enter name">
+            <input type="text" id = "beneficiarymobileNo" placeholder = "Enter mobile">
+            <input type="text" id = "key" placeholder = "Enter UniqueId">
+            <button onclick = "addBeneficiary()">Add Beneficiary</button>
+        </div>
+    </div>
+
+
+    <div id = "operation">
+        <h3>DELETE , PATCH , PUT & GET Methods</h3>
+        <input type="text" id = "key2" placeholder = "Enter UniqueId">
+        <input type="text" id = "beneficiaryNumber" placeholder = "Enter Mobile Number">
+        <button onClick="patchBeneficiary()" id ="patch">Delete Beneficiary</button>
+        <button onClick="getBeneficiary()" id ="get">GetBeneficiary</button>
+        <button onClick="getBeneficiaryList()" id ="get">GetBeneficiaryList</button>
+    </div>
+    
+</body>
+</html>
+
+<script>
+     async function addBeneficiary(){
+   
+        const data = {
+            beneficiaryName:document.getElementById("beneficiaryName").value,
+            beneficiaryMobileNo:document.getElementById("beneficiarymobileNo").value
+        };
+        console.log(data)
+
+        let id = document.getElementById("key").value;
+        let response = await fetch(`http://localhost:8888/ben/${id}`, {
+        method:"POST",
+        body: JSON.stringify(data),
+        headers : { 'Content-Type': 'application/json'},
+        })
+
+        let dat = await response.json();
+
+        console.log(dat);
+
+        console.log("kishan");
+}
+
+async function getBeneficiaryList(){
+    let id = document.getElementById("key2").value;
+    let response = await fetch(`http://localhost:8888/ben/all?uuid=${id}` ,{
+        method: 'GET',
+        headers : {'Content-Type' : 'application/json'},
+    });
+
+    let dat = await response.json();
+    console.log(dat)
+}
+</script>

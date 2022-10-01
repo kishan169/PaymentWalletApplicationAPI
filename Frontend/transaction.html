@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id = "operations">
+        <div id = "signUp"><a href="index.html">SignUP</a></div>
+        <div id = "logIn"><a href="login.html">LogIn</a></div>
+        <div id = "Bank"><a href="addbank.html">Add Bank</a></div>
+        <div id = "beneficiary"><a href="beneficiary.html">Add beneficiary</a></div>
+        <div id = "makePayment"><a href="paybill.html">Pay Bill</a></div>
+        <div id = "transaction"><a href="transaction.html">Transaction</a></div>
+    </div>
+
+
+
+    <div id = "container">
+    
+        <div id = "addinput">
+            <h1>Get Transactions</h1>
+            <input type="text" id = "key" placeholder = "Enter unique Id">
+            
+            <button onclick = "addAccount()">Add Account</button>
+        </div>
+        
+    </div>
+
+
+    <div id = "operation">
+        <h3>Transactions</h3>
+        <input type="text" id = "key" placeholder = "Enter UniqueId">
+        <button onClick="patchBeneficiary()" id ="patch">Delete Beneficiary</button>
+        <button onClick="getBeneficiary()" id ="get">View All Transactions</button>
+        <button onClick="getBeneficiaryList()" id ="get">GetBeneficiaryList</button>
+    </div>
+    
+</body>
+</html>

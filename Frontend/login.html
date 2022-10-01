@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id = "operations">
+        <div id = "signUp"><a href="index.html">SignUP</a></div>
+        <div id = "logIn"><a href="login.html">LogIn</a></div>
+        <div id = "Bank"><a href="addbank.html">Add Bank</a></div>
+        <div id = "beneficiary"><a href="beneficiary.html">Add beneficiary</a></div>
+        <div id = "makePayment"><a href="paybill.html">Pay Bill</a></div>
+        <div id = "transaction"><a href="transaction.html">Transaction</a></div>
+    </div>
+
+    <div id = "container">
+    
+        <div id = "addinput">
+            <h1>LOGIN</h1>
+            <input type="text" id = "mobileNo" placeholder = "Enter mobile">
+            <input type="text" id = "password" placeholder = "Enter password">
+            <button onclick = "LogInAccount()">LOGIN</button>
+        </div>
+        <div id = "operation">
+            <h3>Logout</h3>
+
+            <input type="text" id = "key" placeholder = "Enter UniqueId">
+            <button onClick="patchProduct()" id ="patch">LOGOUT</button>
+            
+        </div>
+          
+    </div>
+    
+</body>
+</html>
+
+<script>
+
+    async function LogInAccount(){
+   
+       const data = {
+           mobileNo:document.getElementById("mobileNo").value,
+           password:document.getElementById("password").value
+       };
+       console.log(data)
+       let response = await fetch("http://localhost:8888/login", {
+       method:"POST",
+       body: JSON.stringify(data),
+       headers : { 'Content-Type': 'application/json'},
+       })
+   
+      let dat = await response.json();
+   
+      console.log(dat);
+   
+      console.log("kishan");
+   }
+   
+   
+   async function deleteProduct(){
+       let id = document.getElementById("key").value;
+    console.log(key);
+       let response = await fetch(`http://localhost:8888/logout?key=${id}` ,{
+           method: 'DELETE',
+           headers : {'Content-Type' : 'application/json'},
+       });
+   
+       let dat = await response.json();
+       console.log(dat)
+   }
+   
+   async function patchProduct(){
+       let id = document.getElementById("key").value;
+   
+       let response = await fetch(`http://localhost:8888/logout?key=${id}` ,{
+           method: 'PATCH',
+           headers : {'Content-Type' : 'application/json'},
+       });
+   
+       let dat = await response.json();
+       console.log(dat)
+   }
+   
+ 
+
+   </script>
