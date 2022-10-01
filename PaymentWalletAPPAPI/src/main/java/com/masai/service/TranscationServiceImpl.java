@@ -71,6 +71,9 @@ public class TranscationServiceImpl implements TransactionService{
 		
 	}
 
+<<<<<<< HEAD
+	
+=======
 	@Override
 	public List<Transaction> viewTranscationByDate(String from, String  to,String uniqueId) throws UserNotLogedinException,TransactionNotFoundException {
 		
@@ -117,6 +120,7 @@ public class TranscationServiceImpl implements TransactionService{
 		return transactionbydate;
 		
 	}
+>>>>>>> 2d1825baeeb2a90f6a1c3852c09c898da285f5f2
 
 	@Override
 	public List<Transaction> viewAllTransactionbyTransactionType(String uniqueId,TransactionType type) throws UserNotLogedinException,TransactionNotFoundException  {
@@ -143,5 +147,22 @@ public class TranscationServiceImpl implements TransactionService{
 		}
 	}
 
+<<<<<<< HEAD
+    @Override
+    public Transaction addTranscation(Transaction tran) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+	@Override
+	public Set<Transaction> viewTranscationByDate(String from, String to) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+=======
    
+>>>>>>> 2d1825baeeb2a90f6a1c3852c09c898da285f5f2
 }

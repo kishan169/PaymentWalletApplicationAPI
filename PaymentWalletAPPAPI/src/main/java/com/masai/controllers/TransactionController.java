@@ -51,10 +51,9 @@ public class TransactionController {
 	
 	
 	
-//	public Set<Transaction> viewTranscationByDate(LocalDate from, LocalDate to);
-	@GetMapping("/historyByDate")
+
 	public ResponseEntity<List<Transaction>> viewTransactionByDatehandler(String from,String to,String uniqueId) throws CustomerNotException, UserNotLogedinException, TransactionNotFoundException{
-		
+
 		List<Transaction> historyByDate= transactionserviceimpl.viewTranscationByDate(from,to,uniqueId);
 		
 		return new ResponseEntity<List<Transaction>>(historyByDate,HttpStatus.OK);

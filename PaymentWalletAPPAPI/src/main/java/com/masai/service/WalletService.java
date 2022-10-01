@@ -26,8 +26,6 @@ public interface WalletService {
 	
 	public List<BeneficiaryDetail> getList(String mobileNo) throws CustomerNotException, LoginException, BeneficiaryDetailException;
 	
-	
-	
 	public Customer addMoney(String mobileNo, Double amount) throws Exception;
 	
 }

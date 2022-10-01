@@ -253,10 +253,15 @@ public class WalletServiceImpl implements WalletService {
 
 	@Override
 	@PutMapping("/addMoney")
+<<<<<<< HEAD
+	public Customer addMoney(String mobileNo, Double amount) throws Exception {
+
+=======
 	public Customer addMoney(String mobileNo, Double amount) throws LoginException {
 //	    add 
 		// TODO Auto-generated method stub
 		
+>>>>>>> 2d1825baeeb2a90f6a1c3852c09c898da285f5f2
 		Optional<CurrentSessionUser> currOptional = currentSessionDAO.findByMobileNo(mobileNo);
 		
 		if(!currOptional.isPresent()) {
@@ -269,6 +274,9 @@ public class WalletServiceImpl implements WalletService {
 		
 		Wallet wallet = currcustomer.getWallet();
 		
+<<<<<<< HEAD
+		BankAccount bankacc = bankaccountdao.findByWalletId(wallet.getWalletId());
+=======
 		
 		
 		
@@ -291,23 +299,38 @@ public class WalletServiceImpl implements WalletService {
 		walletDao.save(wallet);
 		customerDAO.save(currcustomer);
 		
+>>>>>>> 2d1825baeeb2a90f6a1c3852c09c898da285f5f2
 		
+		if(bankacc==null) {
+		    throw new CustomerNotException("bank not linked");
+		}
 		
+		if(bankacc.getBankBalance()==0 || bankacc.getBankBalance()<amount) {
+		    throw new CustomerNotException("insufficient balance in bank");
+		}
 		
+		bankacc.setBankBalance(bankacc.getBankBalance()-amount);
+		
+		wallet.setBalance(wallet.getBalance()+amount);
+		
+		bankaccountdao.save(bankacc);
+		walletDao.save(wallet);
+		customerDAO.save(currcustomer);	
 		
 		Transaction transaction = new Transaction();
 
         transaction.setTransactionType(TransactionType.BANK_TO_WALLET);
         transaction.setTransactionDate(LocalDateTime.now());
-
         transaction.setAmount(amount);
+<<<<<<< HEAD
+        transaction.setDescription("Fund Transfer from Bank to Wallet");
+=======
         transaction.setDescription("Fund Tran");
         transaction.setWalletId(wallet.getWalletId());
         
+>>>>>>> 2d1825baeeb2a90f6a1c3852c09c898da285f5f2
         wallet.getTransaction().add(transaction);
-        
         transactiodao.save(transaction);
-        
         
         return currcustomer;
 		
