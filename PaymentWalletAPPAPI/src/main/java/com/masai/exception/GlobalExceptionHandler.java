@@ -25,6 +25,13 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<MyErrorDetails> JPAValidationException(MethodArgumentNotValidException methodArgumentNotValidException){
+		MyErrorDetails errorDetails = new MyErrorDetails(LocalDateTime.now(), "validation Error",methodArgumentNotValidException.getBindingResult().getFieldError().getDefaultMessage());
+		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
+	}
+	
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<MyErrorDetails> HandleExtraException(Exception loginException , WebRequest request){
 		MyErrorDetails errorDetails = new MyErrorDetails(LocalDateTime.now(), loginException.getMessage(), request.getDescription(false));
