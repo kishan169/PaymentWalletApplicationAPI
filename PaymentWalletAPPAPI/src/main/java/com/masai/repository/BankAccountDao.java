@@ -12,6 +12,6 @@ import com.masai.model.BankAccount;
 public interface BankAccountDao extends JpaRepository<BankAccount, Integer>{
 
 	
-	public Set<BankAccount> findByWalletId(Integer walletId);
+	public BankAccount findByWalletId(Integer walletId);
     
 }

@@ -8,12 +8,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import javax.naming.InsufficientResourcesException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import com.masai.exception.BankAccountNotExsists;
+import com.masai.exception.BeneficiaryDetailException;
 import com.masai.exception.CustomerNotException;
+import com.masai.exception.InsufficientBalance;
 import com.masai.exception.LoginException;
+import com.masai.exception.NotAnyBankAddedYet;
 import com.masai.model.BankAccount;
 import com.masai.model.BeneficiaryDetail;
 import com.masai.model.CurrentSessionUser;
@@ -60,13 +66,13 @@ public class WalletServiceImpl implements WalletService {
 	
 	
 	@Override
-	public Double showBalance(String mobileNo) throws CustomerNotException {
+	public Double showBalance(String mobileNo) throws CustomerNotException, LoginException {
 		
 		Optional<CurrentSessionUser> currentSessionOptional = currentSessionDAO.findByMobileNo(mobileNo);
 		
 		
 		if(!currentSessionOptional.isPresent()) {
-			throw new CustomerNotException("You have to login First");
+			throw new LoginException("You need to login first");
 		}
 
 		Optional<Customer> customer =  customerDAO.findByMobileNo(mobileNo);
@@ -84,13 +90,13 @@ public class WalletServiceImpl implements WalletService {
 
 
 	@Override
-	public Transaction fundTransfer(String sourceMoblieNo, String targetMobileNo, Double amout) throws CustomerNotException {
+	public Transaction fundTransfer(String sourceMoblieNo, String targetMobileNo, Double amout) throws CustomerNotException, LoginException,BeneficiaryDetailException {
 		
 		
 		Optional<CurrentSessionUser> currentUser = currentSessionDAO.findByMobileNo(sourceMoblieNo);
 		
 		if(!currentUser.isPresent()) {
-			throw new CustomerNotException("Customer not login");
+			throw new LoginException("You need to login first");
 		}
 		
 		Optional<Customer> customerUser = customerDAO.findByMobileNo(sourceMoblieNo);
@@ -102,6 +108,11 @@ public class WalletServiceImpl implements WalletService {
 		
 		Boolean f=true;
 		List<BeneficiaryDetail> beneficiarydetails = wallet.getBeneficiaryDetails();
+		
+		if(beneficiarydetails==null) {
+			throw new BeneficiaryDetailException("You need to add beneficiary to you wallet");
+		}
+		
 		for(BeneficiaryDetail bd:beneficiarydetails) {
 			if (bd.getBeneficiaryMobileNo().equals(targetMobileNo)) {
 				f = false;
@@ -133,10 +144,11 @@ public class WalletServiceImpl implements WalletService {
 		//add to transaction
 		
 		Transaction transaction = new Transaction();
-        transaction.setTransactionType(TransactionType.BANK_TO_WALLET);
+        transaction.setTransactionType(TransactionType.WALLET_TO_WALLET);
         transaction.setTransactionDate(LocalDateTime.now());
         transaction.setAmount(amout);
         transaction.setDescription("Fund Transfer from Wallet to Wallet");
+        transaction.setWalletId(wallet.getWalletId());
         
         wallet.getTransaction().add(transaction);
         
@@ -147,14 +159,16 @@ public class WalletServiceImpl implements WalletService {
 	}
 
 	@Override
-	public Transaction depositeAmount(String mobileNo, Double amount) throws CustomerNotException {
+	public Transaction depositeAmount(String mobileNo, Double amount) throws CustomerNotException, LoginException, InsufficientResourcesException {
 //		dposite to bank
 		//find the customer by the mobileNo;
+		
+		System.out.println("yes i am in the method");
 		
 		Optional<CurrentSessionUser> currentUser = currentSessionDAO.findByMobileNo(mobileNo);
 		
 		if(!currentUser.isPresent()) {
-			throw new CustomerNotException("Customer not login");
+			throw new LoginException("You need to login first");
 		}
 		
 		Optional<Customer> customerUser = customerDAO.findByMobileNo(mobileNo);
@@ -165,37 +179,38 @@ public class WalletServiceImpl implements WalletService {
 //		got the  wallet
 		Wallet wallet = customer.getWallet();
 //		got the bankac
-//		BankAccount bankacc = bankaccountdao.findByWalletId(wallet.getWalletId()); 
-//		
-//		
-//
-//		
-//		if(bankacc==null) {
-//			throw new CustomerNotException("Bank not add to the wallet yet");
-//		}
-//		
-//		if(wallet.getBalance()==null) {
-//			throw new CustomerNotException("Insifficinet balance");
-//		}
-//		if(wallet.getBalance()<amount) {
-//			throw new CustomerNotException("Insufficient balance");
-//		}
-//		
-//		customer.getWallet().setBalance(wallet.getBalance()-amount);
-//		
-//		bankacc.setBankBalance(bankacc.getBankBalance()+amount);
-//		
-//		bankaccountdao.save(bankacc);
-//		walletDao.save(wallet);
+		BankAccount bankacc = bankaccountdao.findByWalletId(wallet.getWalletId()); 
+		
+		
+
+		
+		if(bankacc==null) {
+			throw new NotAnyBankAddedYet("Bank not add to the wallet yet");
+		}
+		
+		if(wallet.getBalance()==null) {
+			throw new InsufficientResourcesException("Insifficinet balance");
+		}
+		if(wallet.getBalance()<amount) {
+			throw new InsufficientResourcesException("Insufficient balance");
+		}
+		
+		customer.getWallet().setBalance(wallet.getBalance()-amount);
+		
+		bankacc.setBankBalance(bankacc.getBankBalance()+amount);
+		
+		bankaccountdao.save(bankacc);
+		walletDao.save(wallet);
 		
 		//if found add the amount to the account;
 		//else throw error;
 		
 		Transaction transaction = new Transaction();
-        transaction.setTransactionType(TransactionType.BANK_TO_WALLET);
+        transaction.setTransactionType(TransactionType.WALLET_TO_BANK);
         transaction.setTransactionDate(LocalDateTime.now());
         transaction.setAmount(amount);
         transaction.setDescription("Fund Transfer from Wallet to Wallet");
+        transaction.setWalletId(wallet.getWalletId());
         
         wallet.getTransaction().add(transaction);
         
@@ -206,17 +221,23 @@ public class WalletServiceImpl implements WalletService {
 	}
 
 	@Override
-	public List<BeneficiaryDetail> getList(String mobileNo) throws CustomerNotException {
+	public List<BeneficiaryDetail> getList(String mobileNo) throws CustomerNotException, LoginException, BeneficiaryDetailException {
 		
 			Optional<CurrentSessionUser> currentuser = currentSessionDAO.findByMobileNo(mobileNo);
 			
 			if(!currentuser.isPresent()) {
-				throw new CustomerNotException("not found");
+				throw new LoginException("You need to login first");
 			}
 			
 			Optional<Customer> custOptional = customerDAO.findByMobileNo(mobileNo);
 			Customer curruser = custOptional.get();
 			Wallet wallet = curruser.getWallet();
+			
+			List<BeneficiaryDetail> beneficiarydetails = wallet.getBeneficiaryDetails();
+			
+			if(beneficiarydetails==null) {
+				throw new BeneficiaryDetailException("You need to add beneficiary to you wallet");
+			}
 		
 			return wallet.getBeneficiaryDetails();
 		
@@ -232,14 +253,14 @@ public class WalletServiceImpl implements WalletService {
 
 	@Override
 	@PutMapping("/addMoney")
-	public Customer addMoney(String mobileNo, Double amount) throws Exception {
+	public Customer addMoney(String mobileNo, Double amount) throws LoginException {
 //	    add 
 		// TODO Auto-generated method stub
 		
 		Optional<CurrentSessionUser> currOptional = currentSessionDAO.findByMobileNo(mobileNo);
 		
 		if(!currOptional.isPresent()) {
-		    throw new CustomerNotException("not found");
+			throw new LoginException("You need to login first");
 		}
 		
 		Optional<Customer> customer = customerDAO.findByMobileNo(mobileNo);
@@ -248,35 +269,40 @@ public class WalletServiceImpl implements WalletService {
 		
 		Wallet wallet = currcustomer.getWallet();
 		
-//		BankAccount bankacc = bankaccountdao.findByWalletId(wallet.getWalletId());
-//		
-//		if(bankacc==null) {
-//		    throw new CustomerNotException("bank not linked");
-//		}
-//		
-//		if(bankacc.getBankBalance()==0 || bankacc.getBankBalance()<amount) {
-//		    throw new CustomerNotException("insufficient balance in bank");
-//		}
-//		
-//		bankacc.setBankBalance(bankacc.getBankBalance()-amount);
-//		
-//		wallet.setBalance(wallet.getBalance()+amount);
-//		
-//		bankaccountdao.save(bankacc);
-//		walletDao.save(wallet);
-//		customerDAO.save(currcustomer);
-//		
+		
+		
+		
+		
+		BankAccount bankacc =  bankaccountdao.findByWalletId(wallet.getWalletId());
+		
+		if(bankacc==null) {
+		    throw new NotAnyBankAddedYet("bank not linked");
+		}
+		
+		if(bankacc.getBankBalance()==0 || bankacc.getBankBalance()<amount) {
+		    throw new InsufficientBalance("insufficient balance in bank");
+		}
+		
+		bankacc.setBankBalance(bankacc.getBankBalance()-amount);
+		
+		wallet.setBalance(wallet.getBalance()+amount);
+		
+		bankaccountdao.save(bankacc);
+		walletDao.save(wallet);
+		customerDAO.save(currcustomer);
+		
 		
 		
 		
 		
 		Transaction transaction = new Transaction();
 
-        transaction.setTransactionType(TransactionType.WALLET_TO_WALLET);
+        transaction.setTransactionType(TransactionType.BANK_TO_WALLET);
         transaction.setTransactionDate(LocalDateTime.now());
 
         transaction.setAmount(amount);
-        transaction.setDescription("Fund Transfer from Wallet to Wallet");
+        transaction.setDescription("Fund Tran");
+        transaction.setWalletId(wallet.getWalletId());
         
         wallet.getTransaction().add(transaction);
         
