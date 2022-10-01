@@ -6,7 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMin;
+
 
 @Entity
 public class BillPayment {
@@ -20,6 +21,7 @@ public class BillPayment {
 	
 	private TransactionType transactionType;
 	
+	@DecimalMin(value = "0.1", inclusive = true)
 	private Double amount;
 	
 	private LocalDateTime time;
