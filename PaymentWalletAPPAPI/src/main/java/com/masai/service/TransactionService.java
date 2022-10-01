@@ -13,19 +13,11 @@ import com.masai.model.Wallet;
 
 public interface TransactionService {
 	
-	
-<<<<<<< HEAD
-	public Transaction addTranscation(Transaction tran);
-	public Set<Transaction> viewAlltransaction(Wallet wallet) throws CustomerNotException;
-	public Set<Transaction> viewTranscationByDate(String from, String to);
-	public Set<Transaction> viewAllTransaction(String type);
-=======
-	
 	public List<Transaction> viewAlltransaction(String  uniqueId)throws UserNotLogedinException, TransactionNotFoundException ;
 	
-	public List<Transaction> viewTranscationByDate(LocalDate from, LocalDate to , String uniqueId)  throws UserNotLogedinException,TransactionNotFoundException ;
+	public List<Transaction> viewTranscationByDate(String from, String to , String uniqueId)  throws UserNotLogedinException,TransactionNotFoundException ;
 		
-	public List<Transaction> viewAllTransaction(String uniqueId,TransactionType type) throws UserNotLogedinException, TransactionNotFoundException;
->>>>>>> 2d1825baeeb2a90f6a1c3852c09c898da285f5f2
+	public List<Transaction> viewAllTransactionbyTransactionType(String uniqueId,TransactionType type) throws UserNotLogedinException, TransactionNotFoundException;
+
 
 }

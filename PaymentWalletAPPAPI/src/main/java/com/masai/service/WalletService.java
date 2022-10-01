@@ -20,7 +20,7 @@ public interface WalletService {
 	
 	public  Double showBalance(String mobileNo) throws CustomerNotException, LoginException;
 	
-	public Transaction fundTransfer(String sourceMoblieNo,String targetMobileNo,Double amout) throws CustomerNotException, BeneficiaryDetailException, LoginException;
+	public Transaction fundTransfer(String sourceMoblieNo,String targetMobileNo,Double amout,String uniqueId) throws CustomerNotException, BeneficiaryDetailException, LoginException;
 	
 	public Transaction depositeAmount(String mobileNo,Double amount) throws CustomerNotException, LoginException, InsufficientResourcesException;
 	

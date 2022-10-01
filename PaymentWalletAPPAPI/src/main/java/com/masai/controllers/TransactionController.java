@@ -5,6 +5,7 @@ import com.masai.exception.UserNotLogedinException;
 import com.masai.model.Transaction;
 import com.masai.model.TransactionType;
 import com.masai.model.Wallet;
+import com.masai.repository.TransactionDao;
 import com.masai.service.TranscationServiceImpl;
 
 import java.time.LocalDate;
@@ -31,13 +32,16 @@ public class TransactionController {
 	private TranscationServiceImpl transactionserviceimpl;
 	
 	
+	@Autowired
+	private TransactionDao dao;
+	
 	
 
 	
 	
 //	public Set<Transaction> viewAlltransaction(Wallet wallet) throws CustomerNotException;
-	@GetMapping("/transation_histroy")
-	public ResponseEntity<List<Transaction>> viewAllTransactionHandler( @RequestBody String uniqueId) throws CustomerNotException, UserNotLogedinException, TransactionNotFoundException{
+	@GetMapping("/transation_histroy/{uniqueId}")
+	public ResponseEntity<List<Transaction>> viewAllTransactionHandler( @PathVariable("uniqueId") String uniqueId) throws CustomerNotException, UserNotLogedinException, TransactionNotFoundException{
 		
 		List<Transaction> allTransaction = transactionserviceimpl.viewAlltransaction(uniqueId);
 		
@@ -47,15 +51,9 @@ public class TransactionController {
 	
 	
 	
-//	public Set<Transaction> viewTranscationByDate(LocalDate from, LocalDate to);
-<<<<<<< HEAD
-	@GetMapping("/historyByDate/{st}/{to}")
-	public ResponseEntity<Set<Transaction>> viewTransactionByDatehandler(@PathVariable("st") String from,@PathVariable("to") String to){
-=======
-	@GetMapping("/historyByDate")
-	public ResponseEntity<List<Transaction>> viewTransactionByDatehandler(LocalDate from,LocalDate to,String uniqueId) throws CustomerNotException, UserNotLogedinException, TransactionNotFoundException{
->>>>>>> 2d1825baeeb2a90f6a1c3852c09c898da285f5f2
-		
+
+	public ResponseEntity<List<Transaction>> viewTransactionByDatehandler(String from,String to,String uniqueId) throws CustomerNotException, UserNotLogedinException, TransactionNotFoundException{
+
 		List<Transaction> historyByDate= transactionserviceimpl.viewTranscationByDate(from,to,uniqueId);
 		
 		return new ResponseEntity<List<Transaction>>(historyByDate,HttpStatus.OK);
@@ -66,10 +64,10 @@ public class TransactionController {
 	
 	
 //	public Set<Transaction> viewAllTransactionaa(String type);
-	@GetMapping("/historybytype/{transactiontype}")
+	@GetMapping("/historybytype/{transactiontype}/{uniqueId}")
 	public ResponseEntity<List<Transaction>> viewAllTransactionByTypeHandler(@PathParam("transactiontype") TransactionType type,@PathVariable String uniqueId) throws CustomerNotException, UserNotLogedinException, TransactionNotFoundException{
 		
-		List<Transaction> TransactionType = transactionserviceimpl.viewAllTransaction(uniqueId,type);
+		List<Transaction> TransactionType = transactionserviceimpl.viewAllTransactionbyTransactionType(uniqueId, type);
 		
 		return new ResponseEntity<List<Transaction>>(TransactionType,HttpStatus.OK);
 	}

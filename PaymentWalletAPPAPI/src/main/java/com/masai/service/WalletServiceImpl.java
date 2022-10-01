@@ -90,10 +90,10 @@ public class WalletServiceImpl implements WalletService {
 
 
 	@Override
-	public Transaction fundTransfer(String sourceMoblieNo, String targetMobileNo, Double amout) throws CustomerNotException, LoginException,BeneficiaryDetailException {
+	public Transaction fundTransfer(String sourceMoblieNo, String targetMobileNo, Double amout,String uniqueId) throws CustomerNotException, LoginException,BeneficiaryDetailException {
 		
 		
-		Optional<CurrentSessionUser> currentUser = currentSessionDAO.findByMobileNo(sourceMoblieNo);
+		Optional<CurrentSessionUser> currentUser = currentSessionDAO.findByUuid(uniqueId);
 		
 		if(!currentUser.isPresent()) {
 			throw new LoginException("You need to login first");
@@ -109,7 +109,7 @@ public class WalletServiceImpl implements WalletService {
 		Boolean f=true;
 		List<BeneficiaryDetail> beneficiarydetails = wallet.getBeneficiaryDetails();
 		
-		if(beneficiarydetails==null) {
+		if(beneficiarydetails==null || beneficiarydetails.size()==0) {
 			throw new BeneficiaryDetailException("You need to add beneficiary to you wallet");
 		}
 		
