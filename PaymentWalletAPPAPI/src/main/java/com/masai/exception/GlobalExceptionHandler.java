@@ -28,7 +28,11 @@ public class GlobalExceptionHandler {
 		MyErrorDetails errorDetails = new MyErrorDetails(LocalDateTime.now(), loginException.getMessage(), request.getDescription(false));
 		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
 	}
-	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<MyErrorDetails> HandleExtraException(MethodArgumentNotValidException methodArgumentNotValidException){
+		MyErrorDetails errorDetails = new MyErrorDetails(LocalDateTime.now(),"Validation Error",methodArgumentNotValidException.getBindingResult().getFieldError().getDefaultMessage());
+		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
+	}
 	
 	
 }
