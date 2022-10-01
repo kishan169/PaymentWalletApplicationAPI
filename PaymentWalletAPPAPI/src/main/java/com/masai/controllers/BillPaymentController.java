@@ -32,13 +32,15 @@ public class BillPaymentController {
 		
 	}
 	
-	@GetMapping("/billpayments")
-	public ResponseEntity<List<BillPayment>> viewAllBillPayment() throws BillPaymentException{
+	@GetMapping("/billpayments/{billId}")
+	public ResponseEntity<BillPayment>getBillPaymentDetailsByBillIDHandler(@PathVariable("billId")Integer billId) throws BillPaymentException{
 		
-		List<BillPayment> viewBP=billpaymentservice.viewBillPayment();
+		BillPayment bp=billpaymentservice.viewBillPayment(billId);
 		
-		return new ResponseEntity<List<BillPayment>>(viewBP,HttpStatus.OK);
+		return new ResponseEntity<BillPayment>(bp, HttpStatus.OK);		
+		
 	}
+	
 	
 	
 

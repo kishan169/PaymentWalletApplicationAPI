@@ -17,24 +17,14 @@ public class BillPayment {
 	
 	private BillType billtype;
 	
+	private TransactionType transactionType;
+	
 	private Double amount;
 	
 	private LocalDateTime time;
 	
 	private Integer walletId;
 
-	public BillPayment() {
-		super();
-	}
-
-	public BillPayment(Integer billId, BillType billtype, Double amount, LocalDateTime time, Integer walletId) {
-		super();
-		this.billId = billId;
-		this.billtype = billtype;
-		this.amount = amount;
-		this.time = time;
-		this.walletId = walletId;
-	}
 
 	public Integer getBillId() {
 		return billId;
