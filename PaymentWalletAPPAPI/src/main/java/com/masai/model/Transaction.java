@@ -27,12 +27,13 @@ public class Transaction {
     
     @CreatedDate
     @CreationTimestamp
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime transactionDate;
     private double amount;
     private String description;
     
-    private Integer walletId;
+    private Integer  walletId;
+  
 
 	/**
 	 * @return the transactionId
@@ -111,15 +112,14 @@ public class Transaction {
 		return walletId;
 	}
 
-	/**
-	 * @param walletId the walletId to set
-	 */
+
+	public Integer getWalletId() {
+		return walletId;
+	}
+
 	public void setWalletId(Integer walletId) {
 		this.walletId = walletId;
 	}
-    
-    
 
-    
 	
 }

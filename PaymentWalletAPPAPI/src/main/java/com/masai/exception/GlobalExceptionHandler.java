@@ -39,6 +39,12 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<MyErrorDetails> MobileNumberException(MethodArgumentNotValidException loginException ){
+		MyErrorDetails errorDetails = new MyErrorDetails(LocalDateTime.now(),"valadiation error",loginException.getBindingResult().getFieldError().getDefaultMessage());
+		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
+	}
+	
 	
 	@ExceptionHandler(BillNotExisttException.class)
 	public ResponseEntity<MyErrorDetails> BillNotExtraException(BillNotExisttException billPaymentException , WebRequest request){

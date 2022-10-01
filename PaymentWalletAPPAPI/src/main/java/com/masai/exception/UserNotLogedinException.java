@@ -1,6 +1,6 @@
 package com.masai.exception;
 
-public class UserNotLogedinException extends RuntimeException {
+public class UserNotLogedinException extends Exception {
 
 	
 	public UserNotLogedinException() {}
