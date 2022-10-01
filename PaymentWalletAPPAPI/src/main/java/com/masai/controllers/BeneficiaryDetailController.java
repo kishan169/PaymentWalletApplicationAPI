@@ -2,6 +2,7 @@ package com.masai.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,28 +26,26 @@ import com.masai.service.LoginServiceImpl;
 @RestController
 public class BeneficiaryDetailController {
 	@Autowired
-	private BeneficiaryDetailServices bSer;
+	private BeneficiaryDetailServices beneficiaryService;
 	
 	@PostMapping("ben")
-	public ResponseEntity<BeneficiaryDetail> addBeneficiaryDetail(@RequestBody BeneficiaryDetail beneficiaryDetail) throws BeneficiaryDetailException{
-		BeneficiaryDetail saved = bSer.addBeneficiary(beneficiaryDetail);
+	public ResponseEntity<BeneficiaryDetail> addBeneficiaryDetail(@Valid @RequestParam  String uuid,@Valid @RequestBody BeneficiaryDetail beneficiaryDetail) throws BeneficiaryDetailException{
+		BeneficiaryDetail saved = beneficiaryService.addBeneficiary(uuid,beneficiaryDetail);
 		return new ResponseEntity<BeneficiaryDetail>(saved,HttpStatus.CREATED);
 	}
 	@PatchMapping("ben/del")
-	public ResponseEntity<BeneficiaryDetail>deleteBeneficiaryDetail(@RequestParam String mobileNo,@RequestParam String beneficiaryMobileNo) throws BeneficiaryDetailException{
-		System.out.println(mobileNo);
-		System.out.println(beneficiaryMobileNo);
-		BeneficiaryDetail deleted = bSer.deleteBeneficiary(mobileNo,beneficiaryMobileNo);
+	public ResponseEntity<BeneficiaryDetail>deleteBeneficiaryDetail(@Valid @RequestParam String uuid,@Valid @RequestParam String beneficiaryMobileNo) throws BeneficiaryDetailException{
+		BeneficiaryDetail deleted = beneficiaryService.deleteBeneficiary(uuid,beneficiaryMobileNo);
 		return new ResponseEntity<BeneficiaryDetail>(deleted,HttpStatus.OK);
 	}
 	@GetMapping("ben/{beneficiaryMobileNo}")
-	public ResponseEntity<BeneficiaryDetail>findBeneficiaryDetailByMobNo(@PathVariable("beneficiaryMobileNo") String MobNo) throws BeneficiaryDetailException{
-		BeneficiaryDetail beneficiaryDetail = bSer.viewBeneficiaryByMobileNo(MobNo);
-		return new ResponseEntity<BeneficiaryDetail>(beneficiaryDetail,HttpStatus.OK);
+	public ResponseEntity<List<BeneficiaryDetail>>findBeneficiaryDetailByMobNo(@Valid @PathVariable("beneficiaryMobileNo") String MobNo) throws BeneficiaryDetailException{
+		List<BeneficiaryDetail> beneficiaryDetail = beneficiaryService.viewBeneficiaryByMobileNo(MobNo);
+		return new ResponseEntity<List<BeneficiaryDetail>>(beneficiaryDetail,HttpStatus.OK);
 	}
-	@PostMapping("ben/customer")
-	public ResponseEntity<List<BeneficiaryDetail>>findBeneficiaryDetailByCustomer(@RequestBody Customer customer) throws BeneficiaryDetailException{
-		List<BeneficiaryDetail> list = bSer.viewAllBeneficiary(customer);
+	@GetMapping("ben/all")
+	public ResponseEntity<List<BeneficiaryDetail>>findBeneficiaryDetailByCustomer(@Valid @RequestParam String uuid) throws BeneficiaryDetailException{
+		List<BeneficiaryDetail> list = beneficiaryService.viewAllBeneficiary(uuid);
 		return new ResponseEntity<List<BeneficiaryDetail>>(list,HttpStatus.OK);
 	}
 }

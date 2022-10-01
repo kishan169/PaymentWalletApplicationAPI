@@ -26,26 +26,15 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
 	}
 	
-<<<<<<< HEAD
-	@ExceptionHandler(InsufficientBalanceException.class)
-	public ResponseEntity<MyErrorDetails> InsufficientBalanceException(InsufficientBalanceException balanceException , WebRequest request){
-=======
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<MyErrorDetails> JPAValidationException(MethodArgumentNotValidException methodArgumentNotValidException){
 		MyErrorDetails errorDetails = new MyErrorDetails(LocalDateTime.now(), "validation Error",methodArgumentNotValidException.getBindingResult().getFieldError().getDefaultMessage());
 		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
 	}
 	
-	
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<MyErrorDetails> HandleExtraException(Exception loginException , WebRequest request){
-		MyErrorDetails errorDetails = new MyErrorDetails(LocalDateTime.now(), loginException.getMessage(), request.getDescription(false));
-		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
-	}
-	
-	@ExceptionHandler(Exception.class)
+
+	@ExceptionHandler(InsufficientBalanceException.class)
 	public ResponseEntity<MyErrorDetails> HandleExtraException(InsufficientBalanceException balanceException , WebRequest request){
->>>>>>> ed96151e1fee44610405b126c1e29b444bd006ec
 		MyErrorDetails errorDetails = new MyErrorDetails(LocalDateTime.now(), balanceException.getMessage(), request.getDescription(false));
 		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
 	}
@@ -62,7 +51,7 @@ public class GlobalExceptionHandler {
 		MyErrorDetails errorDetails = new MyErrorDetails(LocalDateTime.now(), exception.getMessage(), request.getDescription(false));
 		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
 	}
-	
+
 	
 	
 }

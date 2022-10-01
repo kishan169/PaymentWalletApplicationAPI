@@ -7,9 +7,8 @@ import com.masai.model.BeneficiaryDetail;
 import com.masai.model.Customer;
 
 public interface BeneficiaryDetailServices {
-	public BeneficiaryDetail addBeneficiary(BeneficiaryDetail bd) throws BeneficiaryDetailException;
-	public BeneficiaryDetail deleteBeneficiary(String bd,String mobile) throws BeneficiaryDetailException;
-
-	public BeneficiaryDetail viewBeneficiaryByMobileNo(String mobNo) throws BeneficiaryDetailException;
-	public List<BeneficiaryDetail> viewAllBeneficiary(Customer customer) throws BeneficiaryDetailException;
+	public BeneficiaryDetail addBeneficiary(String uniqueId,BeneficiaryDetail beneficiaryDetail) throws BeneficiaryDetailException;
+	public BeneficiaryDetail deleteBeneficiary(String uniqueId,String benficiaryMobileNo) throws BeneficiaryDetailException;
+	public List<BeneficiaryDetail> viewBeneficiaryByMobileNo(String beneficiaryMobileNo) throws BeneficiaryDetailException;
+	public List<BeneficiaryDetail> viewAllBeneficiary(String uniqueId) throws BeneficiaryDetailException;
 }

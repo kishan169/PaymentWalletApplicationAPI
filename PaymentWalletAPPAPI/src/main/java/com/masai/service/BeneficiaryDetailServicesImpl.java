@@ -31,65 +31,70 @@ public class BeneficiaryDetailServicesImpl implements BeneficiaryDetailServices 
 	
 
 	@Override
-	public BeneficiaryDetail addBeneficiary(BeneficiaryDetail beneficiaryDetail) throws BeneficiaryDetailException {
-		CurrentSessionUser user =  LoginServiceImpl.getCurrentUser();
+	public BeneficiaryDetail addBeneficiary(String uniqueId,BeneficiaryDetail beneficiaryDetail) throws BeneficiaryDetailException {
+		Optional<CurrentSessionUser> currentSessionUser= sDao.findByUuid(uniqueId);
+		if(currentSessionUser.isPresent()) {
+			Optional<Customer> userOptional=customerDao.findById(currentSessionUser.get().getUserId());
+			if(userOptional.isPresent()) {
+				Wallet wallet = userOptional.get().getWallet();
+				beneficiaryDetail.setWalletId(wallet.getWalletId());
+				List<BeneficiaryDetail> list = wallet.getBeneficiaryDetails();
+				list.add(beneficiaryDetail);
+				BeneficiaryDetail saved =bDao.save(beneficiaryDetail);
+				return saved;
+			}else {
+				throw new BeneficiaryDetailException("No Customer found with id "+currentSessionUser.get().getUserId());
+			}
+		}
 		
-		Optional<Customer> customer = customerDao.findById(user.getUserId());
-		if(customer.isPresent()) {
-		Wallet wallet = customer.get().getWallet();
-		System.out.println(wallet.getWalletId());
-		//BeneficiaryDetail saved =bDao.save(bd);
-		beneficiaryDetail.setWalletId(wallet.getWalletId());
-		List<BeneficiaryDetail> list = wallet.getBeneficiaryDetails();
-		list.add(beneficiaryDetail);
-		BeneficiaryDetail saved =bDao.save(beneficiaryDetail);
-
-		return saved;
-		}else {
+		else {
 			throw new BeneficiaryDetailException("You need to login first!");
 		}
 	}
 
 	@Override
-	public BeneficiaryDetail deleteBeneficiary(String customerMobile,String benficiaryMobile) throws BeneficiaryDetailException {
-		Optional<Customer> customerOption=customerDao.findByMobileNo(customerMobile);
-		if(customerOption.isPresent()) {
-			Customer customer = customerOption.get();
-			Wallet wallet=customer.getWallet();
-			
-			List<BeneficiaryDetail>list = bDao.findByWalletId(wallet.getWalletId());
-			if(list.isEmpty()){
-				throw new BeneficiaryDetailException("Wallet is empty");
-			}else {
-				int index=-1;
-				for(int i=0;i<list.size();i++) {
-					if(list.get(i).getBeneficiaryMobileNo().equals(benficiaryMobile)) {
-						index=i;
-						break;
+	public BeneficiaryDetail deleteBeneficiary(String uniqueId,String benficiaryMobile) throws BeneficiaryDetailException {
+		Optional<CurrentSessionUser> currentSessionUser= sDao.findByUuid(uniqueId);
+		if(currentSessionUser.isPresent()) {
+			Optional<Customer> userOptional=customerDao.findById(currentSessionUser.get().getUserId());
+			if(userOptional.isPresent()) {
+				Customer customer = userOptional.get();
+				Wallet wallet = customer.getWallet();
+				List<BeneficiaryDetail> list=wallet.getBeneficiaryDetails();
+				if(!list.isEmpty()) {
+					int index=-1;
+					for(int i=0;i<list.size();i++) {
+						if(list.get(i).getBeneficiaryMobileNo().equals(benficiaryMobile)) {
+							index=i;
+							break;
+						}
 					}
+					if(index==-1) throw new BeneficiaryDetailException("Beneficiary Not found");
+					BeneficiaryDetail beneficiaryDetail=list.get(index);
+					BeneficiaryDetail updated=list.remove(index);
+					wallet.setBeneficiaryDetails(list);
+					bDao.delete(updated);
+					return beneficiaryDetail;
+					
+				}else {
+					throw new BeneficiaryDetailException("There is no beneficiary found in the list");
 				}
-				if(index==-1) throw new BeneficiaryDetailException("Beneficiary Not found with Mobile No "+benficiaryMobile);
-				BeneficiaryDetail beneficiaryDetail=list.get(index);
-				System.out.println(beneficiaryDetail.getBeneficiaryMobileNo());
-				System.out.println(index);
-				BeneficiaryDetail updated=list.remove(index);
-				wallet.setBeneficiaryDetails(list);
-				bDao.delete(updated);
 				
-				return beneficiaryDetail;
-				
+			}else {
+				throw new BeneficiaryDetailException("No Customer found with id "+currentSessionUser.get().getUserId());
 			}
-			
-		}else {
-			throw new BeneficiaryDetailException("No Customer found with the mobile no "+customerMobile);
+		}
+		
+		else {
+			throw new BeneficiaryDetailException("You need to login first!");
 		}
 		
 	}
 
 	@Override
-	public BeneficiaryDetail viewBeneficiaryByMobileNo(String beneficiaryMobileNo) throws BeneficiaryDetailException {
-		BeneficiaryDetail beneficiaryDetail=bDao.findBybeneficiaryMobileNo(beneficiaryMobileNo);
-		if(beneficiaryDetail == null) {
+	public List<BeneficiaryDetail> viewBeneficiaryByMobileNo(String beneficiaryMobileNo) throws BeneficiaryDetailException {
+		List<BeneficiaryDetail> beneficiaryDetail=bDao.findBybeneficiaryMobileNo(beneficiaryMobileNo);
+		if(beneficiaryDetail.isEmpty()) {
 			throw new BeneficiaryDetailException("No Beneficiary found with Mobile No : "+beneficiaryMobileNo);
 		}else {
 			return beneficiaryDetail;
@@ -97,19 +102,27 @@ public class BeneficiaryDetailServicesImpl implements BeneficiaryDetailServices 
 	}
 
 	@Override
-	public List<BeneficiaryDetail> viewAllBeneficiary(Customer customer) throws BeneficiaryDetailException {
-		Optional<Customer> customerOpt=customerDao.findByMobileNo(customer.getMobileNo());
-		if(customerOpt.isPresent()) {
-			Customer existingCustomer=customerOpt.get();
-			List<BeneficiaryDetail> list = existingCustomer.getWallet().getBeneficiaryDetails();
-			if(list.isEmpty()) {
-				throw new BeneficiaryDetailException("No Beneficiary found with id : "+existingCustomer.getUserId());
+	public List<BeneficiaryDetail> viewAllBeneficiary(String uniqueId) throws BeneficiaryDetailException {
+		Optional<CurrentSessionUser> currentSessionUser= sDao.findByUuid(uniqueId);
+		if(currentSessionUser.isPresent()) {
+			CurrentSessionUser currUser =  currentSessionUser.get();
+			int userid=currUser.getUserId();
+			Optional<Customer> customerOpt = customerDao.findById(userid);
+			if(customerOpt.isPresent()) {
+				Customer customer = customerOpt.get();
+				List<BeneficiaryDetail>list =customer.getWallet().getBeneficiaryDetails();
+				if(list.isEmpty()) {
+					throw new BeneficiaryDetailException("No Beneficiary found in the list");
+				}else {
+					return list;
+				}
 			}else {
-				return list;
+				throw new BeneficiaryDetailException("You need to login first");
 			}
+			
 		}
 		else {
-			throw new BeneficiaryDetailException("No customer found");	
+			throw new BeneficiaryDetailException("You need to login first");	
 		}
 	}
 
