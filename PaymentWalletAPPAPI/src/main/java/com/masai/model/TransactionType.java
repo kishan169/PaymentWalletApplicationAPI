@@ -9,7 +9,6 @@ public enum TransactionType {
 	DEBITCART_PAYMENT,
 	CREDITCARD_PAYMENT,
 	INTERNET_BANKING,
-	PAY_ON_RENT,
 	AUTO_PAY;
 
 }

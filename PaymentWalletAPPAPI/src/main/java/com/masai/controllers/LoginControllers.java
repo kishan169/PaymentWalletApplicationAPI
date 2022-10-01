@@ -1,6 +1,7 @@
 package com.masai.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,7 @@ import com.masai.model.Customer;
 import com.masai.service.LoginService;
 import com.masai.service.CustomerService;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 public class LoginControllers {
 	

@@ -24,13 +24,6 @@ public class BeneficiaryDetail {
 	
 	private Integer walletId;
 
-//    public Integer getGetBeneficiaryId() {
-//        return getBeneficiaryId;
-//    }
-//
-//    public void setGetBeneficiaryId(Integer getBeneficiaryId) {
-//        this.getBeneficiaryId = getBeneficiaryId;
-//    }
 
     public String getBeneficiaryMobileNo() {
         return beneficiaryMobileNo;
