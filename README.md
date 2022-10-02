@@ -1,6 +1,10 @@
 # PaymentWalletApplicationAPI
 Live Link:-  <a target="_blank" >https://payment-wallet-api.netlify.app/</a>
 
+This is the collabartive project which is our Backend project based on SpringBoot JPA (API).
+This is the Payment API project with the help of this we can  make various operations like Transaction,Bill payment,Transaction history,Add Balance to Wallet etc. 
+A Colloborative Project build by 5 Team member in 5 working Day.
+
 ## Entity Relationship Diagram
 
 
@@ -22,9 +26,15 @@ Live Link:-  <a target="_blank" >https://payment-wallet-api.netlify.app/</a>
 - Authentication of signUp and Login
 - Input Validation
 - Implement Login and logout Functionality with CurrentSeesionUser table.
-
-
-A Colloborative Project build by 5 Team member in 5 working Day.
+   
+ ## Installation & Run
+ - Before running the API server, we should update the database config inside the application.properties file.
+ - Update the port number, username and password as per our local database config.  
+    - server.port=8080
+    - spring.datasource.url=jdbc:mysql://localhost:3306/projectDB;
+    - spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+    - spring.datasource.username=root
+    - spring.datasource.password=root
 
 ## Tech-Stack
 
