@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import com.masai.exception.BankAccountNotExsists;
 import com.masai.exception.BeneficiaryDetailException;
 import com.masai.exception.CustomerNotException;
-import com.masai.exception.InsufficientBalance;
+import com.masai.exception.InsufficientBalanceException;
 import com.masai.exception.LoginException;
 import com.masai.exception.NotAnyBankAddedYet;
 import com.masai.model.BankAccount;
@@ -84,7 +84,7 @@ public class WalletServiceImpl implements WalletService {
 
 
 	@Override
-	public Transaction fundTransfer(String sourceMoblieNo, String targetMobileNo, Double amout,String uniqueId) throws CustomerNotException, LoginException,BeneficiaryDetailException {
+	public Transaction fundTransfer(String sourceMoblieNo, String targetMobileNo, Double amout,String uniqueId) throws CustomerNotException, LoginException,BeneficiaryDetailException, InsufficientBalanceException {
 		
 		Optional<CurrentSessionUser> currentUser = currentSessionDAO.findByUuid(uniqueId);
 		if(!currentUser.isPresent()) {
@@ -125,7 +125,7 @@ public class WalletServiceImpl implements WalletService {
 		Customer tragetCustomer = tragetopt.get();
 		
 		if(wallet.getBalance()<amout || wallet.getBalance()==null) {
-			throw new CustomerNotException("Insifficent balance");
+			throw new InsufficientBalanceException("Insufficent balance");
 		}
 		
 		wallet.setBalance(wallet.getBalance()-amout);
@@ -151,7 +151,7 @@ public class WalletServiceImpl implements WalletService {
 	}
 
 	@Override
-	public Transaction depositeAmount(String uniqueId, Double amount) throws CustomerNotException, LoginException, InsufficientResourcesException {
+	public Transaction depositeAmount(String uniqueId, Double amount) throws CustomerNotException, LoginException, InsufficientBalanceException {
 		
 		Optional<CurrentSessionUser> currentUser = currentSessionDAO.findByUuid(uniqueId);
 		
@@ -172,11 +172,8 @@ public class WalletServiceImpl implements WalletService {
 			throw new NotAnyBankAddedYet("Bank Account not added to the wallet yet");
 		}
 		
-		if(wallet.getBalance()==null) {
-			throw new InsufficientResourcesException("Insifficinet balance");
-		}
 		if(wallet.getBalance()<amount) {
-			throw new InsufficientResourcesException("Insufficient balance");
+			throw new InsufficientBalanceException("Insufficient balance");
 		}
 		
 		customer.getWallet().setBalance(wallet.getBalance()-amount);
@@ -216,7 +213,7 @@ public class WalletServiceImpl implements WalletService {
 			List<BeneficiaryDetail> beneficiarydetails = wallet.getBeneficiaryDetails();
 			
 			if(beneficiarydetails==null) {
-				throw new BeneficiaryDetailException("You need to add beneficiary to you wallet");
+				throw new BeneficiaryDetailException("You need to add beneficiary to your wallet");
 			}
 		
 			return wallet.getBeneficiaryDetails();
@@ -224,7 +221,7 @@ public class WalletServiceImpl implements WalletService {
 	}
 
 	
-	public Customer addMoney(String uniqueId, Double amount) throws LoginException, CustomerNotException {
+	public Customer addMoney(String uniqueId, Double amount) throws LoginException, CustomerNotException, InsufficientBalanceException {
 
 		Optional<CurrentSessionUser> currOptional = currentSessionDAO.findByUuid(uniqueId);
 		
@@ -238,11 +235,11 @@ public class WalletServiceImpl implements WalletService {
 		BankAccount bankacc = bankaccountdao.findByWalletId(wallet.getWalletId());
 
 		if(bankacc==null) {
-		    throw new CustomerNotException("bank not linked");
+		    throw new CustomerNotException("Bank not linked");
 		}
 		
 		if(bankacc.getBankBalance()==0 || bankacc.getBankBalance()<amount) {
-		    throw new CustomerNotException("insufficient balance in bank");
+		    throw new InsufficientBalanceException("Insufficient balance in bank");
 		}
 		
 		bankacc.setBankBalance(bankacc.getBankBalance()-amount);
@@ -260,11 +257,8 @@ public class WalletServiceImpl implements WalletService {
         transaction.setAmount(amount);
 
         transaction.setDescription("Fund Transfer from Bank to Wallet is successfull !");
-
-        transaction.setDescription("Fund Tran");
         transaction.setWalletId(wallet.getWalletId());
         
-
         wallet.getTransaction().add(transaction);
         transactiodao.save(transaction);
         

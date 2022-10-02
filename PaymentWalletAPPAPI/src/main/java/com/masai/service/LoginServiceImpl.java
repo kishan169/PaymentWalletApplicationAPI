@@ -16,9 +16,7 @@ import com.masai.repository.CustomerDAO;
 
 @Service
 public class LoginServiceImpl implements LoginService{
-	
-	public static CurrentSessionUser csu;
-	
+
 	@Autowired
 	private CustomerDAO signUpDAO;
 	
@@ -58,7 +56,6 @@ public class LoginServiceImpl implements LoginService{
 			CurrentSessionUser currentSessionUser2 = new CurrentSessionUser(newSignUp.getUserId(), key, newSignUp.getMobileNo(),LocalDateTime.now());
 			loginDAO.save(loginData);
 			SessionDAO.save(currentSessionUser2);
-			csu = currentSessionUser2;
 			return currentSessionUser2.toString();
 		}else {
 			throw new LoginException("Invalid mobile and Password");
@@ -66,9 +63,6 @@ public class LoginServiceImpl implements LoginService{
 		
 	}
 	
-	public static CurrentSessionUser getCurrentUser() {
-		return csu;
-	}
 
 	@Override
 	public String logOutFromAccount(String key) throws LoginException {
@@ -86,7 +80,7 @@ public class LoginServiceImpl implements LoginService{
 		
 		loginDAO.delete(logindata.get());
 		
-		return "Logged Out....";
+		return "Logged Out Succefully....";
 	}
 	
 

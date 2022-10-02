@@ -17,10 +17,19 @@ public class BeneficiaryDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer beneficiaryId;
+	
 	@NotBlank
 	@NotNull
 	@Size(min = 4,max = 25 ,message = "Name length minimum 4 to 25")
 	private String beneficiaryName;
+	
+	@NotBlank
+	@NotNull
+	@Size(min = 10,max = 10 ,message = "mobile number must be in 10 digits!")
+	private String beneficiaryMobileNo;
+	
+	private Integer walletId;
+
 	public BeneficiaryDetail() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -60,16 +69,4 @@ public class BeneficiaryDetail {
 		this.walletId = walletId;
 	}
 
-	@NotBlank
-	@NotNull
-	@Size(min = 10,max = 10 ,message = "{Mobile.invalid}")
-	private String beneficiaryMobileNo;
-	
-	private Integer walletId;
-
-
-	
-	
-	
-	
 }

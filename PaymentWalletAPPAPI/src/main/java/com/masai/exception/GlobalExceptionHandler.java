@@ -26,7 +26,6 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
 	}
 	
-	
 
 	@ExceptionHandler(InsufficientBalanceException.class)
 	public ResponseEntity<MyErrorDetails> HandleExtraException(InsufficientBalanceException balanceException , WebRequest request){

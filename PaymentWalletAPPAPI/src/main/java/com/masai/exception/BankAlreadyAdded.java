@@ -1,6 +1,6 @@
 package com.masai.exception;
 
-public class BankAlreadyAdded extends RuntimeException {
+public class BankAlreadyAdded extends Exception {
 
 	public BankAlreadyAdded() {
 		super();

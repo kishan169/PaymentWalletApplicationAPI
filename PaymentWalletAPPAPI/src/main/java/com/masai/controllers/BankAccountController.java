@@ -49,7 +49,7 @@ public class BankAccountController {
 	}
 	
 	@GetMapping("/{id}")
-	public  ResponseEntity<BankAccount> viewAllAccountDetails(@PathVariable("id") String uniqueId) throws NotAnyBankAddedYet, UserNotLogedinException {
+	public  ResponseEntity<BankAccount> viewAllAccountDetails(@PathVariable("id") String uniqueId) throws NotAnyBankAddedYet, UserNotLogedinException, BankAccountNotExsists {
 		BankAccount accountDetails = bankService.viewAllAccount(uniqueId);
 		return new ResponseEntity<BankAccount>(accountDetails,HttpStatus.ACCEPTED);
 	}

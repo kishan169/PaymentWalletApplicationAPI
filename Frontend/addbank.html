@@ -91,7 +91,7 @@ async function deleteAccount(){
 async function getBankDetail(){
     let id = document.getElementById("key").value;
 
-    let response = await fetch('http://localhost:8888/bank/-2040768860' ,{
+    let response = await fetch(`http://localhost:8888/bank/${id}` ,{
         method: 'GET',
         headers : {'Content-Type' : 'application/json'},
     });

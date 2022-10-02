@@ -102,7 +102,7 @@ public class BanKAccountServiceImpl implements BankAccountService{
 	}
 
 	@Override
-	public BankAccount viewAllAccount(String uniqueId) throws UserNotLogedinException, NotAnyBankAddedYet {
+	public BankAccount viewAllAccount(String uniqueId) throws UserNotLogedinException, NotAnyBankAddedYet, BankAccountNotExsists {
 		Optional<CurrentSessionUser> currentUser =  sessionDao.findByUuid(uniqueId);
 		
 		if(!currentUser.isPresent()) {

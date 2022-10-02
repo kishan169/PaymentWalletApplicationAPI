@@ -20,7 +20,6 @@ public class CurrentUserSessionServiceImpl implements CurrentUserSessionService{
 	@Autowired
 	private CustomerDAO signUpDAO;
 	
-
 	@Override
 	public CurrentSessionUser getCurrentUserSession(String key) throws LoginException {
 		Optional<CurrentSessionUser> currentSessionuser = sessionDAO.findByUuid(key);

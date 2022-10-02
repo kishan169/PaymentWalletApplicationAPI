@@ -43,7 +43,7 @@ public class TranscationServiceImpl implements TransactionService{
 		Optional<CurrentSessionUser> optional = sessionDao.findByUuid(uniqueId);
 		
 		if(!optional.isPresent()) {
-			throw new UserNotLogedinException("User is not Login");
+			throw new UserNotLogedinException("User is not Logged in");
 		}
 		
 		Optional<Customer> customer=  customerDAO.findById(optional.get().getUserId());
@@ -56,7 +56,7 @@ public class TranscationServiceImpl implements TransactionService{
 		if(transactions.size()>0) {
 			return transactions;
 		}else {
-			throw new TransactionNotFoundException("trnasation not found");
+			throw new TransactionNotFoundException("Not found any transaction with wallet");
 		}
 		
 	}
@@ -67,15 +67,14 @@ public class TranscationServiceImpl implements TransactionService{
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		
-		
-
 		LocalDate start = LocalDate.parse(from, formatter);
 		LocalDate end = LocalDate.parse(to, formatter);
 		
+		System.out.println(from);
 		Optional<CurrentSessionUser> optional = sessionDao.findByUuid(uniqueId);
 		
 		if(!optional.isPresent()) {
-			throw new UserNotLogedinException("User not logedin");
+			throw new UserNotLogedinException("User not logged in");
 		}
 		
 		Optional<Customer> customer=  customerDAO.findById(optional.get().getUserId());
@@ -84,8 +83,7 @@ public class TranscationServiceImpl implements TransactionService{
 		System.out.println(wallet.getWalletId());
 		List<Transaction> transaction = transactiondao.findByWalletId(wallet.getWalletId());
 		
-		
-		List<Transaction> transactionbydate = new ArrayList<>();
+		List<Transaction> transactionbydate = transactiondao.findByTransactionDate(start);
 		
 		for(Transaction tr: transaction) {
 			LocalDateTime localDateTime = tr.getTransactionDate();
@@ -110,7 +108,7 @@ public class TranscationServiceImpl implements TransactionService{
 		Optional<CurrentSessionUser> optional = sessionDao.findByUuid(uniqueId);
 		
 		if(!optional.isPresent()) {
-			throw new UserNotLogedinException("User not logedin");
+			throw new UserNotLogedinException("User not logged In");
 		}
 		
 		Optional<Customer> customer=  customerDAO.findById(optional.get().getUserId());
@@ -118,10 +116,17 @@ public class TranscationServiceImpl implements TransactionService{
 		List<Transaction> transaction = wallet.getTransaction();
 		List<Transaction> transactionslist = transactiondao.getTransactionByTransactionType(type);
 		
-		if(transactionslist.size()>0) {
-			return transactionslist;
+		List<Transaction> transactionLists= new ArrayList<>();
+		for(Transaction tr: transactionslist) {
+			if(tr.getWalletId()==wallet.getWalletId()) {
+				transactionLists.add(tr);
+			}
+		}
+		
+		if(transactionLists.size()>0) {
+			return transactionLists;
 		}else {
-			throw new TransactionNotFoundException("trnasation not found");
+			throw new TransactionNotFoundException("Transaction not found");
 		}
 	}
 
