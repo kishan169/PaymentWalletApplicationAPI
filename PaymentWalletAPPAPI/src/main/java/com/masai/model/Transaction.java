@@ -31,7 +31,7 @@ public class Transaction {
     
     private double amount;
     
-    private String description;
+	private String description;
     
     private Integer  walletId;
   
@@ -52,10 +52,6 @@ public class Transaction {
 		this.transactionType = transactionType;
 	}
 
-	public LocalDateTime getTransactionDate() {
-		return transactionDate;
-	}
-
 	public void setTransactionDate(LocalDateTime transactionDate) {
 		this.transactionDate = transactionDate;
 	}
@@ -70,6 +66,10 @@ public class Transaction {
 
 	public String getDescription() {
 		return description;
+	}
+
+	public LocalDateTime getTransactionDate() {
+		return transactionDate;
 	}
 
 	public void setDescription(String description) {
@@ -93,7 +93,4 @@ public class Transaction {
 	}
 
 
-
-
-	
 }
