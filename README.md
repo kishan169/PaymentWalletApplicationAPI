@@ -4,7 +4,7 @@
 
 
 
-![Entity Relation Diagaram]([https://ibb.co/rsLncR4](https://i.imgur.com/SeX80BI.jpg))
+<img src="https://i.imgur.com/SeX80BI.jpg" alt="ER Diagram"/>
 
 ## Features
 - User Login / Signup 
