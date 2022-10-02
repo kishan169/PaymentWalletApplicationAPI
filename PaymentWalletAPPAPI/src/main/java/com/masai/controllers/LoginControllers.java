@@ -3,6 +3,8 @@ package com.masai.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,14 +26,15 @@ public class LoginControllers {
 	private LoginService loginService;
 	
 	@PostMapping("/login")
-	public String loginHandler(@Valid @RequestBody LogIn loginData) throws LoginException {
-		return loginService.logInAccount(loginData);
+	public ResponseEntity<String> loginHandler(@Valid @RequestBody LogIn loginData) throws LoginException {
+		String login = loginService.logInAccount(loginData);
+		return new ResponseEntity<String>(login,HttpStatus.OK);
 	}
 	
 	@PatchMapping("/logout")
-	public String logOutFromAccount(@RequestParam String key) throws LoginException
-	{
-		return loginService.logOutFromAccount(key);
+	public ResponseEntity<String> logOutFromAccount(@RequestParam String key) throws LoginException{
+		String logout = loginService.logOutFromAccount(key);
+		return new ResponseEntity<String>(logout,HttpStatus.OK);
 	}
 	
 	

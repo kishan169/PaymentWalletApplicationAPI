@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,9 +33,9 @@ import com.masai.repository.SessionDAO;
 import com.masai.service.CurrentUserSessionServiceImpl;
 import com.masai.service.CustomerServiceImpl;
 import com.masai.service.WalletServiceImpl;
-
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/Wallet")
+@RequestMapping("/wallet")
 public class WalletController {
 
 	@Autowired

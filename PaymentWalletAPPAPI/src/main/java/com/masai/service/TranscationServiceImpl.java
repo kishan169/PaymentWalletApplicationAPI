@@ -25,7 +25,6 @@ import io.swagger.v3.oas.annotations.servers.Server;
 @Service
 public class TranscationServiceImpl implements TransactionService{
 	
-	
 	@Autowired
 	private WalletDao walletdao;
 	
@@ -79,9 +78,7 @@ public class TranscationServiceImpl implements TransactionService{
 			throw new UserNotLogedinException("User not logedin");
 		}
 		
-		
 		Optional<Customer> customer=  customerDAO.findById(optional.get().getUserId());
-		
 		
 		Wallet wallet = customer.get().getWallet();
 		System.out.println(wallet.getWalletId());
