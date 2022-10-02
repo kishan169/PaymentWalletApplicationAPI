@@ -1,5 +1,6 @@
 package com.masai.service;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -61,7 +62,6 @@ public class TranscationServiceImpl implements TransactionService{
 		
 	}
 
-
 	@Override
 	public List<Transaction> viewTranscationByDate(String from, String  to,String uniqueId) throws UserNotLogedinException,TransactionNotFoundException {
 		
@@ -70,7 +70,6 @@ public class TranscationServiceImpl implements TransactionService{
 		LocalDate start = LocalDate.parse(from, formatter);
 		LocalDate end = LocalDate.parse(to, formatter);
 		
-		System.out.println(from);
 		Optional<CurrentSessionUser> optional = sessionDao.findByUuid(uniqueId);
 		
 		if(!optional.isPresent()) {
@@ -80,25 +79,20 @@ public class TranscationServiceImpl implements TransactionService{
 		Optional<Customer> customer=  customerDAO.findById(optional.get().getUserId());
 		
 		Wallet wallet = customer.get().getWallet();
-		System.out.println(wallet.getWalletId());
+		
+		DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		List<Transaction> transaction = transactiondao.findByWalletId(wallet.getWalletId());
+		List<Transaction> trans = new ArrayList<>();
 		
-		List<Transaction> transactionbydate = transactiondao.findByTransactionDate(start);
-		
-		for(Transaction tr: transaction) {
-			LocalDateTime localDateTime = tr.getTransactionDate();
-			String date = localDateTime.getDayOfMonth() + "-" + localDateTime.getMonthValue() + "-"+ localDateTime.getYear();
-			
-			LocalDate temp = LocalDate.parse(date, formatter);
-			
+		for(int i = 0 ; i<transaction.size() ; i++) {
+			String str1 =  transaction.get(i).getTransactionDate().format(formatter2);
+			LocalDate temp = LocalDate.parse(str1, formatter);
 			if ((temp.isAfter(start) && temp.isBefore(end)) || temp.equals(start) || temp.equals(end)) {
-				
-				transactionbydate.add(tr);
+				trans.add(transaction.get(i));
 			}
 		}
-		
-		return transactionbydate;
-		
+		return trans;
+
 	}
 
 

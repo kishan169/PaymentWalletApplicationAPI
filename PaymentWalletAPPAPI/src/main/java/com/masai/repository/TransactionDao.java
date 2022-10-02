@@ -19,4 +19,6 @@ public interface TransactionDao extends JpaRepository<Transaction, Integer>{
 	public List<Transaction> getTransactionByTransactionType(TransactionType type);
 
 	public List<Transaction> findByTransactionDate(LocalDate date);
+	
+
 }
