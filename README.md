@@ -36,8 +36,8 @@ A Colloborative Project build by 5 Team member in 5 working Day.
 - Java-Script
 
 # Team-Members
-- Kishan Savaj (fw18_0169)
-- Yogesh Jagtap
-- Deepak Kumar Singh
-- Surag
-- Surya Moharana
+- Kishan Savaj [@kishan169](https://github.com/kishan169)
+- Yogesh Jagtap [jagtapyogesh41](https://github.com/jagtapyogesh41)
+- Deepak Kumar Singh [@Dks-believer](https://github.com/Dks-believer)
+- Surag [SuragVC] (https://github.com/SuragVC)
+- Surya Moharana [SuryAMoharana] (https://github.com/SuryAMoharana)
