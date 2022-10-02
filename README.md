@@ -64,3 +64,22 @@ A Colloborative Project build by 5 Team member in 5 working Day.
 ## Benificiary Details
 
 ![Screenshot (320)](https://user-images.githubusercontent.com/97676470/193452144-89e944df-c8de-4355-b241-fe0dd1b6a177.png)
+
+# Backend
+
+## Swagger UI
+
+![Screenshot (321)](https://user-images.githubusercontent.com/97676470/193454568-b4e6c1b4-bcf7-4a39-b544-28c4d83c67bf.png)
+
+## Bank Account controller and Basic error controller
+
+
+![Screenshot (322)](https://user-images.githubusercontent.com/97676470/193454629-f234e6a3-c789-4140-8970-282ce284b9b4.png)
+
+## Login, SignUp, Transaction, Wallet Controller
+![Screenshot (324)](https://user-images.githubusercontent.com/97676470/193454681-56f20521-7045-4fd4-b91f-ed31036ccde9.png)
+
+## Benificiary Detail and Bill Payment controller
+![Screenshot (325)](https://user-images.githubusercontent.com/97676470/193454749-00148c65-19a9-455f-8c29-5aa9ef7ef670.png)
+
+![thank-you-message-person-using-laptop-computer-thank-you-message-person-using-laptop-computer-165172636](https://user-images.githubusercontent.com/97676470/193455146-6d60ca42-0811-46b0-ad3f-0c49a1296fa5.jpg)
