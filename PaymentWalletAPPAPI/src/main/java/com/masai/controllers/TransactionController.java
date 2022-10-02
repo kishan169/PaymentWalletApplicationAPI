@@ -51,8 +51,9 @@ public class TransactionController {
 	
 	
 	
-
-	public ResponseEntity<List<Transaction>> viewTransactionByDatehandler(String from,String to,String uniqueId) throws CustomerNotException, UserNotLogedinException, TransactionNotFoundException{
+	@GetMapping("/{from}/{to}/{id}")
+	public ResponseEntity<List<Transaction>> viewTransactionByDatehandler(@PathVariable("from") String from,
+			@PathVariable("to") String to,@PathVariable("id") String uniqueId) throws CustomerNotException, UserNotLogedinException, TransactionNotFoundException{
 
 		List<Transaction> historyByDate= transactionserviceimpl.viewTranscationByDate(from,to,uniqueId);
 		

@@ -22,10 +22,10 @@ public interface WalletService {
 	
 	public Transaction fundTransfer(String sourceMoblieNo,String targetMobileNo,Double amout,String uniqueId) throws CustomerNotException, BeneficiaryDetailException, LoginException;
 	
-	public Transaction depositeAmount(String mobileNo,Double amount) throws CustomerNotException, LoginException, InsufficientResourcesException;
+	public Transaction depositeAmount(String uniqueId,Double amount) throws CustomerNotException, LoginException, InsufficientResourcesException;
 	
-	public List<BeneficiaryDetail> getList(String mobileNo) throws CustomerNotException, LoginException, BeneficiaryDetailException;
+	public List<BeneficiaryDetail> getList(String uniqueId) throws CustomerNotException, LoginException, BeneficiaryDetailException;
 	
-	public Customer addMoney(String mobileNo, Double amount) throws Exception;
+	public Customer addMoney(String uniqueId, Double amount) throws Exception;
 	
 }

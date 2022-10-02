@@ -16,9 +16,9 @@ public interface TransactionDao extends JpaRepository<Transaction, Integer>{
 	
 
 	
-//	@Query(value = " SELECT t FROM Transaction t  where t.TransactionDate between ?1 and ?2")
-//	@Query("select t from transaction t where t.transactionDate between :?1 and :?2")
-//	public List<Transaction> getTransactionByTransactionDate(LocalDate to,LocalDate from);
+//	@Query(value = " SELECT t FROM Transaction t  where t.TransactionDate BETWEEN ?1 and ?2")
+//	@Query("select t from Transaction t where t.TransactionDate between :?1 and :?2")
+	public List<Transaction> findByWalletId(Integer walletId);
 
 
 	

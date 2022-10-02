@@ -34,7 +34,7 @@ import com.masai.service.CustomerServiceImpl;
 import com.masai.service.WalletServiceImpl;
 
 @RestController
-// @RequestMapping("/Wallet")
+@RequestMapping("/Wallet")
 public class WalletController {
 
 	@Autowired
@@ -44,51 +44,43 @@ public class WalletController {
 	private CustomerServiceImpl customerServiceImpl;
 
 	@Autowired
-	private SessionDAO sessiondao;
-
-	@Autowired
 	private CurrentUserSessionServiceImpl currentuserSesionServiceImpl;
-
-
+	
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<String> viewWalletBalance(@PathVariable("id") String uniqueId) throws CustomerNotException, LoginException{
+		Double balance = walletServiceImpl.showBalance(uniqueId);
+		return new ResponseEntity<String>(("wallet balanace is : "+ balance) , HttpStatus.CREATED);
+	}
+ 
 
 	@PutMapping("/fundtran/{sourceMobileNo}/{tragetMobileNo}/{amount}/{uniqueId}")
 	public ResponseEntity<Transaction> FundTransactionHandler(@PathVariable("sourceMobileNo") String sourceMobileNo,
 			@PathVariable("tragetMobileNo") String tragerMobileNo, @PathVariable("amount") Double amount,@PathVariable("uniqueId") String uniqueId)
 			throws CustomerNotException, LoginException, BeneficiaryDetailException {
-
 		Transaction transaction = walletServiceImpl.fundTransfer(sourceMobileNo, tragerMobileNo, amount,uniqueId);
-
 		return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
 	}
 
-	// public Customer depositeAmount(String mmobileNo,BigDecimal amount);
-	@PutMapping("/deposite/{mobile}/{amount}")
-	public ResponseEntity<Transaction> depositeAmountFromWalletToBankHandler(@PathVariable("mobile") String mobileNo,@PathVariable("amount") Double amount)
+	@PutMapping("/deposite/{id}/{amount}")
+	public ResponseEntity<Transaction> depositeAmountFromWalletToBankHandler(@PathVariable("id") String uniqueId,@PathVariable("amount") Double amount)
 			throws CustomerNotException, InsufficientResourcesException, LoginException {
-
-		Transaction transaction = walletServiceImpl.depositeAmount(mobileNo, amount);
-		System.out.println("yes there is problem over here");
-
+		Transaction transaction = walletServiceImpl.depositeAmount(uniqueId, amount);
 		return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
 	}
 
 
-	@GetMapping("/getbenList/{mobileNo}")
-	public ResponseEntity<List<BeneficiaryDetail>> getAllCoustomerFromWallet(@PathVariable("mobileNo") String mobileNo)
+	@GetMapping("/getbenList/{uniqueid}")
+	public ResponseEntity<List<BeneficiaryDetail>> getAllCoustomerFromWallet(String uniqueId)
 			throws CustomerNotException, LoginException, BeneficiaryDetailException {
-		List<BeneficiaryDetail> beneficiaryDetails = walletServiceImpl.getList(mobileNo);
-
+		List<BeneficiaryDetail> beneficiaryDetails = walletServiceImpl.getList(uniqueId);
 		return new ResponseEntity<List<BeneficiaryDetail>>(beneficiaryDetails, HttpStatus.OK);
 	}
 
-	// lsCustomer addMoney(Wallet wallet, Double amount);
-	@PostMapping("/addMoney/{mobileNo}/{amount}")
-	public ResponseEntity<Customer> addMoneyHandler(String mobileNo, Double amount) throws Exception {
-
-		Customer customer = walletServiceImpl.addMoney(mobileNo, amount);
-
+	@PostMapping("/addMoney/{uniqueid}/{amount}")
+	public ResponseEntity<Customer> addMoneyToWalletHandler(String uniqueId, Double amount) throws Exception {
+		Customer customer = walletServiceImpl.addMoney(uniqueId, amount);
 		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
-
 	}
 
 }
