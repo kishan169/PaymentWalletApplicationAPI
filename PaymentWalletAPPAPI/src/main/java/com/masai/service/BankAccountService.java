@@ -16,5 +16,5 @@ public interface BankAccountService {
 	
 	public BankAccount viewBankAccountI(Integer accountNumber,String uniqueId) throws BankAccountNotExsists,UserNotLogedinException ;
 	
-	public BankAccount viewAllAccount(String uniqueId) throws UserNotLogedinException,NotAnyBankAddedYet;
+	public BankAccount viewAllAccount(String uniqueId) throws UserNotLogedinException,NotAnyBankAddedYet, BankAccountNotExsists;
 }

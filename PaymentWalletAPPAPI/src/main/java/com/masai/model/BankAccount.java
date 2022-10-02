@@ -33,12 +33,6 @@ public class BankAccount {
 
 	private Integer walletId;
 	
-//	@JsonIgnore
-//    private Wallet wall;
-	
-//	@JsonIgnore
-//	private Customer cost;
-//	
 
 	public Integer getAccountNumber() {
 		return accountNumber;
@@ -103,9 +97,5 @@ public class BankAccount {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-
-	
-	
+		
 }

@@ -44,10 +44,6 @@ public class LogIn {
 		this.mobileNo = mobileNo;
 	}
 
-	public LogIn() {
-		super();
-
-	}
 
 	public Integer getUserId() {
 		return userId;
@@ -66,6 +62,10 @@ public class LogIn {
 		this.password = password;
 	}
 	
-	
+
+	public LogIn() {
+		super();
+
+	}
 	
 }

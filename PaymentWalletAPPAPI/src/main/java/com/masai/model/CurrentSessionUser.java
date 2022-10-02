@@ -13,10 +13,8 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
-@Data
 public class CurrentSessionUser {
 	
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -26,7 +24,10 @@ public class CurrentSessionUser {
 	
 	private String uuid;
 	
+	private String mobileNo;
 	
+	private LocalDateTime localDateTime;
+
 	public String getMobileNo() {
 		return mobileNo;
 	}
@@ -35,12 +36,6 @@ public class CurrentSessionUser {
 		this.mobileNo = mobileNo;
 	}
 
-	private String mobileNo;
-	
-	private LocalDateTime localDateTime;
-
-
-	
 
 	public CurrentSessionUser(Integer userId, String uuid, String mobileNo, LocalDateTime localDateTime) {
 		super();

@@ -65,6 +65,22 @@
         console.log("kishan");
 }
 
+
+async function patchBeneficiary(){
+    let id = document.getElementById("key2").value;
+    let mobile = document.getElementById("beneficiaryNumber").value;
+    let response = await fetch(`http://localhost:8888/ben/del?uuid=${id}&beneficiaryMobileNo=${mobile}` ,{
+        method: 'PATCH',
+        body : JSON.stringify({
+            name:"Ankur",
+        }),
+        headers : {'Content-Type' : 'application/json'},
+    });
+
+    let dat = await response.json();
+    console.log(dat)
+}
+
 async function getBeneficiaryList(){
     let id = document.getElementById("key2").value;
     let response = await fetch(`http://localhost:8888/ben/all?uuid=${id}` ,{

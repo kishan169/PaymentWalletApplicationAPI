@@ -54,7 +54,7 @@ public class BillPaymentServiceImpl implements BillPaymentService{
 		Wallet wallet = customer.get().getWallet();
 		
 		if(wallet.getBalance()<billpayment.getAmount()) {
-			throw new InsufficientBalanceException("Insuficient balance in wallet, Add money to your wallet");
+			throw new InsufficientBalanceException("Insufficient balance in wallet, Add money to your wallet");
 		}
 		
 		wallet.setBalance(wallet.getBalance()-billpayment.getAmount());
@@ -72,6 +72,7 @@ public class BillPaymentServiceImpl implements BillPaymentService{
 			transaction.setTransactionDate(LocalDateTime.now());
 			transaction.setTransactionType(billpayment.getTransactionType());
 			transaction.setWalletId(wallet.getWalletId());
+			wallet.getTransaction().add(transaction);
 			transactionDao.save(transaction);
 		}
 		System.out.println(billpayment);

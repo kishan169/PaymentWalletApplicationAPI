@@ -13,6 +13,7 @@
         <div id = "signUp"><a href="index.html">SignUP</a></div>
         <div id = "logIn"><a href="login.html">LogIn</a></div>
         <div id = "Bank"><a href="addbank.html">Add Bank</a></div>
+        <div id = "wallet"><a href="wallet.html">Wallet</a></div>
         <div id = "beneficiary"><a href="beneficiary.html">Add beneficiary</a></div>
         <div id = "makePayment"><a href="paybill.html">Pay Bill</a></div>
         <div id = "transaction"><a href="transaction.html">Transaction</a></div>
@@ -26,7 +27,7 @@
             <h1>Get Transactions</h1>
             <input type="text" id = "key" placeholder = "Enter unique Id">
             
-            <button onclick = "addAccount()">Add Account</button>
+            <button onclick = "getTransaction()">Get List Of Transaction</button>
         </div>
         
     </div>
@@ -34,11 +35,41 @@
 
     <div id = "operation">
         <h3>Transactions</h3>
-        <input type="text" id = "key" placeholder = "Enter UniqueId">
-        <button onClick="patchBeneficiary()" id ="patch">Delete Beneficiary</button>
-        <button onClick="getBeneficiary()" id ="get">View All Transactions</button>
-        <button onClick="getBeneficiaryList()" id ="get">GetBeneficiaryList</button>
+        <input type="text" id = "uniqueId" placeholder = "Enter UniqueId">
+        <input type="text" id = "type" placeholder = "Enter TransactionType">
+        <button onClick="getTransactionList()" id ="get">Get Transaction List</button>
     </div>
     
 </body>
 </html>
+
+<script>
+
+
+async function getTransactionList(){
+     let id = document.getElementById("uniqueId").value;
+     let type = document.getElementById("type").value;
+    console.log(id);
+    let response = await fetch(`http://localhost:8888/transaction/historybytype/${type}/${id}` ,{
+        method: 'GET',
+        headers : {'Content-Type' : 'application/json'},
+    });
+
+    let dat = await response.json();
+    console.log(dat)
+}
+
+
+async function getTransaction(){
+     let id = document.getElementById("key").value;
+    console.log(id);
+    let response = await fetch(`http://localhost:8888/transaction/transation_histroy/${id}` ,{
+        method: 'GET',
+        headers : {'Content-Type' : 'application/json'},
+    });
+
+    let dat = await response.json();
+    console.log(dat)
+}
+   
+</script>

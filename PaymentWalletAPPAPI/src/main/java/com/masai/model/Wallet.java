@@ -22,13 +22,10 @@ import lombok.ToString;
 
 @Entity
 public class Wallet {
-    @Id
+   
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer walletId;
-	
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
-//	private Integer walletId;
 	
 	private Double balance;
 	

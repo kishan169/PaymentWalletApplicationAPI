@@ -14,17 +14,9 @@ import com.masai.model.TransactionType;
 @Repository
 public interface TransactionDao extends JpaRepository<Transaction, Integer>{
 	
-
-	
-//	@Query(value = " SELECT t FROM Transaction t  where t.TransactionDate BETWEEN ?1 and ?2")
-//	@Query("select t from Transaction t where t.TransactionDate between :?1 and :?2")
 	public List<Transaction> findByWalletId(Integer walletId);
-
-
 	
-	
-//	@Query("select t from transaction t where t.transactionType=?1")
 	public List<Transaction> getTransactionByTransactionType(TransactionType type);
 
-
+	public List<Transaction> findByTransactionDate(LocalDate date);
 }

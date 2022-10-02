@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id = "operations">
+        <div id = "signUp"><a href="index.html">SignUP</a></div>
+        <div id = "logIn"><a href="login.html">LogIn</a></div>
+        <div id = "Bank"><a href="addbank.html">Add Bank</a></div>
+        <div id = "wallet"><a href="wallet.html">Wallet</a></div>
+        <div id = "beneficiary"><a href="beneficiary.html">Add beneficiary</a></div>
+        <div id = "makePayment"><a href="paybill.html">Pay Bill</a></div>
+        <div id = "transaction"><a href="transaction.html">Transaction</a></div>
+    </div>
+
+<div id = "container">
+    
+    <div id = "addinput">
+        <h1>Create New Account</h1>
+        <input type="text" id = "userName" placeholder = "Enter name">
+        <input type="text" id = "mobileNo" placeholder = "Enter mobile">
+        <input type="text" id = "email" placeholder = "Enter email">
+        <input type="text" id = "password" placeholder = "Enter password">
+        <button onclick = "addAccount()">Add Account</button>
+    </div>
+    <div id = "operation">
+        <h3>DELETE , PATCH , PUT & GET Methods</h3>
+
+        <div>
+            <input type="text" id = "keyA" placeholder = "Enter ID">
+            <input type="text" id = "amount" placeholder = "Enter Amount">
+            <button onClick="addbalancetoWallet()" id ="post">Add to Balance</button>
+        </div>
+        <div>
+            <input type="text" id = "source" placeholder = "Enter source mobile">
+            <input type="text" id = "toMobile" placeholder = "Enter to mobile">
+            <input type="text" id = "amount" placeholder = "Enter Amount">
+            <button onClick="transferMoney()" id ="put">Transfer Money</button>
+        </div>
+        
+        <div>
+            <input type="text" id = "keyC" placeholder = "Enter ID">
+            <button onClick="getCustomer()" id ="get">Get Customer </button>
+        </div>
+        
+
+        <div>
+            <input type="text" id = "keyD" placeholder = "Enter ID">
+            <input type="text" id = "amount" placeholder = "Enter Amount">
+            <button onClick="depositbalancetoBank()" id ="put">Deposit to Bank </button>
+        </div>
+        
+        <div>
+            <input type="text" id = "keyW" placeholder = "Enter ID">
+            <button onClick="viewWalletBalance()" id ="get">ViewWalletBalance</button>
+        </div>
+        
+    </div>
+      
+</div>
+    
+</body>
+</html>
+
+<script>
+
+   async function getCustomer(){
+        let id = document.getElementById("keyC").value;
+        console.log(id);
+       let response = await fetch(`http://localhost:8888/getbenList/${id}` ,{
+           method: 'GET',
+           headers : {'Content-Type' : 'application/json'},
+       });
+   
+       let dat = await response.json();
+       console.log(dat)
+   }
+   
+   async function viewWalletBalance(){
+        let id = document.getElementById("keyW").value;
+        console.log(id);
+       let response = await fetch(`http://localhost:8888/wallet/${id}` ,{
+           method: 'GET',
+           headers : {'Content-Type' : 'application/json'},
+       });
+   
+       let dat = await response.json();
+       console.log(dat)
+   }
+       
+   </script>
+   
