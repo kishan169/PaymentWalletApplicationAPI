@@ -84,9 +84,7 @@ public class LoginServiceImpl implements LoginService{
 		
 		Optional<LogIn> logindata = loginDAO.findById(currentSessionuserOptional.get().getUserId());
 		
-		System.out.println(logindata);
 		loginDAO.delete(logindata.get());
-		
 		
 		return "Logged Out....";
 	}

@@ -39,7 +39,7 @@
         <input type="text" id = "key" placeholder = "Enter ID">
         <input type="text" id = "accountNumber" placeholder = "Enter Account Number">
         <button onClick="deleteAccount()" id ="delete">Delete Bank Account Details</button>
-        <button onClick="getProduct()" id ="get">View Bank Account Details</button>
+        <button onClick="getBankDetail()" id ="get">View Bank Account Details</button>
     </div>
     
 </body>
@@ -75,8 +75,9 @@ async function addAccount(){
 
 async function deleteAccount(){
     let id = document.getElementById("key").value;
-
-    let response = await fetch(`http://localhost:5001/bank/${id}` ,{
+    let acc = document.getElementById("accountNumber").value;
+    console.log(id,acc);
+    let response = await fetch(`http://localhost:5001/bank/${acc}/${id}` ,{
         method: 'DELETE',
         headers : {'Content-Type' : 'application/json'},
     });
@@ -84,6 +85,21 @@ async function deleteAccount(){
     let dat = await response.json();
     console.log(dat)
 }
+
+
+
+async function getBankDetail(){
+    let id = document.getElementById("key").value;
+
+    let response = await fetch('http://localhost:8888/bank/-2040768860' ,{
+        method: 'GET',
+        headers : {'Content-Type' : 'application/json'},
+    });
+
+    let dat = await response.json();
+    console.log(dat)
+}
+
 
 </script>
 

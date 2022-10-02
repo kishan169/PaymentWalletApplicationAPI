@@ -19,7 +19,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Transaction {
 	
 
-    @Id
+    @Override
+	public String toString() {
+		return "Transaction [transactionId=" + transactionId + ", transactionType=" + transactionType
+				+ ", transactionDate=" + transactionDate + ", amount=" + amount + ", description=" + description
+				+ ", walletId=" + walletId + "]";
+	}
+
+
+
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer transactionId;
     
