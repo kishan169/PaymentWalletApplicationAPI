@@ -4,7 +4,7 @@
 
 
 
-[![Entity Relation Diagaram](/assets/images/shiprock.jpg "Shiprock, New Mexico by Beau Rogers")](https://github.com/kishan169/PaymentWalletApplicationAPI/blob/main/ER-Diagram.jpg)
+![Entity Relation Diagaram](https://ibb.co/rsLncR4)
 
 ## Features
 - User Login / Signup 
