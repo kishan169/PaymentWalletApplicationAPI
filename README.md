@@ -1,6 +1,8 @@
 # PaymentWalletApplicationAPI
 Live Link:-  <a target="_blank" >https://payment-wallet-api.netlify.app/</a>
 
+Swagger Link:- <a target="_blank" >http://localhost:8888/swagger-ui/</a>
+
 This is the collabartive project which is our Backend project based on SpringBoot JPA (API).
 This is the Payment API project with the help of this we can  make various operations like Transaction,Bill payment,Transaction history,Add Balance to Wallet etc. 
 A Colloborative Project build by 5 Team member in 5 working Day.
